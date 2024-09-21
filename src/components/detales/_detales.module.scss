@@ -1,0 +1,32 @@
+.detales{
+    // @apply ;
+    .detales_price{
+        @apply flex justify-between items-center;
+    }
+    .detales_blocks{
+        @apply flex max-w-[345px] w-full flex-col gap-3 mt-6;
+        .detales_block{
+            @apply flex justify-between items-center;
+            span{
+           @apply text-[16px] font-normal leading-[21px] text-regal-span-opacity;
+            }
+            p{
+                @apply text-[16px] font-semibold leading-[12px] text-black;
+
+
+            }
+
+        }
+
+    }
+    .detales_texts{
+        @apply mt-6;
+        h4{
+            @apply text-[16px] font-semibold leading-[12px] text-black;
+        }
+        p{
+            @apply mt-[3px] text-[16px] font-semibold leading-[18px] text-regal-span-opacity;
+        }
+
+    }
+}

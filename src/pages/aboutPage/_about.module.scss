@@ -1,0 +1,25 @@
+.about_section {
+    @apply pt-[42px];
+
+    .about_section_home {
+        @apply text-xs font-normal text-slate-400 flex gap-2 items-center
+    }
+
+    .about_about_block {
+        h1 {
+            @apply text-2xl font-bold text-center p-14
+        }
+
+        .about_wrapper_p {
+            @apply pb-[25px] leading-7
+        }
+
+        .about_wrapper_p_two {
+            @apply pb-[25px] leading-7
+        }
+
+        .about_link {
+            @apply text-blue-600
+        }
+    }
+}

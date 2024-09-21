@@ -1,0 +1,18 @@
+header{
+	@apply border-b-2 border-regal-black;
+	.admin_header{
+		@apply flex items-center justify-between py-[15px];
+	
+		>.admin_header_logo{
+			@apply w-[168px] h-[48px]
+		}
+	
+		>.admin_header_link{
+			@apply flex gap-[23px];
+	
+			.admin_header_link_item{
+				@apply text-base font-medium hover:border-b hover:border-[#E11E24] duration-300
+			}
+		}
+	}
+}

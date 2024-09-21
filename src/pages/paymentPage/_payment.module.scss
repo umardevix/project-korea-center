@@ -1,0 +1,40 @@
+.payment_section{
+    @apply py-8 sm:py-[42px];
+    .payment_container{
+        .payment_header{
+            @apply flex items-center gap-4;
+            span{
+                @apply flex items-center gap-2 text-[16px] leading-5 font-normal text-regal-grey text-center;
+            }
+
+        }
+        form{
+            @apply w-[290px] mx-auto max-w-full mt-8;
+            label{
+                @apply font-bold text-[34px] leading-[39.84px] flex justify-center;
+
+            }
+            .payment_info_top{
+                @apply mt-[30px] flex justify-center gap-[30px];
+                .payment_block{
+                    @apply flex items-center gap-1 text-[14px] font-normal leading-[16.41px];
+                }
+            }
+            .payment_info{
+                .payment_block{
+                    img{
+                        @apply hover:cursor-pointer;
+                    }
+                }
+         
+                .login_button{
+                    @apply mt-6;
+                    button{
+                        @apply w-full h-[35px] rounded-[4px] bg-regal-red text-regal-white text-[14px] font-semibold;
+                    }
+        
+                }
+            }
+        }
+    }
+}

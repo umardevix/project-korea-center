@@ -1,0 +1,25 @@
+.add_product{
+	@apply mt-[42px];
+	.add_product_title{
+		@apply flex items-center;
+
+		>p{
+			@apply flex gap-[9.68px] text-sm cursor-pointer font-normal
+		}
+		>h1{
+			@apply text-center w-full text-[34px] font-bold
+		}
+	}
+
+	.add_product_block{
+		@apply flex justify-between mt-[86px]
+	}
+
+	.save_product{
+		@apply flex justify-center mt-4;
+
+		>button{
+			@apply bg-regal-red text-white rounded w-[285px] h-[35px]
+		}
+	}
+}	

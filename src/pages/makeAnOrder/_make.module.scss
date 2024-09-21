@@ -1,0 +1,32 @@
+.make_section {
+    @apply pt-8 sm:pt-[42px];
+    .make_continer{
+        .make_header {
+            @apply flex gap-4;
+            span {
+                @apply flex gap-2 text-regal-grey text-[16px];
+            }
+
+        }
+        .make_texts{
+            @apply pt-8 sm:pt-[42px];
+            h1{
+                @apply text-regal-black text-[28px] sm:text-[34px] sm:text-center font-bold leading-[32.81px];
+
+            }
+            p{
+                @apply text-regal-black mt-[25px] sm:mt-[30px] text-[20px] sm:text-[24px] sm:leading-[28.8px] font-normal leading-6 md:text-center;
+            }
+            .make_div{
+                @apply flex justify-center;
+             
+                button {
+                    @apply text-center mt-[30px] bg-regal-red text-regal-white w-[290px] h-[35px] font-semibold text-[14px] rounded hover:shadow-red-shadow;
+                }
+            }
+
+        }
+
+    }
+
+}

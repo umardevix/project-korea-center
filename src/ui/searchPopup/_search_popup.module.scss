@@ -1,0 +1,53 @@
+.search_form{
+	@apply w-full md:w-[245px] lg:w-[285px] flex flex-col gap-[7.74px] md:gap-[9px];
+	h1 {
+		@apply text-[13.75px] md:text-[16px] font-semibold flex text-nowrap;
+
+	}
+
+	.search_select{
+		@apply py-[7.74px] px-[6.88px] sm:py-[9px] md:py-[8px] appearance-none bg-[url('/assets/svg/arrowDown.svg')] bg-no-repeat bg-right bg-[length:35px_12px] outline-none rounded-[3.44px] md:rounded-[4px] border border-regal-placeholder;
+	}
+
+	.search_input{
+		@apply flex items-center gap-[7.4px] md:gap-[9px] cursor-pointer;
+	}
+	.search_input_item{
+		@apply flex flex-col w-full border-t mt-[22px] border-regal-black;
+
+		>div{
+			@apply flex gap-4 mt-[18px];	
+
+			>input{
+				@apply w-full h-[34px] border border-regal-placeholder outline-none rounded-[4px]  px-[40px] ;
+
+				&::placeholder {
+					@apply text-center;
+				}
+			}
+			
+		}
+		>input{
+			@apply w-full h-[34px] border border-regal-placeholder outline-none rounded mt-[9px] pl-[9px];
+
+			&::placeholder {
+				@apply pl-[9px];
+			}
+
+		}
+
+	}
+
+	button{
+		@apply text-[12.04px] md:text-[14px] rounded py-[7px]
+	}
+
+	.search_btn{
+		@apply bg-regal-red text-regal-white mt-[22px] md:mt-[17px]
+	}
+
+	.clear_btn{
+		@apply border border-regal-black text-regal-text-black mt-[1px]
+	}
+
+}

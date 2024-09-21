@@ -1,0 +1,29 @@
+.burger{
+    @apply indent-1 w-full h-[100vh] fixed bg-[rgba(0,0,0,0.3)] z-40 top-0 left-0;
+    .burger_global{
+        @apply  flex justify-end ;
+        .burger_container{
+            @apply w-[204px] sm:w-[275px] max-w-full bg-regal-white mt-[80px] ;
+            .burger_info{
+               @apply p-6 pb-[36px] sm:p-[30px]; 
+               nav{
+                ul {
+
+                    @apply flex flex-col gap-[24px] pb-3 border-b border-regal-black;
+                    li {
+                      a {
+                        @apply text-base text-regal-black;
+                      }
+                    }
+                  }
+               }
+               .header_login{
+                @apply flex items-center gap-[9px] mt-6;
+               }
+
+            }
+            
+
+        }
+    }
+}

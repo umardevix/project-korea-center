@@ -1,0 +1,22 @@
+.add_product_img_block{
+	@apply grid grid-cols-2 gap-4;
+
+	>.add_product_img_item{
+		@apply w-[387px] h-[206px] border-2 border-gray-300 flex items-center justify-center bg-[#D3D3D3] rounded-2xl;
+
+		>img{
+			@apply object-cover h-full w-full rounded-2xl;
+		}
+
+		>div{
+			@apply text-gray-500;
+		}
+	}
+}
+label{
+	@apply relative  inline-block;
+
+	button{
+		@apply  mt-4 px-4 py-2 bg-blue-50 rounded-[4px] border border-[#A1A1A1] bg-transparent font-semibold;
+	}
+}

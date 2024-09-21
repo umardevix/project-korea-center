@@ -1,0 +1,9 @@
+.pagination_block {
+    @apply flex justify-center items-center mt-[35px];
+    .pagination_block_li_btn {
+        @apply p-[5px] text-base font-normal bg-white border-slate-300 border-2 w-32  hover:text-white hover:bg-blue-500 active:text-white  active:bg-blue-500 focus:text-white  focus:bg-blue-500 
+    }
+    .pagination_block_number_btns {
+        @apply p-[5px] text-base font-normal bg-white border-slate-300 border-2 w-9 hover:text-white hover:bg-blue-500 active:text-white  active:bg-blue-500 focus:text-white  focus:bg-blue-500 
+    }
+}

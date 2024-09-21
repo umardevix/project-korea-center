@@ -1,0 +1,33 @@
+.dashboard{
+	@apply mt-[42px];
+	.dashboard_search{
+		@apply flex justify-between items-end;
+		.dashboard_search_input{
+			@apply w-full relative;
+			>div{
+				@apply absolute left-[18px] top-[12px] border-r border-regal-grey h-[28px];
+				>img{
+					@apply w-[18px] h-[18px] mr-[5px] mt-[5px]
+				} 
+			}
+			>input{
+				@apply w-[692px] h-[50px] rounded-lg outline-none pl-[68px] shadow-sm
+			}
+		}
+		.dashboard_select{
+			@apply flex items-end gap-[30px];
+			>div{
+				>p{
+					@apply text-regal-global-gray text-xs
+				}
+				>select{
+					@apply rounded-[4px] border border-regal-global-gray w-[184px] h-[35px] mt-[3px] bg-transparent outline-none
+				}
+			}
+			button{
+				@apply bg-regal-red text-regal-white w-[170px] h-[40px] font-semibold rounded
+			}
+		}
+
+	}
+}

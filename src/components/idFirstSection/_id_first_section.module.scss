@@ -1,0 +1,19 @@
+.id_first_container{
+    @apply mt-8 lg:flex gap-5;
+    .id_first_image_content{
+        @apply w-full sm:col-span-2 max-w-full lg:w-[387px] ;
+
+    }
+    .id_div{
+        @apply sm:flex sm:gap-[34px] md:justify-between lg:justify-start lg:gap-5;
+
+        .id_first_info_content{
+            @apply w-full sm:w-[455px] md:w-[605px] max-w-full lg:max-w-[488px] lg:w-full mt-8 sm:mt-[20.47px] lg:mt-0;
+    
+        }
+        .id_first_search_content{
+         @apply mt-[34px] sm:mt-[20.47px] lg:mt-0 sm:w-[285px] sm:max-w-full lg:w-[285px] lg:max-w-full;
+        }
+    }
+
+}

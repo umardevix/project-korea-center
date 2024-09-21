@@ -1,0 +1,23 @@
+.new_fixed{
+    @apply w-full h-screen bg-regal-fixed fixed top-0 left-0;
+    .new_container{
+        @apply h-[100vh] flex justify-center pt-[158px] sm:pt-[299px] md:pt-[284px];
+        .new_info{
+            @apply w-[388px] sm:w-[426px] h-[246px] bg-regal-white flex flex-col items-center justify-center;
+            .new_content{
+                @apply font-semibold text-[18px] leading-[21.09px] ;
+                .two_button {
+                    @apply mt-[25px] flex gap-x-5 justify-center;
+                    .two_button_1 {
+                        @apply w-[84px] h-[29px] border border-regal-black rounded	size-[16px] font-semibold leading-[18.75px];
+                    }
+                    .two_button_2 {
+                        @apply w-[77px] h-[29px] border rounded bg-regal-green text-regal-white  leading-[18.75px] font-semibold size-[16px] ;
+                    }
+                }
+            }
+        }
+    }
+    
+
+} 

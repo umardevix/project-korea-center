@@ -1,0 +1,37 @@
+.login_input_1{
+    @apply mt-6;
+    span{
+        @apply font-light text-[12px] leading-[14.06px] text-regal-placeholder;
+
+    }
+    .login_input{
+        @apply mt-[3px] relative;
+        input{
+            @apply w-full h-[35px] border border-regal-global-gray rounded-[4px] px-3 pt-[5px] pb-[6px] outline-none font-normal text-[14px] leading-[16.41px] text-regal-black;
+
+        }
+        span{
+            @apply absolute top-[5px] right-3 indent-96;
+        }
+        .select_dropdown{
+            @apply absolute top-[5px] left-3 w-[67px] h-6 flex items-center gap-[3px] border-r-[0.5px] border-regal-border;
+            p{
+                @apply font-normal text-[14px] leading-[16.41px];
+
+            }
+            .select_dropdown_img{
+                @apply w-6 h-full flex items-center justify-center;
+
+            }
+
+        }
+    }
+
+}
+.login_input_one{
+.login_input{
+input{
+    @apply pl-[84px];
+}
+}
+}

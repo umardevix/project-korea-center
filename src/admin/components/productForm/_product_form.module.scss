@@ -1,0 +1,19 @@
+.add_product_details{
+	@apply flex flex-col w-[294px] gap-[3px];
+
+	>input{
+		@apply border border-gray-300 rounded-md p-2 outline-none bg-transparent ;
+	}
+
+	>label{
+		@apply text-regal-placeholder text-xs;
+	}
+
+	>select{
+		@apply border border-gray-300 rounded-md p-2 outline-none bg-transparent;
+	}
+
+	>textarea{
+		@apply border border-gray-300 rounded-md p-2 outline-none bg-transparent 
+	}
+}

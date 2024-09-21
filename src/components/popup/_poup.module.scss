@@ -1,0 +1,25 @@
+.popup_fixed{
+    @apply w-full h-screen bg-bg-fiexed fixed top-0 left-0;
+    .popup_container{
+        @apply flex justify-center pt-[152px] sm:pt-[162px];
+        .popup_info{
+            @apply w-[388px] sm:w-[426px] h-[233px] max-w-full bg-regal-white flex justify-center items-center;
+            .popup_content{
+
+                .popup_top{
+                    @apply flex items-center gap-[9px];
+                    p{
+                        @apply font-semibold text-[18px] leading-[21.09px] text-regal-black;
+                    }
+
+                }
+                .popup_button{
+                    @apply flex justify-center;
+                    button{
+                        @apply w-[217px] py-2 max-w-full rounded-[4px] text-[16px] font-semibold leading-[18.75px] text-regal-white bg-regal-red mt-[30px];
+                    }
+                }
+            }
+        }
+    }
+}

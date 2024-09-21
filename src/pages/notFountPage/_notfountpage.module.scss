@@ -1,0 +1,20 @@
+.notfound_section {
+    @apply pt-[32px] sm:pt-[42px];
+    .notfound_container {
+        @apply w-[327px] sm:w-[740px] md:w-[860px] max-w-full  mx-auto;
+        .notfound_header {
+            h1 {
+                @apply  text-regal-black text-[42px] font-medium sm:text-[90px] mt-[18px] md:text-[110px] md:leading-[95px] leading-10 sm:leading-[80px] sm:text-center;
+            }
+            p {
+                @apply text-regal-black text-[16px] font-normal leading-6 mt-[18px] sm:mt-[35px] sm:text-center;
+            }
+        }
+        .notfound_button {
+            @apply flex justify-center;
+            button {
+                @apply text-center mt-[25px] sm:mt-10 bg-regal-red text-regal-white w-[217px] h-[35px] font-semibold text-[16px] rounded hover:shadow-red-shadow;
+            }
+        }  
+    }
+}

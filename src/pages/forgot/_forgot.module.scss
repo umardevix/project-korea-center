@@ -1,0 +1,75 @@
+.login_section {
+    @apply py-8 sm:py-[42px];
+  }
+  .forgot_container {
+    @apply flex justify-center;
+    .login_info {
+      @apply w-[285px];
+      .login_title {
+        @apply flex flex-col items-center;
+        h1 {
+          @apply font-bold text-[34px] m-0 text-regal-black leading-[39.84px];
+        }
+      }
+      .login_inputs {
+        @apply mt-6 flex flex-col;
+        .login_input_1 {
+          span {
+            @apply font-light text-[12px] leading-[14.06px] text-regal-placeholder;
+          }
+          .login_input {
+            @apply mt-[3px] relative;
+            input {
+              @apply w-full h-[35px] border rounded-[4px] px-3 pt-[5px] pb-[6px] outline-none font-normal text-[14px] leading-[16.41px] text-regal-black;
+            }
+  
+            span {
+              @apply absolute top-[5px] right-3 indent-96;
+            }
+            .select_dropdown {
+              @apply absolute top-[5px] left-3 w-[67px] h-6 flex items-center gap-[3px] border-r-[0.5px] border-regal-border;
+              .select {
+                @apply w-[59px] font-normal text-[14px] leading-[16.41px] outline-none;
+                option {
+                  @apply outline-none;
+                }
+              }
+            }
+          }
+          .border_true {
+            input {
+              @apply border-regal-global-gray;
+            }
+          }
+          .border_false {
+            input {
+              @apply border-regal-red;
+            }
+          }
+        }
+        .login_input_one {
+          .login_input {
+            input {
+              @apply pl-[84px];
+            }
+          }
+        }
+        .login_input_2 {
+          @apply mt-4;
+        }
+        a{
+          @apply font-normal text-[14px] leading-[16.41px] text-right mt-4;
+        }
+      }
+      .login_button {
+        @apply mt-6 flex flex-col;
+        button {
+          @apply w-full h-[35px] rounded-[4px] bg-regal-red text-regal-white text-[14px] font-semibold;
+        }
+        small {
+          @apply font-normal leading-[14.06px] tracking-[2%] text-center text-[12px] text-regal-red mt-3;
+        }
+      }
+    }
+  }
+  

@@ -1,0 +1,44 @@
+.wrapper_back {
+    @apply pt-[20px];
+
+    .btn_back {
+        @apply text-gray-500 flex items-center;
+    }
+
+    .details_h2 {
+        @apply pt-[42px] text-4xl font-bold text-center
+    }
+}
+
+.block_left_right {
+    @apply flex gap-[150px];
+
+    .block_left {
+        @apply pt-[42px];
+
+        .zakaz {
+            @apply flex gap-[30px] text-base font-normal
+        }
+    }
+
+    .block_right {
+        @apply pt-[42px];
+
+        .tovar_p {
+            @apply text-base font-bold
+        }
+
+        .tovar_block {
+            @apply flex gap-[5px]
+        }
+
+        .line {
+            @apply mt-[24px] w-full h-px bg-black
+        }
+
+        .block_total {
+            @apply pt-[24px] flex gap-[64px]
+        }
+    }
+
+}

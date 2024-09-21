@@ -1,0 +1,30 @@
+.category_card{
+	@apply w-full mt-5 sm:mt-0 sm:max-w-[377px] md:max-w-[287px] relative bg-regal-white flex  items-center justify-center rounded-2xl shadow-md cursor-pointer;
+	
+	>.category_img{
+		@apply flex flex-col items-center justify-center;
+		>img{
+			@apply py-[60px];
+		}
+	}
+
+	&:hover{
+		// @apply ;
+		.category_btn_info{
+			@apply h-full bg-blue-500 opacity-45 transition-all ease-out duration-500 rounded-t-2xl;
+			.category_btn {
+				@apply opacity-65;
+			}
+		}
+	}
+
+	>.category_btn_info{
+		@apply w-full h-[64px] absolute bottom-0 flex justify-center items-end bg-blue-500 rounded-b-2xl;
+		>.category_btn{
+			@apply w-full   py-6 flex items-center justify-center;
+			>span{
+				@apply text-regal-white font-bold text-lg
+			}
+		}
+	}
+}
