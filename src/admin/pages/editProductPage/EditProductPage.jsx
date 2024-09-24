@@ -28,19 +28,17 @@ export const EditProductPage = () => {
 	const { categories } = useSelector(state => state.categories)
 
 	const dispatch = useDispatch()
-
-
 	useEffect(() => {
 		dispatch(fetchCategories())
 	}, [dispatch])
 
+	
 
-	// Функция для обработки выбранных фотографий
 	const handleAddPhoto = (e) => {
 		const file = e.target.files[0];
 		if (file && currentIndex < photos.length) {
 			const newPhotos = [...photos];
-			newPhotos[currentIndex] = file; // Сохраняем файл
+			newPhotos[currentIndex] = file; 
 			setPhotos(newPhotos);
 			setCurrentIndex((prevIndex) => prevIndex + 1);
 		}
@@ -68,10 +66,9 @@ export const EditProductPage = () => {
 		formData.append('generation', generation);
 		formData.append('category', category);
 
-		// Добавляем фото с правильными ключами (image1, image2 и т.д.)
 		photos.forEach((photo, index) => {
 			if (photo) {
-				formData.append(`image${index + 1}`, photo); // Сервер ожидает image1, image2 и т.д.
+				formData.append(`image${index + 1}`, photo);
 			}
 		});
 
@@ -163,7 +160,7 @@ export const EditProductPage = () => {
 							<option value="Новый">Новый</option>
 							<option value="Б/У">Б/У</option>
 						</select>
-
+{/* Categori */}
 						<label>Категория</label>
 						<select value={category} onChange={(e) => setCategory(e.target.value)}>
 							<option value="">Выберите категорию</option>
@@ -173,6 +170,8 @@ export const EditProductPage = () => {
 								))
 							}
 						</select>
+{/* Categori */}
+
 
 						<label>Номер запчасти</label>
 						<input onChange={(e) => setNumber(e.target.value)} type="text" value={number} />
@@ -196,3 +195,6 @@ export const EditProductPage = () => {
 		</div>
 	)
 }
+
+
+
