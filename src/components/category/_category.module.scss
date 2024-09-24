@@ -2,12 +2,11 @@
 	@apply w-full;
 	.category_block{
 		@apply mt-[86px];
-		
 		>h2{
 			@apply text-[23px] sm:text-[28px] text-regal-black font-bold
 		}
 		>.category_item{
-			@apply  sm:grid sm:grid-cols-2 gap-5 mt-[42px] md:grid-cols-3 lg:grid-cols-4 md:gap-5 justify-between ;
+			@apply  sm:grid items-center gap-5 mt-[42px] md:grid-cols-5 lg:grid-cols-7 md:gap-5 gap-5 ;
 		}
 	}
 }
