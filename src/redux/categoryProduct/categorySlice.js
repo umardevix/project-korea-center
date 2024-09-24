@@ -7,9 +7,9 @@ export const fetchCategories = createAsyncThunk(
     async (_, { rejectWithValue }) => {
         try {
             const response = await axios.get('/products/categories/');
-            return response.data;
+            return response.data; // Возвращаем полученные данные
         } catch (error) {
-            return rejectWithValue(error.response?.data || error.message);
+            return rejectWithValue(error.response?.data || error.message); // Обработка ошибок
         }
     }
 );
@@ -20,17 +20,17 @@ export const addCategory = createAsyncThunk(
     async (categoryData, { rejectWithValue }) => {
         try {
             const formData = new FormData();
-            formData.append('category', categoryData.name);
-            formData.append('image', categoryData.image);
+            formData.append('category', categoryData.name); // Название категории
+            if (categoryData.image) {
+                formData.append('image', categoryData.image); // Изображение, если есть
+            }
 
             const response = await axios.post('/products/categories/', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
-            toast.success('Категория успешно добавлена');
-            return response.data;
+            return response.data; // Возвращаем созданную категорию
         } catch (error) {
-            toast.error('Ошибка при добавлении категории');
-            return rejectWithValue(error.response?.data || error.message);
+            return rejectWithValue(error.response?.data || error.message); // Обработка ошибок
         }
     }
 );
@@ -46,26 +46,26 @@ const categorySlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchCategories.pending, (state) => {
-                state.loading = true;
+                state.loading = true; // Устанавливаем состояние загрузки
             })
             .addCase(fetchCategories.fulfilled, (state, action) => {
-                state.loading = false;
-                state.categories = action.payload;
+                state.loading = false; // Убираем состояние загрузки
+                state.categories = action.payload; // Обновляем категории
             })
             .addCase(fetchCategories.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload;
+                state.loading = false; // Убираем состояние загрузки
+                state.error = action.payload; // Устанавливаем ошибку
             })
             .addCase(addCategory.pending, (state) => {
-                state.loading = true;
+                state.loading = true; // Устанавливаем состояние загрузки
             })
             .addCase(addCategory.fulfilled, (state, action) => {
-                state.loading = false;
-                state.categories.push(action.payload);
+                state.loading = false; // Убираем состояние загрузки
+                state.categories.push(action.payload); // Добавляем новую категорию
             })
             .addCase(addCategory.rejected, (state, action) => {
-                state.loading = false;
-                state.error = action.payload;
+                state.loading = false; // Убираем состояние загрузки
+                state.error = action.payload; // Устанавливаем ошибку
             });
     },
 });
