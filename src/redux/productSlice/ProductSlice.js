@@ -7,17 +7,38 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async ()
   return response.data;
 });
 
+
 // Асинхронный thunk для удаления продукта
 export const deleteProduct = createAsyncThunk('products/deleteProduct', async (productId) => {
   await axios.delete(`/products/product/${productId}`);
-  return productId; // Возвращаем ID для удаления из состояния
+  return productId;
 });
+
 
 // Асинхронный thunk для добавления продукта
 export const addProduct = createAsyncThunk('products/addProduct', async (newProduct) => {
   const response = await axios.post('/products/product/', newProduct);
   return response.data; // Возвращаем добавленный продукт
 });
+
+
+export const fetchArticulData = (articul) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`/api/products?articul=${articul}`);
+      const data = await response.json();
+
+      dispatch({
+        type: 'FETCH_ARTICUL_RESULTS',
+        payload: data,
+      });
+    } catch (error) {
+      console.error('Ошибка при поиске артикула:', error);
+    }
+  };
+};
+
+
 
 const initialState = {
   products: [],
@@ -136,13 +157,9 @@ export const {
   setSelectedModel,
   setSelectedGeneration,
   setSelectedArticul,
-  setSelectedCategories, // Добавлено
+  setSelectedCategories, 
   filterProducts,
   resetFilters,
 } = productsSlice.actions;
 
 export default productsSlice.reducer;
-
-
-
-
