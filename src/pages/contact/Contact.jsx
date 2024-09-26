@@ -51,16 +51,15 @@ const Contact = () => {
 
 
                             <div className={styles.contact_section_right}>
-                                <iframe
-                                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d22078.352483472754!2d74.49317848165427!3d42.88403555678361!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x389ec9f5ce482549%3A0x6d3564aad24cb4fd!2z0KDRi9C90L7QuiDQmtGD0LTQsNC50LHQtdGA0LPQtdC9INCw0LLRgtC-0LfQsNC_0YfQsNGB0YLQuA!5e0!3m2!1sru!2skg!4v1723197825190!5m2!1sru!2skg"
-                                    width="100%"
-                                    
-                                    height="100%"
-                                    style={{ border: 0 }}
-                                    allowFullScreen
-                                    loading="lazy"
-                                    referrerPolicy="no-referrer-when-downgrade"
-                                />
+                                <iframe 
+                                src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d1515.3666447669766!2d72.8022568!3d40.5695667!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x38bdab6fdd595d33%3A0xaeb51883fc5cba37!2z0JrQvtGA0LXRjyDQptC10L3RgtGA!5e0!3m2!1sru!2skg!4v1727256695043!5m2!1sru!2skg" 
+                                width="100%" 
+                                height="100%" 
+                                style={{border: 8}}
+                                allowFullScreen
+                                 loading="lazy"
+                                 referrerPolicy="no-referrer-when-downgrade"
+                                  />
 
                             </div>
 
