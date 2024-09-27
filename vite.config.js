@@ -12,7 +12,6 @@ export default defineConfig({
         changeOrigin: true,
 
         rewrite: (path) => path.replace(/^\/products/, '/products'), // Исправлено
-
       },
       '/account': {
         target: 'http://130.211.125.242',

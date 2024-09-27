@@ -5,7 +5,7 @@ import { useLoaderData } from 'react-router-dom'
 import IdFirstSection from '../../components/idFirstSection/IdFirstSection'
 import styles from './_productId.module.scss'
 
-import ProductSection from '../../components/productSection/ProductSection'
+// import ProductSection from '../../components/productSection/ProductSection'
 import { filterProducts, setSelectedModel } from '../../redux/productSlice/ProductSlice'
 import Card from '../../components/card/Card'
 import { useState } from 'react'
