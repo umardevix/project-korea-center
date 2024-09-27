@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchProducts, setSearchQuery, setProductCondition } from '../../redux/productSlice/ProductSlice';
+import { fetchProducts, setSearchQuery, setProductCondition } from '../../redux/productSlice/ProductSlice'; // Проверяем импорт
 import styles from './_product.module.scss';
 import Pagination from '../pagination/Pogination';
 import Card from '../card/Card';
@@ -11,20 +12,21 @@ const ProductSection = ({ searchQuery, productCondition }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // Достаем из состояния Redux необходимые данные
   const { filteredProducts, loading, error } = useSelector((state) => state.products);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 3;
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const [itemsPerPage] = React.useState(3);
 
   // Загружаем продукты при монтировании компонента
   useEffect(() => {
     dispatch(fetchProducts());
-  }, [dispatch]);
+  }, []);
 
   // Обновляем поисковый запрос и условие продукта
   useEffect(() => {
-    dispatch(setSearchQuery(searchQuery));
-    dispatch(setProductCondition(productCondition));
-  }, [searchQuery, productCondition]);
+    dispatch(setSearchQuery(searchQuery)); // Устанавливаем поисковый запрос
+    dispatch(setProductCondition(productCondition)); // Устанавливаем состояние продукта (новый/б/у)
+  }, [dispatch, searchQuery, productCondition]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -35,6 +37,10 @@ const ProductSection = ({ searchQuery, productCondition }) => {
       setCurrentPage(pageNumber);
     }
   };
+
+  useEffect(() => {
+    dispatch(fetchProducts())
+  }, [dispatch])
 
   return (
     <section className={styles.product}>

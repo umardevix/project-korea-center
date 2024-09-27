@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './_dashboard.module.scss';
 import { Link } from 'react-router-dom';
-// import ProductSection from '../../../components/productSection/ProductSection';
+import ProductSection from '../../../components/productSection/ProductSection';
 
 export const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -45,7 +45,7 @@ export const Dashboard = () => {
           </div>
         </div>
         {/* Pass searchQuery and productCondition to ProductSection */}
-        {/* <ProductSection searchQuery={searchQuery} productCondition={productCondition} /> */}
+        <ProductSection searchQuery={searchQuery} productCondition={productCondition} />
       </div>
     </div>
   );
