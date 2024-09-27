@@ -17,9 +17,10 @@ import { adminRouter } from "./AdminRouter";
 import Forgot from "../pages/forgot/Forgot";
 import ForgotCode from "../pages/forgotCode/ForgotCode";
 import NewPassword from "../pages/newPassword/NewPassword";
-import AdminPage from "../admin/AdminPage";  
-import PrivateRoute from "../authContext/PrivateRouter";  
+import AdminPage from "../admin/AdminPage";
+import PrivateRoute from "../authContext/PrivateRouter";
 import Prosmotr from "../admin/components/prosmotr/Prosmotr";
+import { Dashboard } from "../admin/pages/dashboardPage/Dashboard";
 
 
 export const router = createBrowserRouter([
@@ -43,10 +44,6 @@ export const router = createBrowserRouter([
       { path: "/forgot", element: <Forgot /> },
       { path: "/forgot-code", element: <ForgotCode /> },
       { path: "/new-password", element: <NewPassword /> },
-      {
-        path: "/admin",
-        element: <PrivateRoute element={<AdminPage />} adminOnly={true} />
-      },
 
       {
         path: "/about",
@@ -84,19 +81,21 @@ export const router = createBrowserRouter([
         path: "*",
         element: <NotFountPage />
       },
-                                          
-      {path:"/payment",
-       element:<PaymentPage/>
+
+      {
+        path: "/payment",
+        element: <PaymentPage />
       },
-      {path:"/opt",
-        element:<OtpPage/>
+      {
+        path: "/opt",
+        element: <OtpPage />
       },
 
       {
         loader: productLoader,
         path: "/product/:id",
         element: <ProductIdPage isProduct={true} />
-        
+
       },
       {
         path: "/prosmotr/:id",
