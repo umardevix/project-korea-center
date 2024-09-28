@@ -24,6 +24,8 @@ export const SearchPopup = () => {
 
 
 
+
+
 	if (loading) return <p>Загрузка...</p>;
 	if (error) return <p>Ошибка: {error}</p>;
 
@@ -31,29 +33,29 @@ export const SearchPopup = () => {
 		<div className={styles.search_form}>
 			<select className={styles.search_select} value={selectedMarka} onChange={(e) => dispatch(setSelectedMarka(e.target.value))}>
 				<option value="">Выберите марку</option>
-				{
+				{/* {
 					products.map(el => (
 						<option key={el.id} value={el.marka}>{el.marka}</option>
 					))
-				}
+				} */}
 			</select>
 
 			<select className={styles.search_select} value={selectedModel} onChange={(e) => dispatch(setSelectedModel(e.target.value))}>
 				<option value="">Выберите модель</option>
-				{
+				{/* {
 					products.map(el => (
 						<option key={el.id} value={el.model}>{el.model}</option>
 					))
-				}
+				} */}
 			</select>
 
 			<select className={styles.search_select} value={selectedGeneration} onChange={(e) => dispatch(setSelectedGeneration(e.target.value))}>
 				<option value="">Выберите поколение</option>
-				{
+				{/* {
 					products.map(el => (
 						<option key={el.id} value={el.generation}>{el.generation}</option>
 					))
-				}
+				} */}
 			</select>
 
 			<div>
