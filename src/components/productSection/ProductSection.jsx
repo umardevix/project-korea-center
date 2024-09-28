@@ -1,6 +1,7 @@
+
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { setSearchQuery, setProductCondition } from '../../redux/productSlice/ProductSlice';
+import { fetchProducts, setSearchQuery, setProductCondition } from '../../redux/productSlice/ProductSlice'; // Проверяем импорт
 import styles from './_product.module.scss';
 import Pagination from '../pagination/Pogination';
 import Card from '../card/Card';
@@ -17,14 +18,14 @@ const ProductSection = ({ searchQuery, productCondition }) => {
   const [itemsPerPage] = React.useState(3);
 
   // Загружаем продукты при монтировании компонента
-  // useEffect(() => {
-  //   dispatch(fetchProducts());
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchProducts());
+  }, []);
 
   // Обновляем поисковый запрос и условие продукта
   useEffect(() => {
-    dispatch(setSearchQuery(searchQuery));
-    dispatch(setProductCondition(productCondition));
+    dispatch(setSearchQuery(searchQuery)); // Устанавливаем поисковый запрос
+    dispatch(setProductCondition(productCondition)); // Устанавливаем состояние продукта (новый/б/у)
   }, [dispatch, searchQuery, productCondition]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -37,6 +38,10 @@ const ProductSection = ({ searchQuery, productCondition }) => {
     }
   };
 
+  useEffect(() => {
+    dispatch(fetchProducts())
+  }, [dispatch])
+
   return (
     <section className={styles.product}>
       <div className="container">
@@ -44,7 +49,7 @@ const ProductSection = ({ searchQuery, productCondition }) => {
           {loading ? (
             <p>Loading...</p>
           ) : error ? (
-            <p>Error: {error}</p> // Показываем ошибку
+            <p>{error}</p>
           ) : filteredProducts.length > 0 ? (
             <>
               {currentItems.map((el) => (
@@ -58,7 +63,7 @@ const ProductSection = ({ searchQuery, productCondition }) => {
               />
             </>
           ) : (
-            <p>No products found. Please try a different search or check back later.</p> // Более подробное сообщение
+            <p>No products found.</p>
           )}
         </div>
       </div>

@@ -1,5 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { setSelectedMarka, setSelectedModel, setSelectedGeneration, setSelectedArticul, filterProducts, resetFilters } from '../../redux/productSlice/ProductSlice';
+import { fetchProducts, setSelectedMarka, setSelectedModel, setSelectedGeneration, setSelectedArticul, filterProducts, resetFilters } from '../../redux/productSlice/ProductSlice';
+
 
 
 import { useEffect, useState } from 'react';
@@ -10,9 +11,9 @@ export const SearchPopup = () => {
 	const dispatch = useDispatch();
 	const { filteredProducts, products, selectedMarka, selectedModel, selectedGeneration, loading, error } = useSelector(state => state.products);
 
-	// useEffect(() => {
-	// 	dispatch(fetchProducts());
-	// }, [dispatch]);
+	useEffect(() => {
+		dispatch(fetchProducts());
+	}, [dispatch]);
 
 	const handleSearch = () => {
 		dispatch(filterProducts());
@@ -33,29 +34,29 @@ export const SearchPopup = () => {
 		<div className={styles.search_form}>
 			<select className={styles.search_select} value={selectedMarka} onChange={(e) => dispatch(setSelectedMarka(e.target.value))}>
 				<option value="">Выберите марку</option>
-				{/* {
+				{
 					products.map(el => (
 						<option key={el.id} value={el.marka}>{el.marka}</option>
 					))
-				} */}
+				}
 			</select>
 
 			<select className={styles.search_select} value={selectedModel} onChange={(e) => dispatch(setSelectedModel(e.target.value))}>
 				<option value="">Выберите модель</option>
-				{/* {
+				{
 					products.map(el => (
 						<option key={el.id} value={el.model}>{el.model}</option>
 					))
-				} */}
+				}
 			</select>
 
 			<select className={styles.search_select} value={selectedGeneration} onChange={(e) => dispatch(setSelectedGeneration(e.target.value))}>
 				<option value="">Выберите поколение</option>
-				{/* {
+				{
 					products.map(el => (
 						<option key={el.id} value={el.generation}>{el.generation}</option>
 					))
-				} */}
+				}
 			</select>
 
 			<div>

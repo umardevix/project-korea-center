@@ -2,17 +2,17 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 // Асинхронный thunk для получения категорий
-// export const fetchCategories = createAsyncThunk(
-//     'categories/fetchCategories',
-//     async (_, { rejectWithValue }) => {
-//         try {
-//             const response = await axios.get('/products/categories/');
-//             return response.data; // Возвращаем полученные данные
-//         } catch (error) {
-//             return rejectWithValue(error.response?.data || error.message); // Обработка ошибок
-//         }
-//     }
-// );
+export const fetchCategories = createAsyncThunk(
+    'categories/fetchCategories',
+    async (_, { rejectWithValue }) => {
+        try {
+            const response = await axios.get('/products/categories/');
+            return response.data; // Возвращаем полученные данные
+        } catch (error) {
+            return rejectWithValue(error.response?.data || error.message); // Обработка ошибок
+        }
+    }
+);
 
 // Асинхронный thunk для добавления новой категории
 export const addCategory = createAsyncThunk(
@@ -45,17 +45,17 @@ const categorySlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            // .addCase(fetchCategories.pending, (state) => {
-            //     state.loading = true; // Устанавливаем состояние загрузки
-            // })
-            // .addCase(fetchCategories.fulfilled, (state, action) => {
-            //     state.loading = false; // Убираем состояние загрузки
-            //     state.categories = action.payload; // Обновляем категории
-            // })
-            // .addCase(fetchCategories.rejected, (state, action) => {
-            //     state.loading = false; // Убираем состояние загрузки
-            //     state.error = action.payload; // Устанавливаем ошибку
-            // })
+            .addCase(fetchCategories.pending, (state) => {
+                state.loading = true; // Устанавливаем состояние загрузки
+            })
+            .addCase(fetchCategories.fulfilled, (state, action) => {
+                state.loading = false; // Убираем состояние загрузки
+                state.categories = action.payload; // Обновляем категории
+            })
+            .addCase(fetchCategories.rejected, (state, action) => {
+                state.loading = false; // Убираем состояние загрузки
+                state.error = action.payload; // Устанавливаем ошибку
+            })
             .addCase(addCategory.pending, (state) => {
                 state.loading = true; // Устанавливаем состояние загрузки
             })
