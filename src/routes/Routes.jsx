@@ -26,77 +26,77 @@ export const router = createBrowserRouter([
     element: <App />,
     children: [
       { path: "/", element: <HomePage /> },
-      { path: "/about", element: <AboutPage /> },
-      { path: "/guarantee", element: <Guarantee /> },
-      { path: "/contact", element: <Contact /> },
-      { path: "/login", element: <LoginPage /> },
-      { path: "/register", element: <RegisterPage /> },
-      { path: "/productid", element: <ProductIdPage /> },
-      { path: "/basket", element: <BasketPage /> },
-      { path: "/makeanorder", element: <MakeAnOrder /> },
-      { path: "*", element: <NotFountPage /> },
-      { path: "/payment", element: <PaymentPage /> },
-      { path: "/otp", element: <OtpPage /> },
-      { path: "/forgot", element: <Forgot /> },
-      { path: "/forgot-code", element: <ForgotCode /> },
-      { path: "/new-password", element: <NewPassword /> },
+      // { path: "/about", element: <AboutPage /> },
+      // { path: "/guarantee", element: <Guarantee /> },
+      // { path: "/contact", element: <Contact /> },
+      // { path: "/login", element: <LoginPage /> },
+      // { path: "/register", element: <RegisterPage /> },
+      // { path: "/productid", element: <ProductIdPage /> },
+      // { path: "/basket", element: <BasketPage /> },
+      // { path: "/makeanorder", element: <MakeAnOrder /> },
+      // { path: "*", element: <NotFountPage /> },
+      // { path: "/payment", element: <PaymentPage /> },
+      // { path: "/otp", element: <OtpPage /> },
+      // { path: "/forgot", element: <Forgot /> },
+      // { path: "/forgot-code", element: <ForgotCode /> },
+      // { path: "/new-password", element: <NewPassword /> },
 
-      {
-        path: "/about",
-        element: <AboutPage />,
-      },
-      {
-        path: "/guarantee",
-        element: <Guarantee />,
-      },
-      {
-        path: "/contact",
-        element: <Contact />,
-      },
-      {
-        path: "/login",
-        element: <LoginPage />
-      },
-      {
-        path: "/register",
-        element: <RegisterPage />
-      },
-      {
-        path: "/productid",
-        element: <ProductIdPage />
-      },
-      {
-        path: "/basket",
-        element: <BasketPage />
-      },
-      {
-        path: "/makeanorder",
-        element: <MakeAnOrder />
-      },
-      {
-        path: "*",
-        element: <NotFountPage />
-      },
+      // {
+      //   path: "/about",
+      //   element: <AboutPage />,
+      // },
+      // {
+      //   path: "/guarantee",
+      //   element: <Guarantee />,
+      // },
+      // {
+      //   path: "/contact",
+      //   element: <Contact />,
+      // },
+      // {
+      //   path: "/login",
+      //   element: <LoginPage />
+      // },
+      // {
+      //   path: "/register",
+      //   element: <RegisterPage />
+      // },
+      // {
+      //   path: "/productid",
+      //   element: <ProductIdPage />
+      // },
+      // {
+      //   path: "/basket",
+      //   element: <BasketPage />
+      // },
+      // {
+      //   path: "/makeanorder",
+      //   element: <MakeAnOrder />
+      // },
+      // {
+      //   path: "*",
+      //   element: <NotFountPage />
+      // },
 
-      {
-        path: "/payment",
-        element: <PaymentPage />
-      },
-      {
-        path: "/opt",
-        element: <OtpPage />
-      },
+      // {
+      //   path: "/payment",
+      //   element: <PaymentPage />
+      // },
+      // {
+      //   path: "/opt",
+      //   element: <OtpPage />
+      // },
 
-      {
-        loader: productLoader,
-        path: "/product/:id",
-        element: <ProductIdPage isProduct={true} />
+      // {
+      //   loader: productLoader,
+      //   path: "/product/:id",
+      //   element: <ProductIdPage isProduct={true} />
 
-      },
-      {
-        path: "/prosmotr/:id",
-        element: <Prosmotr />
-      }
+      // },
+      // {
+      //   path: "/prosmotr/:id",
+      //   element: <Prosmotr />
+      // }
     ],
   }
 ]);
