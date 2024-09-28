@@ -1,12 +1,46 @@
-.category{
-	@apply w-full;
-	.category_block{
-		@apply mt-[86px];
-		>h2{
-			@apply text-[23px] sm:text-[28px] text-regal-black font-bold
-		}
-		>.category_item{
-			@apply  sm:grid items-center gap-5 mt-[42px] md:grid-cols-5 lg:grid-cols-7 md:gap-5 gap-5 ;
-		}
-	}
-}
+.category { 
+	@apply w-full flex justify-center; 
+  
+	.category_block { 
+	  @apply mt-[86px]; 
+  
+	  > h2 { 
+		@apply text-[23px] sm:text-[28px] text-regal-black font-bold text-center; 
+	  } 
+
+	  .carousel { 
+		@apply relative flex items-center justify-center mt-[42px]; 
+  
+		.carouselWrapper { 
+		  @apply overflow-hidden w-full max-w-[1250px]; // Ограничиваем максимальную ширину 
+		} 
+  
+		.carouselItems {  
+		  @apply flex transition-transform duration-300; // Плавный переход для слайдера 
+		  width: calc(100% + 12px); // Убедитесь, что ширина составляет 100% + отступы 
+		} 
+  
+		// .carouselItem { 
+		//   margin: 0 6px; // Уменьшенные отступы между карточками 
+		//   transition: opacity 0.3s ease-in-out; // Плавный переход прозрачности 
+		// } 
+  
+		.prevButton, 
+		.nextButton { 
+		  @apply absolute top-1/2 transform -translate-y-1/2 z-10 p-2 bg-gray-800 text-white rounded hover:bg-gray-700; 
+		  transition: background-color 0.3s, border-color 0.3s; 
+		  cursor: pointer; // Добавляем курсор для кнопок 
+		  width: 40px; // Ширина кнопок 
+		  height: 40px; // Высота кнопок 
+		} 
+  
+		.prevButton { 
+		  left: 10px; // Отступ от левого края 
+		} 
+  
+		.nextButton { 
+		  right: 10px; // Отступ от правого края 
+		} 
+	  } 
+	} 
+  }
