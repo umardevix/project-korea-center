@@ -2,22 +2,43 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 
-export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
-  const response = await axios.get('/products/product');
-  return response.data;
-});
+// export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
+//   const response = await axios.get('/products/product');
+//   return response.data;
+// });
+
 
 // Асинхронный thunk для удаления продукта
 export const deleteProduct = createAsyncThunk('products/deleteProduct', async (productId) => {
   await axios.delete(`/products/product/${productId}`);
-  return productId; // Возвращаем ID для удаления из состояния
+  return productId;
 });
+
 
 // Асинхронный thunk для добавления продукта
 export const addProduct = createAsyncThunk('products/addProduct', async (newProduct) => {
   const response = await axios.post('/products/product/', newProduct);
   return response.data; // Возвращаем добавленный продукт
 });
+
+
+export const fetchArticulData = (articul) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`/api/products?articul=${articul}`);
+      const data = await response.json();
+
+      dispatch({
+        type: 'FETCH_ARTICUL_RESULTS',
+        payload: data,
+      });
+    } catch (error) {
+      console.error('Ошибка при поиске артикула:', error);
+    }
+  };
+};
+
+
 
 const initialState = {
   products: [],
@@ -98,19 +119,19 @@ const productsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProducts.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchProducts.fulfilled, (state, action) => {
-        state.loading = false;
-        state.products = action.payload;
-        state.filteredProducts = action.payload;
-      })
-      .addCase(fetchProducts.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
-      })
+      // .addCase(fetchProducts.pending, (state) => {
+      //   state.loading = true;
+      //   state.error = null;
+      // })
+      // .addCase(fetchProducts.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.products = action.payload;
+      //   state.filteredProducts = action.payload;
+      // })
+      // .addCase(fetchProducts.rejected, (state, action) => {
+      //   state.loading = false;
+      //   state.error = action.error.message;
+      // })
       .addCase(deleteProduct.fulfilled, (state, action) => {
         state.products = state.products.filter(product => product.id !== action.payload);
         state.filteredProducts = state.filteredProducts.filter(product => product.id !== action.payload);
@@ -136,13 +157,9 @@ export const {
   setSelectedModel,
   setSelectedGeneration,
   setSelectedArticul,
-  setSelectedCategories, // Добавлено
+  setSelectedCategories,
   filterProducts,
   resetFilters,
 } = productsSlice.actions;
 
 export default productsSlice.reducer;
-
-
-
-
