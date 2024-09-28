@@ -7,8 +7,8 @@ const CategoryCard = ({ id, category, image }) => {
 	const dispatch = useDispatch();
 
 	const handleClick = () => {
-		dispatch(setSelectedCategories(id));  // Устанавливаем выбранную категорию по id
-		dispatch(filterProducts());           // Фильтруем продукты
+		dispatch(setSelectedCategories(id));  
+		dispatch(filterProducts());          
 	};
 
 	return (
