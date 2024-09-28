@@ -5,26 +5,22 @@ import Contact from "../pages/contact/Contact";
 import Guarantee from "../pages/guarantee/Guarantee";
 import HomePage from "../pages/homePage/HomePage";
 import LoginPage from "../pages/loginPage/LoginPage";
-import RegisterPage from "../pages/registerPage/RegisterPage";
 import ProductIdPage, { productLoader } from "../pages/productIdPage/ProductIdPage";
+import RegisterPage from "../pages/registerPage/RegisterPage";
 
+import Prosmotr from "../admin/components/prosmotr/Prosmotr";
 import BasketPage from "../pages/basketPage/BasketPage";
+import Forgot from "../pages/forgot/Forgot";
+import ForgotCode from "../pages/forgotCode/ForgotCode";
 import MakeAnOrder from "../pages/makeAnOrder/MakeAnOrder";
+import NewPassword from "../pages/newPassword/NewPassword";
 import NotFountPage from "../pages/notFountPage/NotFountPage";
 import OtpPage from "../pages/otpPage/OtpPage";
 import PaymentPage from "../pages/paymentPage/PaymentPage";
-import { adminRouter } from "./AdminRouter";
-import Forgot from "../pages/forgot/Forgot";
-import ForgotCode from "../pages/forgotCode/ForgotCode";
-import NewPassword from "../pages/newPassword/NewPassword";
-import AdminPage from "../admin/AdminPage";
-import PrivateRoute from "../authContext/PrivateRouter";
-import Prosmotr from "../admin/components/prosmotr/Prosmotr";
-import { Dashboard } from "../admin/pages/dashboardPage/Dashboard";
 
 
 export const router = createBrowserRouter([
-  ...adminRouter,
+  // ...adminRouter,
   {
     path: "/",
     element: <App />,
