@@ -2,10 +2,10 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 
-export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
-  const response = await axios.get('/products/product');
-  return response.data;
-});
+// export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
+//   const response = await axios.get('/products/product');
+//   return response.data;
+// });
 
 
 // Асинхронный thunk для удаления продукта
@@ -119,19 +119,19 @@ const productsSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProducts.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(fetchProducts.fulfilled, (state, action) => {
-        state.loading = false;
-        state.products = action.payload;
-        state.filteredProducts = action.payload;
-      })
-      .addCase(fetchProducts.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.error.message;
-      })
+      // .addCase(fetchProducts.pending, (state) => {
+      //   state.loading = true;
+      //   state.error = null;
+      // })
+      // .addCase(fetchProducts.fulfilled, (state, action) => {
+      //   state.loading = false;
+      //   state.products = action.payload;
+      //   state.filteredProducts = action.payload;
+      // })
+      // .addCase(fetchProducts.rejected, (state, action) => {
+      //   state.loading = false;
+      //   state.error = action.error.message;
+      // })
       .addCase(deleteProduct.fulfilled, (state, action) => {
         state.products = state.products.filter(product => product.id !== action.payload);
         state.filteredProducts = state.filteredProducts.filter(product => product.id !== action.payload);
@@ -157,7 +157,7 @@ export const {
   setSelectedModel,
   setSelectedGeneration,
   setSelectedArticul,
-  setSelectedCategories, 
+  setSelectedCategories,
   filterProducts,
   resetFilters,
 } = productsSlice.actions;

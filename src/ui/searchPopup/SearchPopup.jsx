@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts, setSelectedMarka, setSelectedModel, setSelectedGeneration, setSelectedArticul, filterProducts, resetFilters } from '../../redux/productSlice/ProductSlice';
+import { setSelectedMarka, setSelectedModel, setSelectedGeneration, setSelectedArticul, filterProducts, resetFilters } from '../../redux/productSlice/ProductSlice';
 
 
 import { useEffect, useState } from 'react';
@@ -10,9 +10,9 @@ export const SearchPopup = () => {
 	const dispatch = useDispatch();
 	const { filteredProducts, products, selectedMarka, selectedModel, selectedGeneration, loading, error } = useSelector(state => state.products);
 
-	useEffect(() => {
-		dispatch(fetchProducts());
-	}, [dispatch]);
+	// useEffect(() => {
+	// 	dispatch(fetchProducts());
+	// }, [dispatch]);
 
 	const handleSearch = () => {
 		dispatch(filterProducts());
@@ -21,7 +21,7 @@ export const SearchPopup = () => {
 	const handleReset = () => {
 		dispatch(resetFilters());
 	};
-	
+
 
 
 	if (loading) return <p>Загрузка...</p>;
@@ -67,12 +67,12 @@ export const SearchPopup = () => {
 							<input
 								placeholder='Год, c'
 								type="number"
-								
+
 							/>
 							<input
 								placeholder='Год, по'
 								type="number"
-							
+
 							/>
 						</div>
 						<input onChange={(e) => dispatch(setSelectedArticul(e.target.value))} placeholder='Артикул' type="text" />
