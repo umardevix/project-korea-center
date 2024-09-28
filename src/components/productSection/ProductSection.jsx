@@ -1,7 +1,6 @@
-
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchProducts, setSearchQuery, setProductCondition } from '../../redux/productSlice/ProductSlice'; // Проверяем импорт
+import { setSearchQuery, setProductCondition } from '../../redux/productSlice/ProductSlice';
 import styles from './_product.module.scss';
 import Pagination from '../pagination/Pogination';
 import Card from '../card/Card';
@@ -18,14 +17,14 @@ const ProductSection = ({ searchQuery, productCondition }) => {
   const [itemsPerPage] = React.useState(3);
 
   // Загружаем продукты при монтировании компонента
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, []);
+  // useEffect(() => {
+  //   dispatch(fetchProducts());
+  // }, [dispatch]);
 
   // Обновляем поисковый запрос и условие продукта
   useEffect(() => {
-    dispatch(setSearchQuery(searchQuery)); // Устанавливаем поисковый запрос
-    dispatch(setProductCondition(productCondition)); // Устанавливаем состояние продукта (новый/б/у)
+    dispatch(setSearchQuery(searchQuery));
+    dispatch(setProductCondition(productCondition));
   }, [dispatch, searchQuery, productCondition]);
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -38,10 +37,6 @@ const ProductSection = ({ searchQuery, productCondition }) => {
     }
   };
 
-  useEffect(() => {
-    dispatch(fetchProducts())
-  }, [dispatch])
-
   return (
     <section className={styles.product}>
       <div className="container">
@@ -49,7 +44,7 @@ const ProductSection = ({ searchQuery, productCondition }) => {
           {loading ? (
             <p>Loading...</p>
           ) : error ? (
-            <p>{error}</p>
+            <p>Error: {error}</p> // Показываем ошибку
           ) : filteredProducts.length > 0 ? (
             <>
               {currentItems.map((el) => (
@@ -63,7 +58,7 @@ const ProductSection = ({ searchQuery, productCondition }) => {
               />
             </>
           ) : (
-            <p>No products found.</p>
+            <p>No products found. Please try a different search or check back later.</p> // Более подробное сообщение
           )}
         </div>
       </div>

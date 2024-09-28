@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import styles from "./_category.module.scss";
 import CategoryCard from "../categoryCard/CategoryCard";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchCategories } from "../../redux/categoryProduct/categorySlice";
+// import { fetchCategories } from "../../redux/categoryProduct/categorySlice";
 
 const Category = () => {
   const { categories } = useSelector((state) => state.categories);

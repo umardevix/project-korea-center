@@ -18,6 +18,10 @@ function Footer() {
               <h3>Способы оплаты:</h3>
               <li>
                 <img src="/assets/svg/radio.svg" alt="" />
+                Наличнии
+              </li>
+              <li>
+                <img src="/assets/svg/radio.svg" alt="" />
                 Мбанк
               </li>
               <li>
