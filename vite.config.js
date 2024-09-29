@@ -18,6 +18,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/account/, '/account'), // Исправлено
       },
+      '/basket': {
+        target: 'http://130.211.125.242',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/basket/, '/basket'), // Исправлено
+      },
     },
   },
 });

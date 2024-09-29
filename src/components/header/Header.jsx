@@ -18,7 +18,7 @@ function Header() {
     const fetchBasket = async () => {
       try {
         const token = localStorage.getItem('accessToken');
-        const response = await axios.get("http://130.211.125.242/basket/", {
+        const response = await axios.get("/basket/", {
           headers: {
             Authorization: `Bearer ${token}`,
           },

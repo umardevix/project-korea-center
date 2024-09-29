@@ -24,7 +24,7 @@ const BasketPage = () => {
         return;
       }
   
-      const res = await axios.get("http://130.211.125.242/basket/", {
+      const res = await axios.get("/basket/", {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -62,7 +62,7 @@ const BasketPage = () => {
     try {
       const accessToken = localStorage.getItem('accessToken');
       dispatch(removeItemFromBasket(productId));
-      await axios.delete(`http://130.211.125.242/basket/item/${productId}/`, {
+      await axios.delete(`/basket/item/${productId}/`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }

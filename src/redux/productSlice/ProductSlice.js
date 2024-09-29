@@ -33,7 +33,7 @@ export const addProduct = createAsyncThunk('products/addProduct', async (newProd
 export const addToBasket = createAsyncThunk(
   'basket/addToBasket',
   async ({ productData }) => {
-    const response = await axios.post("http://130.211.125.242/basket/", productData, {
+    const response = await axios.post("/basket/", productData, {
       headers: {
         Authorization: `Bearer ${getAccessToken()}`,
       },
@@ -51,7 +51,7 @@ export const deleteBasketItem = createAsyncThunk(
     }
 
     try {
-      const response = await axios.delete(`http://130.211.125.242/basket/item/${productId}`, {
+      const response = await axios.delete(`/basket/item/${productId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
