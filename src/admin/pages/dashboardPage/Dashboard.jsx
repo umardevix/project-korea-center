@@ -1,11 +1,23 @@
 import React, { useState } from 'react';
 import styles from './_dashboard.module.scss';
-import { Link } from 'react-router-dom';
+import { Link,Navigate } from 'react-router-dom';
+import { useSelector } from 'react-redux'; // Импортируем useSelector
 import ProductSection from '../../../components/productSection/ProductSection';
 
 export const Dashboard = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [productCondition, setProductCondition] = useState('all'); // Single value for product condition
+
+
+  const user = useSelector((state) => state.user.user); // Получаем пользователя из Redux
+  const isAdmin = user?.role === 'admin'; // Проверяем, является ли пользователь администратором
+  
+  // Если пользователь не администратор, перенаправляем на страницу 404
+  if (!isAdmin) {
+    return <Navigate to="/not-found" />;
+  }
+  
+
 
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);

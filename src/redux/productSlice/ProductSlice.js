@@ -2,6 +2,14 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 
+const getAccessToken = () => {
+  const token = localStorage.getItem('accessToken');
+  if (!token) {
+    console.error('Token is missing');
+  }
+  return token;
+};
+
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
   const response = await axios.get('/products/product');
   return response.data;
@@ -20,6 +28,43 @@ export const addProduct = createAsyncThunk('products/addProduct', async (newProd
   const response = await axios.post('/products/product/', newProduct);
   return response.data; // Возвращаем добавленный продукт
 });
+
+
+export const addToBasket = createAsyncThunk(
+  'basket/addToBasket',
+  async ({ productData }) => {
+    const response = await axios.post("http://130.211.125.242/basket/", productData, {
+      headers: {
+        Authorization: `Bearer ${getAccessToken()}`,
+      },
+    });
+    return response.data;
+  }
+);
+
+export const deleteBasketItem = createAsyncThunk(
+  'basket/deleteItem',
+  async (productId, { rejectWithValue }) => {
+    const token = getAccessToken(); // Get token from localStorage
+    if (!token) {
+      return rejectWithValue({ error: "Token is missing" });
+    }
+
+    try {
+      const response = await axios.delete(`http://130.211.125.242/basket/item/${productId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return productId; // Return only productId
+    } catch (error) {
+      return rejectWithValue(error.response?.data || { error: "An error occurred" });
+    }
+  }
+);
+
+
 
 
 export const fetchArticulData = (articul) => {
@@ -42,6 +87,12 @@ export const fetchArticulData = (articul) => {
 
 const initialState = {
   products: [],
+  basket: {
+    items: [],
+    total_items_count: 0,
+  },
+  token: null,
+  basketItems: [],
   filteredProducts: [],
   selectedMarka: '',
   selectedModel: '',
@@ -63,6 +114,14 @@ const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
+    setBasket: (state, action) => {
+      const { items, total_items_count } = action.payload;
+      state.basket.items = items || [];
+      state.basket.total_items_count = total_items_count || 0;
+    },
+    setToken(state, action) {
+      state.token = action.payload; // Установите токен при аутентификации
+    },
     setSelectedCategories(state, action) {
       state.selectedCategories = action.payload;
     },
@@ -146,8 +205,27 @@ const productsSlice = createSlice({
       .addCase(addProduct.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
-      });
-  },
+      })
+      .addCase(addToBasket.fulfilled, (state, action) => {
+        state.basket.items.push(action.payload); // Добавляем продукт в массив items
+        state.basket.total_items_count += 1; // Увеличиваем счетчик элементов в корзине
+      })
+      
+      
+      .addCase(addToBasket.rejected, (state, action) => {
+        console.error("Ошибка добавления в корзину:", action.error);
+        state.loading = false; // Завершение загрузки при ошибке
+      })
+    .addCase(deleteBasketItem.fulfilled, (state, action) => {
+      // Логика для обновления состояния после успешного удаления
+      state.basket = state.basket.filter(item => item.product !== action.payload); // Удаление по productId
+    })
+    .addCase(deleteBasketItem.rejected, (state, action) => {
+      // Логика для обработки ошибки
+      console.error(action.payload);
+    });
+
+},
 });
 
 export const {
@@ -159,6 +237,7 @@ export const {
   setSelectedArticul,
   setSelectedCategories,
   filterProducts,
+  setBasket,
   resetFilters,
 } = productsSlice.actions;
 
