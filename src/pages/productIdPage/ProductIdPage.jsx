@@ -50,4 +50,3 @@ const productLoader = async ({ params }) => {
 }
 
 export { ProductIdPage as default, productLoader }
-
