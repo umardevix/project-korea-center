@@ -20,6 +20,7 @@ import NewPassword from "../pages/newPassword/NewPassword";
 import AdminPage from "../admin/AdminPage";  
 import PrivateRoute from "../authContext/PrivateRouter";  
 import Prosmotr from "../admin/components/prosmotr/Prosmotr";
+import ProfilePage from "../pages/profile/ProfilePage";
 
 
 export const router = createBrowserRouter([
@@ -34,7 +35,6 @@ export const router = createBrowserRouter([
       { path: "/contact", element: <Contact /> },
       { path: "/login", element: <LoginPage /> },
       { path: "/register", element: <RegisterPage /> },
-      { path: "/productid", element: <ProductIdPage /> },
       { path: "/basket", element: <BasketPage /> },
       { path: "/makeanorder", element: <MakeAnOrder /> },
       { path: "*", element: <NotFountPage /> },
@@ -43,6 +43,10 @@ export const router = createBrowserRouter([
       { path: "/forgot", element: <Forgot /> },
       { path: "/forgot-code", element: <ForgotCode /> },
       { path: "/new-password", element: <NewPassword /> },
+      {
+        path: "/profile",
+        element: <PrivateRoute element={<ProfilePage />} /> // Используем PrivateRoute для профиля
+      },
       {
         path: "/admin",
         element: <PrivateRoute element={<AdminPage />} adminOnly={true} />
@@ -68,12 +72,9 @@ export const router = createBrowserRouter([
         path: "/register",
         element: <RegisterPage />
       },
+
       {
-        path: "/productid",
-        element: <ProductIdPage />
-      },
-      {
-        path: "/basket",
+        path: "/basket-page",
         element: <BasketPage />
       },
       {
