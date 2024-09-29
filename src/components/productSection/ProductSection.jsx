@@ -38,6 +38,8 @@ const ProductSection = ({ searchQuery, productCondition }) => {
     }
   };
 
+  console.log(filteredProducts)
+
   useEffect(() => {
     dispatch(fetchProducts())
   }, [dispatch])

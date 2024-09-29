@@ -1,5 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts, setSelectedMarka, setSelectedModel, setSelectedGeneration, setSelectedArticul, filterProducts, resetFilters } from '../../redux/productSlice/ProductSlice';
+
+
+
 import { useEffect, useState } from 'react';
 import styles from './_search_popup.module.scss';
 
@@ -19,6 +22,10 @@ export const SearchPopup = () => {
 	const handleReset = () => {
 		dispatch(resetFilters());
 	};
+
+
+
+
 
 	if (loading) return <p>Загрузка...</p>;
 	if (error) return <p>Ошибка: {error}</p>;
@@ -60,8 +67,16 @@ export const SearchPopup = () => {
 				{
 					popup && <div className={styles.search_input_item}>
 						<div>
-							<input placeholder='Год, c' type="number" />
-							<input placeholder='Год, по' type="number" />
+							<input
+								placeholder='Год, c'
+								type="number"
+
+							/>
+							<input
+								placeholder='Год, по'
+								type="number"
+
+							/>
 						</div>
 						<input onChange={(e) => dispatch(setSelectedArticul(e.target.value))} placeholder='Артикул' type="text" />
 					</div>

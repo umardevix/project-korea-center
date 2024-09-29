@@ -5,11 +5,15 @@ import Contact from "../pages/contact/Contact";
 import Guarantee from "../pages/guarantee/Guarantee";
 import HomePage from "../pages/homePage/HomePage";
 import LoginPage from "../pages/loginPage/LoginPage";
-import RegisterPage from "../pages/registerPage/RegisterPage";
 import ProductIdPage, { productLoader } from "../pages/productIdPage/ProductIdPage";
+import RegisterPage from "../pages/registerPage/RegisterPage";
 
+import Prosmotr from "../admin/components/prosmotr/Prosmotr";
 import BasketPage from "../pages/basketPage/BasketPage";
+import Forgot from "../pages/forgot/Forgot";
+import ForgotCode from "../pages/forgotCode/ForgotCode";
 import MakeAnOrder from "../pages/makeAnOrder/MakeAnOrder";
+import NewPassword from "../pages/newPassword/NewPassword";
 import NotFountPage from "../pages/notFountPage/NotFountPage";
 import OtpPage from "../pages/otpPage/OtpPage";
 import PaymentPage from "../pages/paymentPage/PaymentPage";
@@ -21,6 +25,7 @@ import AdminPage from "../admin/AdminPage";
 import PrivateRoute from "../authContext/PrivateRouter";  
 import Prosmotr from "../admin/components/prosmotr/Prosmotr";
 import ProfilePage from "../pages/profile/ProfilePage";
+
 
 
 export const router = createBrowserRouter([
@@ -43,6 +48,7 @@ export const router = createBrowserRouter([
       { path: "/forgot", element: <Forgot /> },
       { path: "/forgot-code", element: <ForgotCode /> },
       { path: "/new-password", element: <NewPassword /> },
+
       {
         path: "/profile",
         element: <PrivateRoute element={<ProfilePage />} /> // Используем PrivateRoute для профиля
@@ -51,6 +57,7 @@ export const router = createBrowserRouter([
         path: "/admin",
         element: <PrivateRoute element={<AdminPage />} adminOnly={true} />
       },
+
 
       {
         path: "/about",
@@ -85,19 +92,21 @@ export const router = createBrowserRouter([
         path: "*",
         element: <NotFountPage />
       },
-                                          
-      {path:"/payment",
-       element:<PaymentPage/>
+
+      {
+        path: "/payment",
+        element: <PaymentPage />
       },
-      {path:"/opt",
-        element:<OtpPage/>
+      {
+        path: "/opt",
+        element: <OtpPage />
       },
 
       {
         loader: productLoader,
         path: "/product/:id",
         element: <ProductIdPage isProduct={true} />
-        
+
       },
       {
         path: "/prosmotr/:id",

@@ -9,7 +9,6 @@ import ProductSection from '../../components/productSection/ProductSection'
 function HomePage() {
   return (
     <div>
-
       <FirstSection />
       <Category />
       <ProductSection />

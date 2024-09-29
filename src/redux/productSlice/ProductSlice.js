@@ -29,6 +29,7 @@ export const addProduct = createAsyncThunk('products/addProduct', async (newProd
   return response.data; // Возвращаем добавленный продукт
 });
 
+
 export const addToBasket = createAsyncThunk(
   'basket/addToBasket',
   async ({ productData }) => {

@@ -8,7 +8,7 @@
 		@apply w-full flex gap-5;
 
 		>.card_img{
-			@apply w-[184px] h-[140px] sm:w-[283px] sm:h-[206px] md:h-[206px] md:w-[387px]  lg:w-[387px] lg:h-full bg-regal-white rounded-2xl shadow-sm   ;
+			@apply w-[184px] h-[140px] sm:w-[283px] sm:h-[206px] md:h-[206px] md:w-[387px]  lg:w-[387px] lg:h-full bg-regal-white rounded-2xl shadow-sm  ;
 	
 			>img{
 				@apply w-[184px] h-[140px] sm:w-[283px] sm:h-[206px] md:h-[206px] md:w-[387px] object-center md:object-fill rounded-2xl;
