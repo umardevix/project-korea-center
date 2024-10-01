@@ -1,32 +1,56 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./_category.module.scss";
 import CategoryCard from "../categoryCard/CategoryCard";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCategories } from "../../redux/categoryProduct/categorySlice";
 
 const Category = () => {
+  const isRef = useRef(null);
   const { categories } = useSelector((state) => state.categories);
   const dispatch = useDispatch();
-  
+
   const [currentIndex, setCurrentIndex] = useState(0); // Индекс текущей карточки
-  
-  const itemsToShow = 4; // Количество видимых карточек
-  
+  const [itemsToShow, setItemsToShow] = useState(4); // Количество видимых карточек
+  const [canScrollNext, setCanScrollNext] = useState(true); // Возможность скролла вправо
+
   useEffect(() => {
     dispatch(fetchCategories());
   }, [dispatch]);
 
+  useEffect(() => {
+    // Обновляем количество видимых карточек в зависимости от ширины экрана
+    const handleResize = () => {
+      if (isRef.current) {
+        const containerWidth = isRef.current.clientWidth;
+        const itemWidth = isRef.current.scrollWidth / categories.length;
+        const visibleItems = Math.floor(containerWidth / itemWidth);
+        setItemsToShow(visibleItems > 0 ? visibleItems : 1);
+      }
+    };
+
+    handleResize(); // Устанавливаем начальное значение
+    window.addEventListener("resize", handleResize); // Обновляем при изменении размера окна
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, [categories]);
+
+  useEffect(() => {
+    if (isRef.current) {
+      // Проверяем, можем ли еще скроллить вправо
+      const maxIndex = Math.max(0, categories.length - itemsToShow);
+      setCanScrollNext(currentIndex < maxIndex);
+    }
+  }, [currentIndex, itemsToShow, categories]);
+
   const handleNext = () => {
-    // Проверяем, не достигли ли мы последней видимой группы карточек
-    if (currentIndex < categories.length - itemsToShow) {
-      setCurrentIndex((prevIndex) => prevIndex + 1); // Переход к следующей карточке
+    if (canScrollNext) {
+      setCurrentIndex((prevIndex) => prevIndex + 1);
     }
   };
 
   const handlePrev = () => {
-    // Проверяем, не находимся ли мы на первой карточке
     if (currentIndex > 0) {
-      setCurrentIndex((prevIndex) => prevIndex - 1); // Переход к предыдущей карточке
+      setCurrentIndex((prevIndex) => prevIndex - 1);
     }
   };
 
@@ -38,19 +62,20 @@ const Category = () => {
 
           <div className={styles.carousel}>
             <button
-              className={`${styles.prevButton}`} // Исправлено
+              className={`${styles.prevButton}`}
               onClick={handlePrev}
-              disabled={currentIndex === 0} // Отключаем кнопку, если находимся на первой карточке
+              disabled={currentIndex === 0}
             >
               &lt;
             </button>
             <div className={styles.carouselWrapper}>
               <div
+                ref={isRef}
                 className={styles.carouselItems}
                 style={{
                   display: 'flex',
-                  transition: "transform 0.5s ease-in-out", // Плавный переход
-                  transform: `translateX(-${currentIndex * (100/ itemsToShow)}%)`, // Исправлено
+                  transition: "transform 0.5s ease-in-out",
+                  transform: `translateX(-${currentIndex * (100 / itemsToShow)}%)`,
                 }}
               >
                 {categories.map((el, index) => (
@@ -58,9 +83,7 @@ const Category = () => {
                     className={styles.carouselItem}
                     key={index}
                     style={{
-                      flex: `0 0 calc(100% / ${itemsToShow} - 12px)`, // Количество видимых карточек, исправлено
-                      margin: "0 6px", // Отступы между карточками 
-                      paddingLeft:"70px"
+                      flex: `0 0 calc(100% / ${itemsToShow} - 12px)`
                     }}
                   >
                     <CategoryCard {...el} />
@@ -70,9 +93,9 @@ const Category = () => {
             </div>
 
             <button
-              className={`${styles.nextButton}`} // Исправлено
+              className={`${styles.nextButton}`}
               onClick={handleNext}
-              disabled={currentIndex >= categories.length - itemsToShow} // Отключаем кнопку, если находимся на последней группе карточек
+              disabled={!canScrollNext}
             >
               &gt;
             </button>
