@@ -6,28 +6,28 @@ export default {
   ],
   theme: {
     extend: {
-      colors:{
-        'regal-black':'#000000',
-        'regal-text-black':'#212529',
-        'regal-red':'#E11E24',
-        'regal-grey':'#6C757D',
-        'regal-green':'#55BB00',
-        'regal-opacity':'#595959',
-        'regal-placeholder':'#999999',
-        'regal-white':'#FFFFFF',
-        'regal-global-gray':'#9D9D9D',
-        'bg-blue':'#3E6AE1',
-        'bg-green':'#55BB00',
-        'border-pogination':'#595959',
-        'border-pogination-hover':'#DEE2E6',
-        'regal-pogination':'#ACACAC',
-        'bg-body':'#F6F3F4',
-        'regal-border':'#A1A1A1',
-        'regal-span-opacity':'#00000080',
-        'regal-fixed':'#00000080',
-        'bg-fiexed':'#00000080'
+      colors: {
+        'regal-black': '#000000',
+        'regal-text-black': '#212529',
+        'regal-red': '#E11E24',
+        'regal-grey': '#6C757D',
+        'regal-green': '#55BB00',
+        'regal-opacity': '#595959',
+        'regal-placeholder': '#999999',
+        'regal-white': '#FFFFFF',
+        'regal-global-gray': '#9D9D9D',
+        'bg-blue': '#3E6AE1',
+        'bg-green': '#55BB00',
+        'border-pogination': '#595959',
+        'border-pogination-hover': '#DEE2E6',
+        'regal-pogination': '#ACACAC',
+        'bg-body': '#F6F3F4',
+        'regal-border': '#A1A1A1',
+        'regal-span-opacity': '#00000080',
+        'regal-fixed': '#00000080',
+        'bg-fiexed': '#00000080'
 
-      },  
+      },
 
       fontFamily: {
         roboto: ['Roboto', 'sans-serif'],
@@ -50,10 +50,13 @@ export default {
       },
       boxShadow: {
         'custom1': '0 0 25px 5px #3E6AE1',
-        'red-shadow':'0px 0px 25px 5px #E11E2440'
+        'red-shadow': '0px 0px 25px 5px #E11E2440'
       }
     },
   },
-  plugins: [],
+  plugins: [
+    require('tailwind-scrollbar-hide')
+    // ...
+  ]
 }
 

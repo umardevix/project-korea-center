@@ -61,19 +61,18 @@ const Category = () => {
           <h2>Запчасти и аксессуары для вашего автомобиля</h2>
 
           <div className={styles.carousel}>
-            <button
+            {/* <button
               className={`${styles.prevButton}`}
               onClick={handlePrev}
               disabled={currentIndex === 0}
             >
               &lt;
-            </button>
+            </button> */}
             <div className={styles.carouselWrapper}>
               <div
                 ref={isRef}
                 className={styles.carouselItems}
                 style={{
-                  display: 'flex',
                   transition: "transform 0.5s ease-in-out",
                   transform: `translateX(-${currentIndex * (100 / itemsToShow)}%)`,
                 }}
@@ -82,23 +81,24 @@ const Category = () => {
                   <div
                     className={styles.carouselItem}
                     key={index}
-                    style={{
-                      flex: `0 0 calc(100% / ${itemsToShow} - 12px)`
-                    }}
                   >
+                    <CategoryCard {...el} />
+                    <CategoryCard {...el} />
+                    <CategoryCard {...el} />
                     <CategoryCard {...el} />
                   </div>
                 ))}
+
               </div>
             </div>
 
-            <button
+            {/* <button
               className={`${styles.nextButton}`}
               onClick={handleNext}
               disabled={!canScrollNext}
             >
               &gt;
-            </button>
+            </button> */}
           </div>
         </div>
       </div>

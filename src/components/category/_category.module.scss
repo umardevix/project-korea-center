@@ -9,29 +9,22 @@
 	  } 
 
 	  .carousel { 
-		@apply relative flex items-center justify-center mt-[42px] ; 
-  
-		.carouselWrapper { 
-		  @apply overflow-scroll w-full max-w-[1250px]; // Ограничиваем максимальную ширину 
-		} 
-  
-		.carouselItems {  
-		  @apply flex transition-transform duration-300 gap-[20px]  justify-between; // Плавный переход для слайдера 
-		  width: calc(100% + 12px); // Убедитесь, что ширина составляет 100% + отступы 
-		} 
-		.carouselItem { 
-		
-		  transition: opacity 0.3s ease-in-out; // Плавный переход прозрачности 
-		
-		  @apply  w-36 h-40  sm:mt-0 sm:max-w-[377px] md:w-full md:max-w-[220px] md:h-[339px];
-		} 
+		@apply flex justify-start mt-[42px] overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide  ; 
+
+		.carouselWrapper{
+			@apply w-full h-full;
+
+			.carouselItems {  
+				@apply flex gap-[20px] mt-3 ; // Плавный переход для слайдера 
+
+				.carouselItem{
+					@apply flex gap-[20px]
+				}
+			} 
+		}
 		.prevButton, 
 		.nextButton { 
 		  @apply absolute top-1/2 transform -translate-y-1/2 z-10 p-2 bg-gray-800 text-white rounded hover:bg-gray-700; 
-		  transition: background-color 0.3s, border-color 0.3s; 
-		  cursor: pointer; // Добавляем курсор для кнопок 
-		  width: 40px; // Ширина кнопок 
-		  height: 40px; // Высота кнопок 
 		} 
   
 		.prevButton { 

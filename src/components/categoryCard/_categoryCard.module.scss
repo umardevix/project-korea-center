@@ -1,10 +1,10 @@
 .category_card{
-	@apply w-full h-full relative bg-regal-white flex  items-center justify-center rounded-2xl shadow-md cursor-pointer  p-0;
+	@apply w-[285px] h-full relative bg-regal-white flex  items-center justify-center rounded-2xl shadow-md cursor-pointer  p-0;
 	
 	>.category_img{
 		@apply flex flex-col items-center justify-center;
 		>img{
-			@apply h-24 pb-8;
+			@apply rounded-2xl pb-8;
 		}
 	}
 
