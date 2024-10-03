@@ -2,7 +2,7 @@
 	@apply w-full flex justify-center; 
   
 	.category_block { 
-	  @apply mt-[86px] border border-regal-red; 
+	  @apply mt-[86px]; 
   
 	  > h2 { 
 		@apply text-[23px] sm:text-[28px] text-regal-black font-bold text-center; 
@@ -16,13 +16,12 @@
 		} 
   
 		.carouselItems {  
-		  @apply flex transition-transform duration-300 gap-[20px] border border-regal-red justify-between; // Плавный переход для слайдера 
+		  @apply flex transition-transform duration-300 gap-[20px]  justify-between; // Плавный переход для слайдера 
 		  width: calc(100% + 12px); // Убедитесь, что ширина составляет 100% + отступы 
 		} 
 		.carouselItem { 
 		
 		  transition: opacity 0.3s ease-in-out; // Плавный переход прозрачности 
-		  border: 1px solid black;
 		
 		  @apply  w-36 h-40  sm:mt-0 sm:max-w-[377px] md:w-full md:max-w-[220px] md:h-[339px];
 		} 
