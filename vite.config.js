@@ -8,18 +8,17 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/products': {
-        target: 'http://localhost:8000',
+        target: 'http://koreacenter.kg/api',
         changeOrigin: true,
-
-        rewrite: (path) => path.replace(/^\/products/, '/products'), // Исправлено
+        rewrite: (path) => path.replace(/^\/products/, '/products'), // Исправлено для использования '/products'
       },
       '/account': {
-        target: 'http://localhost:8000',
+        target: 'http://koreacenter.kg/api',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/account/, '/account'), // Исправлено
       },
       '/basket': {
-        target: 'http://localhost:8000',
+        target: 'http://koreacenter.kg/api',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/basket/, '/basket'), // Исправлено
       },

@@ -25,7 +25,7 @@ export const addCategory = createAsyncThunk(
                 formData.append('image', categoryData.image); // Изображение, если есть
             }
 
-            const response = await axios.post('/products/categories/', formData, {
+            const response = await axios.post('products/categories/', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
             return response.data; // Возвращаем созданную категорию

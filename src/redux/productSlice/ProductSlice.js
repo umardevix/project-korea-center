@@ -210,22 +210,22 @@ const productsSlice = createSlice({
         state.basket.items.push(action.payload); // Добавляем продукт в массив items
         state.basket.total_items_count += 1; // Увеличиваем счетчик элементов в корзине
       })
-      
-      
+
+
       .addCase(addToBasket.rejected, (state, action) => {
         console.error("Ошибка добавления в корзину:", action.error);
         state.loading = false; // Завершение загрузки при ошибке
       })
-    .addCase(deleteBasketItem.fulfilled, (state, action) => {
-      // Логика для обновления состояния после успешного удаления
-      state.basket = state.basket.filter(item => item.product !== action.payload); // Удаление по productId
-    })
-    .addCase(deleteBasketItem.rejected, (state, action) => {
-      // Логика для обработки ошибки
-      console.error(action.payload);
-    });
+      .addCase(deleteBasketItem.fulfilled, (state, action) => {
+        // Логика для обновления состояния после успешного удаления
+        state.basket = state.basket.filter(item => item.product !== action.payload); // Удаление по productId
+      })
+      .addCase(deleteBasketItem.rejected, (state, action) => {
+        // Логика для обработки ошибки
+        console.error(action.payload);
+      });
 
-},
+  },
 });
 
 export const {
