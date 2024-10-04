@@ -14,6 +14,16 @@ const BasketPage = () => {
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
 
+  useEffect(() => {
+    if (!user) {
+      // Если пользователь не авторизован, перенаправляем на страницу входа
+      navigate('/login');
+    } else {
+      // Если пользователь есть, загружаем корзину
+      getBasket();
+    }
+  }, [user, navigate]);
+
   const getBasket = async () => {
     setLoading(true); // Start loading
     try {
@@ -21,9 +31,9 @@ const BasketPage = () => {
 
       if (!accessToken) {
         alert('Вы не авторизованы. Пожалуйста, войдите в систему.');
+        navigate('/login')
         return;
       }
-
       const res = await axios.get("/api/basket", {
         headers: {
           Authorization: `Bearer ${accessToken}`
@@ -83,10 +93,6 @@ const BasketPage = () => {
     event.preventDefault();
     navigate("/payment");
   };
-
-  if (loading) {
-    return <div>Загрузка...</div>; // Add loading state
-  }
 
   return (
     <section className={styles.basket}>
@@ -178,7 +184,7 @@ const BasketPage = () => {
           </div>
         </div>
       ) : (
-        <h2>Пожалуйста, войдите в систему, чтобы увидеть свою корзину.</h2>
+        navigate('/login')
       )}
     </section>
   );
