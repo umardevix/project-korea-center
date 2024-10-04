@@ -121,55 +121,59 @@ const BasketPage = () => {
                 )}
               </div>
 
-              <form onSubmit={handleSubmit}>
-                <h2 className={styles.title}>
-                  Для оформления заказа заполните необходимые поля
-                </h2>
-                <div className={styles.field}>
-                  <label className={styles.label}>Страна</label>
-                  <select className={styles.input}>
-                    <option>Кыргызстан</option>
-                  </select>
-                </div>
-                <div className={styles.field}>
-                  <label className={styles.label}>Телефон</label>
-                  <div className={styles["input-group"]}>
-                    <select className={styles["select-left"]}>
-                      <option>+996</option>
-                    </select>
-                    <input
-                      type="text"
-                      className={styles["input-right"]}
-                      placeholder="Введите номер"
-                      required
-                    />
-                  </div>
-                </div>
-                <div className={styles.field}>
-                  <label className={styles.label}>Имя</label>
-                  <input
-                    type="text"
-                    className={styles.input}
-                    placeholder="Введите имя"
-                    required
-                  />
-                </div>
-                <div className={styles.field}>
-                  <label className={styles.label}>Фамилия</label>
-                  <input
-                    type="text"
-                    className={styles.input}
-                    placeholder="Введите фамилию"
-                    required
-                  />
-                </div>
-                <div className={styles["form-footer"]}>
-                  <span>1 / 2</span>
-                  <button type="submit" className={styles["next-button"]}>
-                    →
-                  </button>
-                </div>
-              </form>
+              {
+                items.length > 0 && (
+                  <form onSubmit={handleSubmit}>
+                    <h2 className={styles.title}>
+                      Для оформления заказа заполните необходимые поля
+                    </h2>
+                    <div className={styles.field}>
+                      <label className={styles.label}>Страна</label>
+                      <select className={styles.input}>
+                        <option>Кыргызстан</option>
+                      </select>
+                    </div>
+                    <div className={styles.field}>
+                      <label className={styles.label}>Телефон</label>
+                      <div className={styles["input-group"]}>
+                        <select className={styles["select-left"]}>
+                          <option>+996</option>
+                        </select>
+                        <input
+                          type="text"
+                          className={styles["input-right"]}
+                          placeholder="Введите номер"
+                          required
+                        />
+                      </div>
+                    </div>
+                    <div className={styles.field}>
+                      <label className={styles.label}>Имя</label>
+                      <input
+                        type="text"
+                        className={styles.input}
+                        placeholder="Введите имя"
+                        required
+                      />
+                    </div>
+                    <div className={styles.field}>
+                      <label className={styles.label}>Фамилия</label>
+                      <input
+                        type="text"
+                        className={styles.input}
+                        placeholder="Введите фамилию"
+                        required
+                      />
+                    </div>
+                    <div className={styles["form-footer"]}>
+                      <span>1 / 2</span>
+                      <button type="submit" className={styles["next-button"]}>
+                        →
+                      </button>
+                    </div>
+                  </form>
+                )
+              }
             </div>
           </div>
         </div>

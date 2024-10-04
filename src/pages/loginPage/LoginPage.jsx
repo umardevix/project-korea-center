@@ -76,7 +76,6 @@ function LoginPage() {
           navigate("/login");
           return;
         }
-        console.log("Refresh Token:", refreshToken);
         const response = await axios.get("/account/user/", {
           headers: {
             Authorization: `Bearer ${accessToken}`, // Добавляем токен в заголовки запроса

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "./_register_page.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -25,29 +25,12 @@ function RegisterPage() {
     setToggleTwo(!toggleTwo);
   }
 
-  function formatPhoneNumber(value) {
-    const cleaned = value.replace(/\D/g, "");
-    const match = cleaned.match(/(\d{0,3})(\d{0,3})(\d{0,3})/);
-    if (match) {
-      return [match[1], match[2], match[3]].filter(Boolean).join("-");
-    }
-    return value;
-  }
-
   function handleChange(event) {
     const { name, value } = event.target;
-    if (name === "phone_number") {
-      const formattedNumber = formatPhoneNumber(value);
-      setUser((prevUser) => ({
-        ...prevUser,
-        [name]: formattedNumber,
-      }));
-    } else {
-      setUser((prevUser) => ({
-        ...prevUser,
-        [name]: value,
-      }));
-    }
+    setUser((prevUser) => ({
+      ...prevUser,
+      [name]: value,
+    }));
   }
 
   function handleCountryCodeChange(event) {
@@ -58,41 +41,60 @@ function RegisterPage() {
     event.preventDefault();
     try {
       if (user.password === user.password_confirm) {
-        const isValidNumber = user.phone_number.replace(/-/g, "");
-        const isValidName = user.first_name.length >= 4;
+        const isValidNumber = user.phone_number.length > 0;
+        const isValidName = user.first_name.length > 0;
         const isValidPassword = user.password.length >= 6;
 
         setUncow(false);
+
+        // Проверка всех обязательных полей перед отправкой
         if (isValidNumber && isValidName && isValidPassword) {
           const formattedUser = {
             ...user,
-            phone_number: `${countryCode}${user.phone_number.replace(/-/g, "")}`,
+            phone_number: `${countryCode}${user.phone_number.replace(/\D/g, "")}`, // Убираем любые символы, кроме цифр
           };
           sendRegistrationData(formattedUser);
         } else {
-          console.log("Validation failed: Please ensure all fields meet the required criteria.");
+          if (!isValidName) alert("Имя обязательно для заполнения");
+          if (!isValidNumber) alert("Номер телефона обязателен для заполнения");
+          if (!isValidPassword) alert("Пароль должен быть не менее 6 символов");
         }
       } else {
         setUncow(true);
+        alert("Пароли не совпадают");
       }
     } catch (error) {
-      console.log(error);
+      console.log("Ошибка при регистрации:", error);
     }
   }
 
   async function sendRegistrationData(data) {
     try {
-      const res = await axios.post("/account/register/", data);
-      console.log(res);
+      const res = await axios.post("/account/register/", data, {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
       if (res.status === 201) {
-        const formattedPhoneNumber = `${countryCode}${user.phone_number.replace(/-/g, "")}`;
+        const formattedPhoneNumber = `${countryCode}${user.phone_number.replace(/\D/g, "")}`;
         navigate("/otp", { state: { phone_number: formattedPhoneNumber } });
       }
     } catch (error) {
-      console.log(error);
-      console.log(data)
+      if (error.response && error.response.status === 400) {
+        // Проверяем наличие ошибки по номеру телефона
+        if (error.response.data.phone_number) {
+          // Показываем алерт, если номер уже существует
+          alert("Пользователь с таким номером телефона уже существует.");
+        } else {
+          // Показываем общую ошибку, если другая проблема
+          alert("Произошла ошибка при регистрации. Пожалуйста, попробуйте снова.");
+        }
+      } else {
+        console.error("Ошибка при отправке данных регистрации:", error.message);
+      }
     }
   }
+
 
   return (
     <section className={styles.login_section}>
@@ -133,7 +135,7 @@ function RegisterPage() {
                     onChange={handleChange}
                     name="phone_number"
                     value={user.phone_number}
-                    type="text" // Use text to allow for formatting
+                    type="text"
                   />
                   <div className={styles.select_dropdown}>
                     <select onChange={handleCountryCodeChange} value={countryCode}>
@@ -152,20 +154,12 @@ function RegisterPage() {
                     name="password"
                     value={user.password}
                     type={toggle ? "text" : "password"}
-                    className={
-                      uncow
-                        ? styles.login_input_error
-                        : styles.login_input_success
-                    }
+                    className={uncow ? styles.login_input_error : styles.login_input_success}
                   />
                   <span>
                     <img
                       onClick={handleToggleOne}
-                      src={
-                        toggle
-                          ? "/public/assets/svg/eye.svg"
-                          : "/public/assets/svg/glass.svg"
-                      }
+                      src={toggle ? "/public/assets/svg/eye.svg" : "/public/assets/svg/glass.svg"}
                       alt=""
                     />
                   </span>
@@ -179,20 +173,12 @@ function RegisterPage() {
                     name="password_confirm"
                     value={user.password_confirm}
                     type={toggleTwo ? "text" : "password"}
-                    className={
-                      uncow
-                        ? styles.login_input_error
-                        : styles.login_input_success
-                    }
+                    className={uncow ? styles.login_input_error : styles.login_input_success}
                   />
                   <span>
                     <img
                       onClick={handleToggleTwo}
-                      src={
-                        toggleTwo
-                          ? "/public/assets/svg/eye.svg"
-                          : "/public/assets/svg/glass.svg"
-                      }
+                      src={toggleTwo ? "/public/assets/svg/eye.svg" : "/public/assets/svg/glass.svg"}
                       alt=""
                     />
                   </span>

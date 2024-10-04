@@ -47,7 +47,7 @@ const ProfilePage = () => {
             <p className="text-gray-700"><strong>Имя:</strong> {user.first_name} {user.last_name}</p>
             <p className="text-gray-700"><strong>Телефон:</strong> {user.phone_number}</p>
             <p className="text-gray-700"><strong>Дата регистрации:</strong> {new Date(user.date_joined).toLocaleDateString()}</p>
-            <button 
+            <button
               className="mt-4 w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 rounded transition duration-200"
               onClick={handleLogout}
             >

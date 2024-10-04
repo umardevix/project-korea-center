@@ -83,9 +83,6 @@ const Category = () => {
                     key={index}
                   >
                     <CategoryCard {...el} />
-                    <CategoryCard {...el} />
-                    <CategoryCard {...el} />
-                    <CategoryCard {...el} />
                   </div>
                 ))}
 
