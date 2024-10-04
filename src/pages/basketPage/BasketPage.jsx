@@ -18,13 +18,13 @@ const BasketPage = () => {
     setLoading(true); // Start loading
     try {
       const accessToken = localStorage.getItem('accessToken');
-  
+
       if (!accessToken) {
         alert('Вы не авторизованы. Пожалуйста, войдите в систему.');
         return;
       }
-  
-      const res = await axios.get("/basket/", {
+
+      const res = await axios.get("/api/basket", {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -45,9 +45,7 @@ const BasketPage = () => {
         console.error('Ожидался массив items, но получен:', res.data);
       }
     } catch (error) {
-      console.error('Ошибка при получении корзины:', error);
-      alert('Не удалось загрузить корзину. Попробуйте еще раз.');
-  
+
       if (error.response && error.response.status === 401) {
         alert('Ваш токен доступа истек. Пожалуйста, войдите в систему снова.');
         localStorage.removeItem('accessToken');
@@ -67,17 +65,17 @@ const BasketPage = () => {
           Authorization: `Bearer ${accessToken}`
         }
       });
-      getBasket(); 
+      getBasket();
     } catch (error) {
       console.error('Ошибка при удалении элемента из корзины:', error);
       alert('Не удалось удалить элемент из корзины. Попробуйте еще раз.');
-      getBasket(); 
+      getBasket();
     }
   };
 
   useEffect(() => {
     if (user) {
-      getBasket(); 
+      getBasket();
     }
   }, [dispatch, user]);
 
@@ -111,10 +109,10 @@ const BasketPage = () => {
                 {items.length > 0 ? (
                   items.map((item) => (
                     <div key={item.product.id} className={styles.card}>
-                      <Card 
-                        el={item.product} 
-                        isBasketPage={true} 
-                        handleDeleteItem={handleDeleteItem} 
+                      <Card
+                        el={item.product}
+                        isBasketPage={true}
+                        handleDeleteItem={handleDeleteItem}
                       />
                     </div>
                   ))

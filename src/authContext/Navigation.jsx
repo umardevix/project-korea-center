@@ -6,6 +6,9 @@ function Navigation() {
   const { user } = useSelector((state) => state.user);
   const isAdmin = user?.role === "admin"; // Проверяем роль
 
+  console.log(user?.role);
+
+
   return (
     <nav>
       {/* Другие ссылки */}

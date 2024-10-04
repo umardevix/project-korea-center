@@ -17,8 +17,8 @@ import { adminRouter } from "./AdminRouter";
 import Forgot from "../pages/forgot/Forgot";
 import ForgotCode from "../pages/forgotCode/ForgotCode";
 import NewPassword from "../pages/newPassword/NewPassword";
-import AdminPage from "../admin/AdminPage";
-import PrivateRoute from "../authContext/PrivateRouter";  
+
+import PrivateRoute from "../authContext/PrivateRouter";
 import Prosmotr from "../admin/components/prosmotr/Prosmotr";
 import ProfilePage from "../pages/profile/ProfilePage";
 
@@ -46,11 +46,7 @@ export const router = createBrowserRouter([
       { path: "/new-password", element: <NewPassword /> },
       {
         path: "/profile",
-        element: <PrivateRoute element={<ProfilePage />} /> // Используем PrivateRoute для профиля
-      },
-      {
-        path: "/admin",
-        element: <PrivateRoute element={<AdminPage />} adminOnly={true} />
+        element: <ProfilePage /> // Используем PrivateRoute для профиля
       },
 
       {

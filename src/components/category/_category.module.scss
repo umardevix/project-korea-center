@@ -5,17 +5,17 @@
 	  @apply mt-[86px]; 
   
 	  > h2 { 
-		@apply text-[23px] sm:text-[28px] text-regal-black font-bold text-center; 
+		@apply text-[23px] sm:text-[28px] text-regal-black font-bold ; 
 	  } 
 
 	  .carousel { 
-		@apply flex justify-start mt-[42px] overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide  ; 
+		@apply flex justify-start overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide mt-[42px]  ; 
 
 		.carouselWrapper{
 			@apply w-full h-full;
 
 			.carouselItems {  
-				@apply flex gap-[20px] mt-3 ; // Плавный переход для слайдера 
+				@apply flex gap-[20px] ; // Плавный переход для слайдера 
 
 				.carouselItem{
 					@apply flex gap-[20px]
