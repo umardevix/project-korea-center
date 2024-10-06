@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../redux/userSlice/userSlice";
+import { refreshAccessToken } from "../../authContext/refreshTokens";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -19,21 +20,14 @@ function LoginPage() {
 
   useEffect(() => {
     if (user) {
-      if (user.role === "admin") {
-        navigate("/admin");
-      } else {
-        navigate("/");
-      }
+      navigate(user.role === "admin" ? "/admin" : "/");
     }
   }, [user, navigate]);
 
   function formatPhoneNumber(value) {
     const cleaned = value.replace(/\D/g, "");
     const match = cleaned.match(/(\d{0,3})(\d{0,3})(\d{0,3})/);
-    if (match) {
-      return [match[1], match[2], match[3]].filter(Boolean).join("-");
-    }
-    return value;
+    return match ? [match[1], match[2], match[3]].filter(Boolean).join("-") : value;
   }
 
   function handlePhoneNumberChange(event) {
@@ -53,36 +47,7 @@ function LoginPage() {
     setCountryCode(event.target.value);
   }
 
-  const refreshAccessToken = async () => {
-    const refreshToken = localStorage.getItem("refreshToken");
-    if (!refreshToken) {
-      return null; // Нет refresh token, не можем обновить
-    }
-
-    try {
-      const response = await axios.post("/account/login/refresh", {
-        token: refreshToken,
-      }, {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${refreshToken}`,
-        },
-      });
-      const newAccessToken = response.data.access;
-      localStorage.setItem("accessToken", newAccessToken);
-      return newAccessToken;
-    } catch (error) {
-      console.error("Ошибка обновления токена:", error);
-      return null; // Обработка ошибки
-    }
-  };
-
-  const isAccessTokenExpired = () => {
-    const accessToken = localStorage.getItem("accessToken");
-    // Здесь добавьте вашу логику проверки срока действия токена
-    return !accessToken; // Заглушка, замените вашей логикой
-  };
-
+  // Основная функция входа
   async function postService() {
     try {
       setIsLoading(true);
@@ -98,10 +63,8 @@ function LoginPage() {
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
 
-        // Получение данных пользователя
-        await makeApiCall("/account/user/"); // Здесь мы используем makeApiCall
-
-        // Перенаправление уже происходит в makeApiCall
+        // Получаем данные пользователя после входа
+        await makeApiCall("/account/user/");
       }
     } catch (error) {
       console.error("Ошибка входа:", error);
@@ -117,11 +80,12 @@ function LoginPage() {
     }
   }
 
+  // Функция для вызова API
   const makeApiCall = async (endpoint) => {
     let accessToken = localStorage.getItem("accessToken");
 
     if (!accessToken || isAccessTokenExpired()) {
-      accessToken = await refreshAccessToken();
+      accessToken = await refreshAccessToken(dispatch); // Передаем dispatch
     }
 
     if (accessToken) {
@@ -131,10 +95,9 @@ function LoginPage() {
             Authorization: `Bearer ${accessToken}`,
           },
         });
-        const userData = apiResponse.data; // Обрабатываем полученные данные
-        dispatch(setUser(userData)); // Сохраняем данные пользователя в Redux
+        const userData = apiResponse.data;
+        dispatch(setUser(userData));
 
-        // Перенаправление в зависимости от роли
         if (userData.role === "admin") {
           navigate("/admin");
         } else {
@@ -144,6 +107,12 @@ function LoginPage() {
         console.error("Ошибка при вызове API:", error);
       }
     }
+  };
+
+  // Проверка истечения токена
+  const isAccessTokenExpired = () => {
+    const accessToken = localStorage.getItem("accessToken");
+    return !accessToken; // Заглушка
   };
 
   function handleSubmit(event) {

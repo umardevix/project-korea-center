@@ -19,6 +19,9 @@ const userSlice = createSlice({
       state.user = null;
       // Remove user from localStorage when clearing
       localStorage.removeItem("user");
+      localStorage.removeItem("basket");
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
     },
   },
 });
