@@ -11,8 +11,8 @@ function Header() {
   const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
   const basketData = useSelector((state) => state.products.basket);
-  
-  const totalItemCount = basketData.total_items_count || 0; 
+
+  const totalItemCount = basketData.total_items_count || 0;
 
   useEffect(() => {
     const fetchBasket = async () => {
@@ -35,7 +35,7 @@ function Header() {
   }, [dispatch, user]);
 
   useEffect(() => {
-    localStorage.setItem('basket', JSON.stringify(basketData)); 
+    localStorage.setItem('basket', JSON.stringify(basketData));
   }, [basketData]);
 
   const handlePopup = (value) => {
@@ -61,7 +61,7 @@ function Header() {
             </ul>
           </nav>
           <div className={styles.header_right}>
-            <Link to="/basket-page/" className={styles.basket}>
+            <Link to="/basket/" className={styles.basket}>
               <div>
                 <img src="/assets/images/basket.png" alt="Корзина" />
               </div>
