@@ -1,5 +1,9 @@
 // import React from 'react';
 import { HiOutlineArrowSmRight } from "react-icons/hi";
+import { CiLocationOn } from "react-icons/ci";
+import { CiPhone } from "react-icons/ci";
+import { FaInstagram } from "react-icons/fa6";
+import { RiTiktokFill } from "react-icons/ri";
 
 import styles from './_contact.module.scss';
 
@@ -21,25 +25,26 @@ const Contact = () => {
                             <div className={styles.contact_section_number}>
                                 <h2>Контакты</h2>
                                 <div className={styles.contact_section_gps}>
-                                    <img src="/public/assets/images/Vector.png" alt="" />
+                                <CiLocationOn />
+
                                     <p>Рынок "Кудайберди" 3-ряд 63 конт. ,
                                         4-ряд 59-60 конт. ор.: ХБК</p>
                                 </div>
 
                                 <div className={styles.contact_section_end}>
-                                    <img src="/public/assets/images/Phone.png" alt="" />
+                                <CiPhone />
                                     <p>+996 (555) 808 - 001</p>
                                 </div>
 
                                 <div className={styles.contact_section_end}>
-                                    <img src="/public/assets/images/Phone.png" alt="" />
+                                <CiPhone />
                                     <p>+996 (505) 888 - 080</p>
                                 </div>
                                 <div className={styles.contact_section_inet}>
                                     <h2>Социальные сети</h2>
                                     <div className={styles.contact_section_img}>
-                                        <img src="/public/assets/images/insta-con.png" alt="" />
-                                        <img src="/public/assets/images/tik-con.png" alt="" />
+                                    <FaInstagram style={{fontSize: '42px'}} />
+                                    <RiTiktokFill style={{fontSize: '42px'}} />
                                     </div>
                                 </div>
                                 <div className={styles.contact_section_day}>
