@@ -16,7 +16,7 @@ function App() {
 
     const intervalId = setInterval(async () => {
       await refreshAccessToken();
-    }, 3000); // Каждые 5 минут
+    }, 300000); // Каждые 5 минут
 
     // Первый вызов при монтировании
     refreshAccessToken();
