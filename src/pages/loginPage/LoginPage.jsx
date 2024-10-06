@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import styles from "./_login_page.module.scss";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,19 +8,17 @@ import { setUser } from "../../redux/userSlice/userSlice";
 function LoginPage() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.user); // Получаем данные пользователя из Redux
+  const { user } = useSelector((state) => state.user);
 
   const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [togglePassword, setTogglePassword] = useState(false);
-  const [countryCode, setCountryCode] = useState("+996"); // Код страны по умолчанию
+  const [countryCode, setCountryCode] = useState("+996");
   const [border, setBorder] = useState(true);
-  const [isLoading, setIsLoading] = useState(false); // Состояние загрузки
+  const [isLoading, setIsLoading] = useState(false);
 
-  // Проверка роли пользователя при загрузке компонента
   useEffect(() => {
     if (user) {
-      // Если пользователь уже вошел, перенаправляем в зависимости от роли
       if (user.role === "admin") {
         navigate("/admin");
       } else {
@@ -31,11 +28,10 @@ function LoginPage() {
   }, [user, navigate]);
 
   function formatPhoneNumber(value) {
-    const cleaned = value.replace(/\D/g, ""); // Удаляем все нецифровые символы
-    const match = cleaned.match(/(\d{0,3})(\d{0,3})(\d{0,3})/); // Форматируем номер
-
+    const cleaned = value.replace(/\D/g, "");
+    const match = cleaned.match(/(\d{0,3})(\d{0,3})(\d{0,3})/);
     if (match) {
-      return [match[1], match[2], match[3]].filter(Boolean).join("-"); // Объединяем форматированный номер
+      return [match[1], match[2], match[3]].filter(Boolean).join("-");
     }
     return value;
   }
@@ -57,61 +53,102 @@ function LoginPage() {
     setCountryCode(event.target.value);
   }
 
+  const refreshAccessToken = async () => {
+    const refreshToken = localStorage.getItem("refreshToken");
+    if (!refreshToken) {
+      return null; // Нет refresh token, не можем обновить
+    }
+
+    try {
+      const response = await axios.post("/account/login/refresh", {
+        token: refreshToken,
+      }, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${refreshToken}`,
+        },
+      });
+      const newAccessToken = response.data.access;
+      localStorage.setItem("accessToken", newAccessToken);
+      return newAccessToken;
+    } catch (error) {
+      console.error("Ошибка обновления токена:", error);
+      return null; // Обработка ошибки
+    }
+  };
+
+  const isAccessTokenExpired = () => {
+    const accessToken = localStorage.getItem("accessToken");
+    // Здесь добавьте вашу логику проверки срока действия токена
+    return !accessToken; // Заглушка, замените вашей логикой
+  };
+
   async function postService() {
     try {
-      setIsLoading(true); // Начинаем загрузку
+      setIsLoading(true);
       const res = await axios.post("/account/login/", {
-        phone_number: `${countryCode}${phoneNumber.replace(/-/g, "")}`, // Объединяем код страны и номер телефона
+        phone_number: `${countryCode}${phoneNumber.replace(/-/g, "")}`,
         password: password,
       });
 
       setBorder(true);
       if (res.status === 200) {
-        const accessToken = res.data.access; // Получаем токен доступа
+        const accessToken = res.data.access;
         const refreshToken = res.data.refresh;
-        localStorage.setItem("accessToken", accessToken); // Сохраняем токен в localStorage
+        localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
-        if (!accessToken) {
-          alert("Вы не вошли в систему! Пожалуйста, войдите.");
-          navigate("/login");
-          return;
-        }
-        const response = await axios.get("/account/user/", {
-          headers: {
-            Authorization: `Bearer ${accessToken}`, // Добавляем токен в заголовки запроса
-          },
-        });
 
-        if (response.status === 200) {
-          const userData = response.data;
-          dispatch(setUser(userData)); // Сохраняем данные пользователя в Redux
+        // Получение данных пользователя
+        await makeApiCall("/account/user/"); // Здесь мы используем makeApiCall
 
-          // Перенаправление в зависимости от роли
-          if (userData.role === "admin") {
-            navigate("/admin");
-          } else {
-            navigate("/");
-          }
-        }
+        // Перенаправление уже происходит в makeApiCall
       }
     } catch (error) {
       console.error("Ошибка входа:", error);
-      setBorder(false); // Показать ошибку
+      setBorder(false);
 
-      // Обратная связь об ошибке
       if (error.response && error.response.status === 401) {
         alert("Неправильные данные! Пожалуйста, проверьте свой номер и пароль.");
       } else {
         alert("Произошла ошибка. Пожалуйста, попробуйте позже.");
       }
     } finally {
-      setIsLoading(false); // Завершаем загрузку
+      setIsLoading(false);
     }
   }
 
+  const makeApiCall = async (endpoint) => {
+    let accessToken = localStorage.getItem("accessToken");
+
+    if (!accessToken || isAccessTokenExpired()) {
+      accessToken = await refreshAccessToken();
+    }
+
+    if (accessToken) {
+      try {
+        const apiResponse = await axios.get(endpoint, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        const userData = apiResponse.data; // Обрабатываем полученные данные
+        dispatch(setUser(userData)); // Сохраняем данные пользователя в Redux
+
+        // Перенаправление в зависимости от роли
+        if (userData.role === "admin") {
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
+      } catch (error) {
+        console.error("Ошибка при вызове API:", error);
+      }
+    }
+  };
+
   function handleSubmit(event) {
-    event.preventDefault(); // Предотвращаем перезагрузку страницы
-    postService(); // Вызываем функцию отправки
+    event.preventDefault();
+    postService();
   }
 
   return (
