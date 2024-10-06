@@ -21,7 +21,6 @@ export const refreshAccessToken = async () => {
 		const newAccessToken = response.data.access;
 		if (newAccessToken) {
 			localStorage.setItem('accessToken', newAccessToken);
-			console.log('Токен успешно обновлен:', newAccessToken);
 
 			// После обновления токена, получите данные пользователя
 			await fetchUserData(newAccessToken);

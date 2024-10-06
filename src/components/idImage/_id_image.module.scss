@@ -9,9 +9,9 @@
 
     }
     .id_image_blocks{
-     @apply flex mt-[8.13px] sm:mt-[16.15px] lg:mt-3  flex justify-between flex-wrap gap-[20.05px] ;
+     @apply flex mt-[8.13px] sm:mt-[16.15px] lg:mt-3  justify-between gap-[20.05px]  ;
      img{
-        @apply w-[81.21px] h-[41.34px] lg:w-[81px] lg:h-[61px] object-cover rounded-[2.03px] sm:w-[164px] sm:h-[82.09px];
+        @apply w-[81.21px] h-[41.34px] lg:w-[81px] lg:h-[61px] object-cover rounded-[2.03px] sm:w-[164px] sm:h-[82.09px] shadow-lg md:w-[100px] cursor-pointer;
      }
     }
 }

@@ -31,7 +31,7 @@ function ProductIdPage({ isProduct = false }) {
       <IdFirstSection product={product} />
       <div className='container'>
         <h1 className={styles.product_id_title}>Другие запчасти {product.model} поколение</h1>
-        <section>
+        <section className='mt-[32px] md:mt-[58px] lg:mt-[42px]'>
           {
             filterProductId.map(el => (
               <Card key={el.id} el={el} />
@@ -44,8 +44,9 @@ function ProductIdPage({ isProduct = false }) {
 }
 
 const productLoader = async ({ params }) => {
-  const res = await axios.get(`/products/product/${params.id}`)
-  return res.data
+  const res = await axios.get(`/products/product/${params.id}/`)
+  return res.data;
+
 
 }
 

@@ -12,8 +12,10 @@ function IdFirstSection({ product }) {
       <ProductNavigate product={product} />
       <div className="container">
         <div className={styles.id_first_container}>
-          <div className={styles.id_first_image_content}>
-            <IdImage product={product} />
+          <div className={styles.first_details}>
+            <div className={styles.id_first_image_content}>
+              <IdImage {...product} />
+            </div>
           </div>
           <div className={styles.id_div}>
             <div className={styles.id_first_info_content}>

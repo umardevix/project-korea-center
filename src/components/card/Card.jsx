@@ -32,7 +32,7 @@ const Card = ({ el, isBasketPage, handleDeleteItem, setBasket }) => {
     try {
       await dispatch(addToBasket(el)).unwrap();
       toast.success('Продукт добавлен в корзину');
-      
+
       // Increment basket count after adding the product
       setBasket(prevCount => prevCount + 1);
     } catch (error) {
@@ -40,8 +40,9 @@ const Card = ({ el, isBasketPage, handleDeleteItem, setBasket }) => {
     }
   };
 
+
   return (
-    <div className={`${styles.card} ${location.pathname === "/basket" && styles.card_basket}`}>
+    <div className={`${styles.card} ${location.pathname === "/basket-page" && styles.card_basket}`}>
       <div onClick={() => navigate(`/product/${el.id}`)} className={styles.card_img_content}>
         <div className={styles.card_img}>
           <img src={el.image1} alt={el.title} />
@@ -68,15 +69,15 @@ const Card = ({ el, isBasketPage, handleDeleteItem, setBasket }) => {
         <GreenButton price={el.price} />
         {
           isBasketPage ? (
-            <button onClick={() => handleDeleteItem(el.id)}  className={styles.cart} disabled={loading}>
-            {loading ? (
-              <span>Загрузка...</span>
-            ) : (
-              <>
-                <img src="/assets/svg/basket_white.svg" alt="Добавить в корзину" />Удалить
-              </>
-            )}
-          </button>
+            <button onClick={() => handleDeleteItem(el.id)} className={styles.cart} disabled={loading}>
+              {loading ? (
+                <span>Загрузка...</span>
+              ) : (
+                <>
+                  <img src="/assets/svg/basket_white.svg" alt="Добавить в корзину" />Удалить
+                </>
+              )}
+            </button>
           ) : location.pathname === '/admin' ? (
             <div className={styles.admin_btn}>
               <Button styleClass={styles.admin_update} text='Обновить' link={`/admin/edit-product/${el.id}`} />
@@ -85,7 +86,7 @@ const Card = ({ el, isBasketPage, handleDeleteItem, setBasket }) => {
           ) : (
             <BlueButton el={el} handleClick={onAddToBasket} setBasket={setBasket} /> // Ensure setBasket is passed correctly
           )
-        }   
+        }
       </div>
     </div>
   );
