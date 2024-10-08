@@ -22,7 +22,7 @@ function Header() {
       try {
         const token = localStorage.getItem('accessToken');
         // Убедитесь, что вы используете правильный URL для API
-        const response = await axios.get("/api/basket/", { // Добавьте полный URL
+        const response = await axios.get("https://koreacenter.kg/api/basket/", { // Добавьте полный URL
           headers: {
             Authorization: `Bearer ${token}`,
           },

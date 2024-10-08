@@ -33,7 +33,7 @@ export const addProduct = createAsyncThunk('products/addProduct', async (newProd
 export const addToBasket = createAsyncThunk(
   'basket/addToBasket',
   async ({ productData }) => {
-    const response = await axios.post("/api/basket/", productData, {
+    const response = await axios.post("https://koreacenter.kg/api/basket/", productData, {
       headers: {
         Authorization: `Bearer ${getAccessToken()}`,
       },
@@ -51,7 +51,7 @@ export const deleteBasketItem = createAsyncThunk(
     }
 
     try {
-      const response = await axios.delete(`/api/basket/item/${productId}`, {
+      const response = await axios.delete(`https://koreacenter.kg/api/basket/item/${productId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

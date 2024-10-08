@@ -36,7 +36,7 @@ const BasketPage = () => {
       }
   
       // Запрос к новому API
-      const res = await axios.get("/api/basket/", {
+      const res = await axios.get("https://koreacenter.kg/api/basket/", {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
@@ -78,7 +78,7 @@ const BasketPage = () => {
     try {
       const accessToken = localStorage.getItem('accessToken');
       dispatch(removeItemFromBasket(productId));
-      await axios.delete(`/api/basket/item/${productId}/`, {
+      await axios.delete(`https://koreacenter.kg/api/basket/item/${productId}/`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
