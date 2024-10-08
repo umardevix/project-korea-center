@@ -1,5 +1,5 @@
 .id_first_container{
-    @apply mt-8 lg:flex gap-5;
+    @apply mt-8 lg:flex justify-between gap-5;
     .id_first_image_content{
         @apply w-full sm:col-span-2 max-w-full lg:w-[387px] ;
 
@@ -14,6 +14,10 @@
         .id_first_search_content{
          @apply mt-[34px] sm:mt-[20.47px] lg:mt-0 sm:w-[285px] sm:max-w-full lg:w-[285px] lg:max-w-full;
         }
+    }
+
+    .first_details{
+        @apply w-full flex gap-[20px]
     }
 
 }

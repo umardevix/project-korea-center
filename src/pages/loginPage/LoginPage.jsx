@@ -5,6 +5,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../redux/userSlice/userSlice";
 import { refreshAccessToken } from "../../authContext/refreshTokens";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function LoginPage() {
   const navigate = useNavigate();
@@ -159,12 +160,10 @@ function LoginPage() {
                     placeholder="Введите пароль"
                     required
                   />
-                  <span>
-                    <img
-                      onClick={handleTogglePassword}
-                      src={togglePassword ? "/public/assets/svg/eye.svg" : "/public/assets/svg/glass.svg"}
-                      alt=""
-                    />
+                  <span className="flex items-center mt-[2px] cursor-pointer" onClick={handleTogglePassword}>
+                    {
+                      togglePassword ? <FaEye className="text-lg" /> : <FaEyeSlash className="text-lg" />
+                    }
                   </span>
                 </div>
               </div>

@@ -1,6 +1,8 @@
 import React from "react";
 import styles from "./_product_navigate.module.scss";
 import { useNavigate } from "react-router-dom";
+import { MdKeyboardArrowRight } from "react-icons/md";
+
 function ProductNavigate({ product }) {
   const navigate = useNavigate()
   return (
@@ -11,16 +13,16 @@ function ProductNavigate({ product }) {
         <div className={styles.product_navigate_1}>
 
           <span onClick={() => navigate('/')}>
-            Главная <img src="/public/assets/svg/right.svg" alt="" />
+            Главная <MdKeyboardArrowRight />
           </span>
           <span onClick={() => navigate('/')}>
-            Запчасти <img src="/public/assets/svg/right.svg" alt="" />
+            Запчасти <MdKeyboardArrowRight />
           </span>
         </div>
         <div className={styles.product_navigate_2}>
 
           <span>
-            {product.model} <img src="/public/assets/svg/right.svg" alt="" />
+            {product.model} <MdKeyboardArrowRight />
           </span>
           <span>
             № {product.artikul}

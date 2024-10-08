@@ -33,16 +33,28 @@ const Card = ({ el, isBasketPage, handleDeleteItem }) => {
     try {
       await dispatch(addToBasket(el)).unwrap();
       toast.success('Продукт добавлен в корзину');
+<<<<<<< HEAD
       dispatch(updateBasketCount(1)); // Увеличиваем общее количество товаров в корзине
     } catch {
+=======
+
+      // Increment basket count after adding the product
+      setBasket(prevCount => prevCount + 1);
+    } catch (error) {
+>>>>>>> 027dad2d451df0f6b9a4a58af093e8aa56658beb
       toast.error('Ошибка при добавлении продукта в корзину');
     } finally {
       setLoading(false);
     }
   };
 
+
   return (
+<<<<<<< HEAD
     <div className={`${styles.card} ${location.pathname === "/basket" ? styles.card_basket : ""}`}>
+=======
+    <div className={`${styles.card} ${location.pathname === "/basket-page" && styles.card_basket}`}>
+>>>>>>> 027dad2d451df0f6b9a4a58af093e8aa56658beb
       <div onClick={() => navigate(`/product/${el.id}`)} className={styles.card_img_content}>
         <div className={styles.card_img}>
           <img src={el.image1} alt={el.title} />
@@ -70,7 +82,17 @@ const Card = ({ el, isBasketPage, handleDeleteItem }) => {
         {
           isBasketPage ? (
             <button onClick={() => handleDeleteItem(el.id)} className={styles.cart} disabled={loading}>
+<<<<<<< HEAD
               {loading ? <span>Загрузка...</span> : <><img src="/assets/svg/basket_white.svg" alt="Удалить" /> Удалить</>}
+=======
+              {loading ? (
+                <span>Загрузка...</span>
+              ) : (
+                <>
+                  <img src="/assets/svg/basket_white.svg" alt="Добавить в корзину" />Удалить
+                </>
+              )}
+>>>>>>> 027dad2d451df0f6b9a4a58af093e8aa56658beb
             </button>
           ) : location.pathname === '/admin' ? (
             <div className={styles.admin_btn}>

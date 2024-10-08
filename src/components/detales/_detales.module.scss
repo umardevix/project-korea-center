@@ -1,5 +1,5 @@
 .detales{
-    // @apply ;
+    @apply w-full md:min-w-[488px];
     .detales_price{
         @apply flex justify-between items-center;
     }

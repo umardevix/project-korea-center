@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./_register_page.module.scss";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function RegisterPage() {
   const navigate = useNavigate();
@@ -156,12 +157,10 @@ function RegisterPage() {
                     type={toggle ? "text" : "password"}
                     className={uncow ? styles.login_input_error : styles.login_input_success}
                   />
-                  <span>
-                    <img
-                      onClick={handleToggleOne}
-                      src={toggle ? "/public/assets/svg/eye.svg" : "/public/assets/svg/glass.svg"}
-                      alt=""
-                    />
+                  <span className="flex items-center mt-[2px] cursor-pointer" onClick={handleToggleOne}>
+                    {
+                      toggle ? <FaEye className="text-lg" /> : <FaEyeSlash className="text-lg" />
+                    }
                   </span>
                 </div>
               </div>
@@ -175,18 +174,12 @@ function RegisterPage() {
                     type={toggleTwo ? "text" : "password"}
                     className={uncow ? styles.login_input_error : styles.login_input_success}
                   />
-                  <span>
-                    <img
-                      onClick={handleToggleTwo}
-                      src={toggleTwo ? "/public/assets/svg/eye.svg" : "/public/assets/svg/glass.svg"}
-                      alt=""
-                    />
+                  <span className="flex items-center mt-[2px] cursor-pointer" onClick={handleToggleTwo}>
+                    {
+                      toggleTwo ? <FaEye className="text-lg" /> : <FaEyeSlash className="text-lg" />
+                    }
                   </span>
                 </div>
-              </div>
-              <div className={styles.remember}>
-                <img src="/public/assets/svg/box.svg" alt="" />
-                <p>Запомнить меня</p>
               </div>
             </div>
             <div className={styles.login_button}>

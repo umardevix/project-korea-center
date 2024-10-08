@@ -6,7 +6,7 @@ function Detales({ product }) {
     return (
         <div className={styles.detales}>
             <div className={styles.detales_price}>
-                <GreenButton />
+                <GreenButton {...product} />
                 <BlueButton />
             </div>
             <div className={styles.detales_blocks}>
