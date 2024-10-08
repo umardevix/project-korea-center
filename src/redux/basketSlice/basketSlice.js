@@ -2,7 +2,7 @@ import { createSlice,createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios';
 
 export const deleteBasket = createAsyncThunk('basket/delete', async () => {
-  const response = await axios.delete('/basket/basket/'); // Adjust the URL as needed
+  const response = await axios.delete('/api/basket/'); // Adjust the URL as needed
   return response.data;
 });
 

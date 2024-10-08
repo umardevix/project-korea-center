@@ -7,7 +7,6 @@ import { toast } from "react-toastify";
 const BlueButton = React.memo(({ el }) => {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
-
   const accessToken = useSelector((state) => state.user.user?.accessToken) || localStorage.getItem('accessToken');
 
   const handleAddToBasket = async () => {
@@ -21,8 +20,6 @@ const BlueButton = React.memo(({ el }) => {
       quantity: 1,
     };
 
-    console.log("Отправка данных на API:", productData);
-
     if (!accessToken) {
       toast.error("Ошибка: Вы не авторизованы. Пожалуйста, войдите в систему.");
       return;
@@ -32,8 +29,8 @@ const BlueButton = React.memo(({ el }) => {
       setLoading(true);
       await dispatch(addToBasket({ productData, accessToken })).unwrap();
       toast.success("Продукт успешно добавлен в корзину");
+      dispatch(updateBasketCount(1)); // Обновляем общее количество товаров в корзине
     } catch (error) {
-      console.error("Ошибка при добавлении в корзину:", error);
       toast.error("Произошла ошибка при добавлении продукта. Пожалуйста, попробуйте еще раз.");
     } finally {
       setLoading(false);

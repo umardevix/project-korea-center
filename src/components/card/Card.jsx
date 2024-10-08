@@ -1,47 +1,48 @@
-import React from "react";
+import React, { useState } from "react";
 import styles from "./_card.module.scss";
 import GreenButton from "../../ui/greenButton/GreenButton";
 import BlueButton from "../../ui/blueButton/BlueButton";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ButtonTrash } from "../../ui/buttonTrash/ButtonTrash";
 import Button from "../../ui/button/Button";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
-import { deleteProduct, addToBasket } from "../../redux/productSlice/ProductSlice";
-import { useState } from "react";
+import { deleteProduct, addToBasket, updateBasketCount } from "../../redux/productSlice/ProductSlice";
 
-
-const Card = ({ el, isBasketPage, handleDeleteItem, setBasket }) => {
+const Card = ({ el, isBasketPage, handleDeleteItem }) => {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
 
   const onDeleteProduct = async (id) => {
-    dispatch(deleteProduct(id))
-      .unwrap()
-      .then(() => {
-        toast.success('Продукт успешно удален');
-      })
-      .catch(() => {
-        toast.error('Ошибка при удалении продукта');
-      });
+    setLoading(true);
+    try {
+      await dispatch(deleteProduct(id)).unwrap();
+      toast.success('Продукт успешно удален');
+      handleDeleteItem(id); // Обновление UI после удаления
+      dispatch(updateBasketCount(-1)); // Уменьшаем общее количество товаров в корзине
+    } catch {
+      toast.error('Ошибка при удалении продукта');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const onAddToBasket = async () => {
+    setLoading(true);
     try {
       await dispatch(addToBasket(el)).unwrap();
       toast.success('Продукт добавлен в корзину');
-      
-      // Increment basket count after adding the product
-      setBasket(prevCount => prevCount + 1);
-    } catch (error) {
+      dispatch(updateBasketCount(1)); // Увеличиваем общее количество товаров в корзине
+    } catch {
       toast.error('Ошибка при добавлении продукта в корзину');
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className={`${styles.card} ${location.pathname === "/basket" && styles.card_basket}`}>
+    <div className={`${styles.card} ${location.pathname === "/basket" ? styles.card_basket : ""}`}>
       <div onClick={() => navigate(`/product/${el.id}`)} className={styles.card_img_content}>
         <div className={styles.card_img}>
           <img src={el.image1} alt={el.title} />
@@ -68,24 +69,18 @@ const Card = ({ el, isBasketPage, handleDeleteItem, setBasket }) => {
         <GreenButton price={el.price} />
         {
           isBasketPage ? (
-            <button onClick={() => handleDeleteItem(el.id)}  className={styles.cart} disabled={loading}>
-            {loading ? (
-              <span>Загрузка...</span>
-            ) : (
-              <>
-                <img src="/assets/svg/basket_white.svg" alt="Добавить в корзину" />Удалить
-              </>
-            )}
-          </button>
+            <button onClick={() => handleDeleteItem(el.id)} className={styles.cart} disabled={loading}>
+              {loading ? <span>Загрузка...</span> : <><img src="/assets/svg/basket_white.svg" alt="Удалить" /> Удалить</>}
+            </button>
           ) : location.pathname === '/admin' ? (
             <div className={styles.admin_btn}>
               <Button styleClass={styles.admin_update} text='Обновить' link={`/admin/edit-product/${el.id}`} />
               <Button styleClass={styles.admin_trash} text='Удалить' handleClick={() => onDeleteProduct(el.id)} />
             </div>
           ) : (
-            <BlueButton el={el} handleClick={onAddToBasket} setBasket={setBasket} /> // Ensure setBasket is passed correctly
+            <BlueButton el={el} handleClick={onAddToBasket} />
           )
-        }   
+        }
       </div>
     </div>
   );

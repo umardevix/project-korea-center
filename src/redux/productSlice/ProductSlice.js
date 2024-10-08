@@ -11,7 +11,7 @@ const getAccessToken = () => {
 };
 
 export const fetchProducts = createAsyncThunk('products/fetchProducts', async () => {
-  const response = await axios.get('/products/product');
+  const response = await axios.get('/products/product/');
   return response.data;
 });
 
@@ -33,7 +33,7 @@ export const addProduct = createAsyncThunk('products/addProduct', async (newProd
 export const addToBasket = createAsyncThunk(
   'basket/addToBasket',
   async ({ productData }) => {
-    const response = await axios.post("/basket/", productData, {
+    const response = await axios.post("/api/basket/", productData, {
       headers: {
         Authorization: `Bearer ${getAccessToken()}`,
       },
@@ -51,7 +51,7 @@ export const deleteBasketItem = createAsyncThunk(
     }
 
     try {
-      const response = await axios.delete(`/basket/item/${productId}`, {
+      const response = await axios.delete(`/api/basket/item/${productId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -63,7 +63,6 @@ export const deleteBasketItem = createAsyncThunk(
     }
   }
 );
-
 
 
 
@@ -110,14 +109,14 @@ const conditionMap = {
 };
 
 
+
+
 const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
-    setBasket: (state, action) => {
-      const { items, total_items_count } = action.payload;
-      state.basket.items = items || [];
-      state.basket.total_items_count = total_items_count || 0;
+    setBasket:(state, action) => {
+      state.basket = action.payload;
     },
     setToken(state, action) {
       state.token = action.payload; // Установите токен при аутентификации
@@ -207,9 +206,9 @@ const productsSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(addToBasket.fulfilled, (state, action) => {
-        state.basket.items.push(action.payload); // Добавляем продукт в массив items
-        state.basket.total_items_count += 1; // Увеличиваем счетчик элементов в корзине
-      })
+        state.basket.items.push(action.payload.item); // добавляем добавленный товар
+        state.basket.total_items_count = action.payload.total_items_count; // обновляем общее количество
+      })      
 
 
       .addCase(addToBasket.rejected, (state, action) => {
@@ -229,6 +228,7 @@ const productsSlice = createSlice({
 });
 
 export const {
+  updateBasketCount,
   setSearchQuery,
   setProductCondition,
   setSelectedMarka,

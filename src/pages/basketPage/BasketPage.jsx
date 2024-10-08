@@ -25,52 +25,60 @@ const BasketPage = () => {
   }, [user, navigate]);
 
   const getBasket = async () => {
-    setLoading(true); // Start loading
+    setLoading(true); // Начинаем загрузку
     try {
       const accessToken = localStorage.getItem('accessToken');
-
+  
       if (!accessToken) {
         alert('Вы не авторизованы. Пожалуйста, войдите в систему.');
-        navigate('/login')
+        navigate('/login');
         return;
       }
-      const res = await axios.get("/api/cart", {
+  
+      // Запрос к новому API
+      const res = await axios.get("/api/basket/", {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
       });
-
-      if (res.data && Array.isArray(res.data.basket.items)) {
+  
+      // Проверяем структуру ответа
+      if (res.data && Array.isArray(res.data.items)) {
         dispatch({ type: 'basket/clearBasket' });
-
-        const uniqueItems = Array.from(new Set(res.data.basket.items.map(item => item.product.id)))
-          .map(id => res.data.basket.items.find(item => item.product.id === id));
-
+  
+        const uniqueItems = Array.from(new Set(res.data.items.map(item => item.product.id)))
+          .map(id => res.data.items.find(item => item.product.id === id));
+  
         uniqueItems.forEach((item) => {
           dispatch(addItemToBasket(item));
         });
-
-        setTotal(res.data.basket.total_price); // Assuming this is correct
+  
+        setTotal(res.data.total_price); // Теперь просто берем total_price из верхнего уровня
       } else {
         console.error('Ожидался массив items, но получен:', res.data);
+        alert('Ошибка получения данных корзины. Проверьте, заполнены ли товары в вашей корзине.');
       }
     } catch (error) {
-
       if (error.response && error.response.status === 401) {
         alert('Ваш токен доступа истек. Пожалуйста, войдите в систему снова.');
         localStorage.removeItem('accessToken');
         navigate('/login');
+      } else {
+        console.error('Ошибка получения данных корзины:', error);
+        alert('Произошла ошибка при получении данных корзины. Попробуйте снова позже.');
       }
     } finally {
-      setLoading(false); // End loading
+      setLoading(false); // Завершаем загрузку
     }
   };
+  
+  
 
   const handleDeleteItem = async (productId) => {
     try {
       const accessToken = localStorage.getItem('accessToken');
       dispatch(removeItemFromBasket(productId));
-      await axios.delete(`/api/cart/item/${productId}/`, {
+      await axios.delete(`/api/basket/item/${productId}/`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
