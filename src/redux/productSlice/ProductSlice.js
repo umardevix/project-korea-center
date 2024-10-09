@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-
+import { toast } from 'react-toastify';
 
 const getAccessToken = () => {
   const token = localStorage.getItem('accessToken');
@@ -39,6 +39,7 @@ export const addToBasket = createAsyncThunk(
       },
     });
     return response.data;
+    ;
   }
 );
 
@@ -57,7 +58,10 @@ export const deleteBasketItem = createAsyncThunk(
         },
       });
 
-      return productId; // Return only productId
+
+      return console.log(productId);
+
+      ; // Return only productId
     } catch (error) {
       return rejectWithValue(error.response?.data || { error: "An error occurred" });
     }
@@ -115,7 +119,7 @@ const productsSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
-    setBasket:(state, action) => {
+    setBasket: (state, action) => {
       state.basket = action.payload;
     },
     setToken(state, action) {
@@ -208,7 +212,7 @@ const productsSlice = createSlice({
       .addCase(addToBasket.fulfilled, (state, action) => {
         state.basket.items.push(action.payload.item); // добавляем добавленный товар
         state.basket.total_items_count = action.payload.total_items_count; // обновляем общее количество
-      })      
+      })
 
 
       .addCase(addToBasket.rejected, (state, action) => {

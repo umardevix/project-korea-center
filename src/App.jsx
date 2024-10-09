@@ -3,6 +3,7 @@ import Layout from "../src/layout/Layout.jsx";
 import { refreshAccessToken } from './authContext/refreshTokens.js';
 import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from './redux/userSlice/userSlice'; // Импортируйте ваши действия Redux
+import { ToastContainer } from 'react-toastify';
 
 function App() {
   const dispatch = useDispatch();
@@ -33,9 +34,12 @@ function App() {
   };
 
   return (
-    <div>
-      <Layout onLogout={handleLogout} />
-    </div>
+    <>
+      <ToastContainer />
+      <div>
+        <Layout onLogout={handleLogout} />
+      </div>
+    </>
   );
 }
 

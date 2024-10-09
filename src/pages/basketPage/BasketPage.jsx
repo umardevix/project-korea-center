@@ -5,6 +5,7 @@ import Card from "../../components/card/Card";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { addItemToBasket, removeItemFromBasket } from "../../redux/basketSlice/basketSlice";
+import { toast } from "react-toastify";
 
 const BasketPage = () => {
   const dispatch = useDispatch();
@@ -28,31 +29,31 @@ const BasketPage = () => {
     setLoading(true); // Начинаем загрузку
     try {
       const accessToken = localStorage.getItem('accessToken');
-  
+
       if (!accessToken) {
         alert('Вы не авторизованы. Пожалуйста, войдите в систему.');
         navigate('/login');
         return;
       }
-  
+
       // Запрос к новому API
       const res = await axios.get("https://koreacenter.kg/api/basket/", {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
       });
-  
+
       // Проверяем структуру ответа
       if (res.data && Array.isArray(res.data.items)) {
         dispatch({ type: 'basket/clearBasket' });
-  
+
         const uniqueItems = Array.from(new Set(res.data.items.map(item => item.product.id)))
           .map(id => res.data.items.find(item => item.product.id === id));
-  
+
         uniqueItems.forEach((item) => {
           dispatch(addItemToBasket(item));
         });
-  
+
         setTotal(res.data.total_price); // Теперь просто берем total_price из верхнего уровня
       } else {
         console.error('Ожидался массив items, но получен:', res.data);
@@ -71,18 +72,23 @@ const BasketPage = () => {
       setLoading(false); // Завершаем загрузку
     }
   };
-  
-  
+
+
 
   const handleDeleteItem = async (productId) => {
     try {
       const accessToken = localStorage.getItem('accessToken');
       dispatch(removeItemFromBasket(productId));
-      await axios.delete(`https://koreacenter.kg/api/basket/item/${productId}/`, {
+      const response = await axios.delete(`https://koreacenter.kg/api/basket/item/${productId}/`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
       });
+
+      if (response.status === 204) {
+        toast.success('Remove product success')
+      }
+
       getBasket();
     } catch (error) {
       console.error('Ошибка при удалении элемента из корзины:', error);
@@ -122,7 +128,7 @@ const BasketPage = () => {
                 </div>
                 {items.length > 0 ? (
                   items.map((item) => (
-                    <div key={item.product.id} className={styles.card}>
+                    <div key={item.product.id} className={styles.basket_card}>
                       <Card
                         el={item.product}
                         isBasketPage={true}

@@ -11,9 +11,12 @@
 		}
 
 		>.basket_block{
-			@apply flex flex-col-reverse sm:flex-row gap-[20px] justify-between mt-[32px] md:mt-[42px];
+			@apply flex flex-col-reverse sm:flex-row gap-[20px] justify-between;
 
 			>.basket_info{
+				.basket_card{
+					@apply mt-[32px]
+				}
 				>.info_title{
 					@apply flex flex-col md:flex-row md:items-end justify-between;
 
@@ -71,3 +74,4 @@
 		}
 	}
 }
+
