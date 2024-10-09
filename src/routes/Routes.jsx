@@ -70,7 +70,7 @@ export const router = createBrowserRouter([
       },
 
       {
-        path: "/basket-page",
+        path: "/basket",
         element: <BasketPage />
       },
       {

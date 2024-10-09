@@ -69,7 +69,6 @@ function Footer() {
             <Link to={'/'}>Главная</Link>
             <Link to={'/about'}>О нас</Link>
             <Link to={'/gorant'}>Гарантия</Link>
-            <Link to={'/deliver'}>Доставка</Link>
             <Link to={'/contact'}>Контакты</Link>
           </div>
         </div>

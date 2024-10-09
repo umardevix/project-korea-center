@@ -2,12 +2,12 @@ import React from 'react'
 import styles from "./_detales.module.scss"
 import GreenButton from '../../ui/greenButton/GreenButton'
 import BlueButton from '../../ui/blueButton/BlueButton'
-function Detales({ product }) {
+function Detales({ product,onAddToBasket }) {
     return (
         <div className={styles.detales}>
             <div className={styles.detales_price}>
                 <GreenButton {...product} />
-                <BlueButton />
+                <BlueButton el={product}  onAddToBasket={onAddToBasket}/>
             </div>
             <div className={styles.detales_blocks}>
                 <div className={styles.detales_block}>
