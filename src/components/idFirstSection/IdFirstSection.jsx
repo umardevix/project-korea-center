@@ -5,7 +5,7 @@ import IdImage from '../idImage/IdImage'
 import Search from '../search/Search'
 import Detales from '../detales/Detales'
 
-function IdFirstSection({ product }) {
+function IdFirstSection({ product,onAddToBasket }) {
 
   return (
     <div>
@@ -19,7 +19,7 @@ function IdFirstSection({ product }) {
           </div>
           <div className={styles.id_div}>
             <div className={styles.id_first_info_content}>
-              <Detales product={product} />
+              <Detales product={product} onAddToBasket={onAddToBasket} />
             </div>
             <div className={styles.id_first_search_content}>
               <Search />

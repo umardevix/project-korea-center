@@ -4,15 +4,16 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useLoaderData } from 'react-router-dom'
 import IdFirstSection from '../../components/idFirstSection/IdFirstSection'
 import styles from './_productId.module.scss'
-
 import ProductSection from '../../components/productSection/ProductSection'
 import { filterProducts, setSelectedModel } from '../../redux/productSlice/ProductSlice'
 import Card from '../../components/card/Card'
 import { useState } from 'react'
+import {toast} from 'react-toastify'
+import { addToBasket,updateBasketCount } from '../../redux/productSlice/ProductSlice'
 
 function ProductIdPage({ isProduct = false }) {
   const { filteredProducts } = useSelector(state => state.products)
-
+  const [loading,setLoading] = useState(false)
   const product = useLoaderData()
 
   const dispatch = useDispatch()
@@ -25,10 +26,24 @@ function ProductIdPage({ isProduct = false }) {
     }
   }, [isProduct, dispatch])
 
+  const onAddToBasket = async () =>{
+    setLoading(true)
+    try{
+      await dispatch(addToBasket(el)).unwrap();
+      toast.success('Продукт добавлен в корзину');
+      dispatch(updateBasketCount(1))
+    }catch{
+      toast.error('Ошибка при добавлении продукта в корзину')
+    }finally{
+      setLoading(false)
+    }
+  };
+
+
 
   return (
     <div>
-      <IdFirstSection product={product} />
+      <IdFirstSection product={product} onAddToBasket={onAddToBasket}/>
       <div className='container'>
         <h1 className={styles.product_id_title}>Другие запчасти {product.model} поколение</h1>
         <section className='mt-[32px] md:mt-[58px] lg:mt-[42px]'>
