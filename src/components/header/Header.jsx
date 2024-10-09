@@ -72,7 +72,7 @@ function Header() {
               <div>
                 <img src="/assets/images/basket.png" alt="Корзина" />
               </div>
-              <span>{totalItemCount}</span> {/* Отображаем общее количество товаров */}
+              {/* <span>{totalItemCount}</span> */}
             </Link>
             {user ? (
               <div className={styles.user_profile}>
