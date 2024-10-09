@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { toast } from 'react-toastify';
 
 // Асинхронный thunk для получения категорий
 export const fetchCategories = createAsyncThunk(
@@ -25,9 +26,10 @@ export const addCategory = createAsyncThunk(
                 formData.append('image', categoryData.image); // Изображение, если есть
             }
 
-            const response = await axios.post('products/categories/', formData, {
+            const response = await axios.post('/products/categories/', formData, {
                 headers: { 'Content-Type': 'multipart/form-data' },
             });
+            toast.success('Added category success')
             return response.data; // Возвращаем созданную категорию
         } catch (error) {
             return rejectWithValue(error.response?.data || error.message); // Обработка ошибок
