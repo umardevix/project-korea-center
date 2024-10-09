@@ -69,7 +69,7 @@ const Card = ({ el, isBasketPage, handleDeleteItem }) => {
         {
           isBasketPage ? (
             <button onClick={() => handleDeleteItem(el.id)} className={styles.cart} disabled={loading}>
-              {loading ? <span>Загрузка...</span> : <><img src="/assets/svg/basket_white.svg" alt="Удалить" /> Удалить</>}
+              {loading ? <span>Загрузка...</span> : <>Удалить</>}
             </button>
           ) : location.pathname === '/admin' ? (
             <div className={styles.admin_btn}>
