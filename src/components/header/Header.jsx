@@ -68,7 +68,7 @@ function Header() {
             </ul>
           </nav>
           <div className={styles.header_right}>
-            <Link to="/basket" className={styles.basket}>
+            <Link to="/cart" className={styles.basket}>
               <div>
                 <img src="/assets/images/basket.png" alt="Корзина" />
               </div>
