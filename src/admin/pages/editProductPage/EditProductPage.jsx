@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './_edit_product.module.scss';
 import { useLoaderData, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/ReactToastify.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCategories } from '../../../redux/categoryProduct/categorySlice';
@@ -32,13 +32,13 @@ export const EditProductPage = () => {
 		dispatch(fetchCategories())
 	}, [dispatch])
 
-	
+
 
 	const handleAddPhoto = (e) => {
 		const file = e.target.files[0];
 		if (file && currentIndex < photos.length) {
 			const newPhotos = [...photos];
-			newPhotos[currentIndex] = file; 
+			newPhotos[currentIndex] = file;
 			setPhotos(newPhotos);
 			setCurrentIndex((prevIndex) => prevIndex + 1);
 		}
@@ -92,7 +92,6 @@ export const EditProductPage = () => {
 	};
 	return (
 		<div className="container">
-			<ToastContainer />
 			<div className={styles.add_product}>
 				<div className={styles.add_product_title}>
 					<p onClick={() => navigate(-1)} className={styles.add_product_info}>
@@ -160,7 +159,7 @@ export const EditProductPage = () => {
 							<option value="Новый">Новый</option>
 							<option value="Б/У">Б/У</option>
 						</select>
-{/* Categori */}
+						{/* Categori */}
 						<label>Категория</label>
 						<select value={category} onChange={(e) => setCategory(e.target.value)}>
 							<option value="">Выберите категорию</option>
@@ -170,7 +169,7 @@ export const EditProductPage = () => {
 								))
 							}
 						</select>
-{/* Categori */}
+						{/* Categori */}
 
 
 						<label>Номер запчасти</label>

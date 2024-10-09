@@ -31,7 +31,7 @@ const BlueButton = React.memo(({ el }) => {
       toast.success("Продукт успешно добавлен в корзину");
       dispatch(updateBasketCount(1)); // Обновляем общее количество товаров в корзине
     } catch (error) {
-      toast.error("Произошла ошибка при добавлении продукта. Пожалуйста, попробуйте еще раз.");
+      console.log(error);
     } finally {
       setLoading(false);
     }

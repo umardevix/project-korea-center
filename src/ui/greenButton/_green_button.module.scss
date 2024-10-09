@@ -2,12 +2,12 @@
     @apply flex flex-col ;
 
     >button{
-        @apply py-2 px-[22px] bg-regal-green rounded-[4px] text-xs md:text-sm font-normal text-regal-white
+        @apply py-2 px-[22px] bg-regal-green rounded-[4px] text-xs md:text-sm font-normal text-regal-white text-nowrap
     }
 
     p{
-        @apply text-regal-green text-xl lg:text-[26px]
-        font-semibold mt-1 sm:mt-4 leading-3 text-nowrap;
+        @apply text-regal-green  text-xl lg:text-[26px]
+        font-semibold mt-3 sm:mt-4 leading-3 text-nowrap;
     }
 
     span{

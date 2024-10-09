@@ -18,7 +18,6 @@ const Card = ({ el, isBasketPage, handleDeleteItem }) => {
     setLoading(true);
     try {
       await dispatch(deleteProduct(id)).unwrap();
-      toast.success('Продукт успешно удален');
       handleDeleteItem(id); // Обновление UI после удаления
       dispatch(updateBasketCount(-1)); // Уменьшаем общее количество товаров в корзине
     } catch {
