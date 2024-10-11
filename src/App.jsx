@@ -27,8 +27,6 @@ function App() {
 
   // Обработчик выхода из аккаунта
   const handleLogout = () => {
-    localStorage.removeItem('accessToken');
-    localStorage.removeItem('refreshToken');
     dispatch(setUser(null)); // Очистите данные пользователя
     setIsLoggedIn(false); // Установите состояние в false
   };

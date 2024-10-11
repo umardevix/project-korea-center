@@ -9,6 +9,7 @@ export const refreshAccessToken = async () => {
 		return null;
 	}
 
+
 	try {
 		const response = await axios.post('/account/login/refresh/', {
 			refresh: refreshToken,
@@ -23,6 +24,8 @@ export const refreshAccessToken = async () => {
 			localStorage.setItem('accessToken', newAccessToken);
 
 			// После обновления токена, получите данные пользователя
+
+
 			await fetchUserData(newAccessToken);
 			return newAccessToken; // Возвращаем новый токен
 		} else {
