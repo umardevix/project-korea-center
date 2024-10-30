@@ -149,7 +149,7 @@ const BasketPage = () => {
                       Для оформления заказа заполните необходимые поля
                     </h2>
                     {open ?
-                      <div className="bg-gray-100 w-full min-h-[100px] flex items-center justify-center mb-6">
+                      <div className="bg-gray-100 w-full  min-h-[100px] flex items-center justify-center mb-6">
                         <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
                           {/* Радиокнопки */}
                           <div className="flex items-center mb-4">
@@ -242,9 +242,9 @@ const BasketPage = () => {
                             required
                           />
                         </div></>}
-                    <div className={open ? 'flex flex-row-reverse justify-between items-center' : 'flex justify-between items-center'}>
+                    <div className={open ? 'flex flex-row-reverse justify-between items-center' : 'flex flex-row-reverse justify-between items-center'}>
                       {
-                        open ? <button className="bg-regal-red w-full py-[7px] rounded font-semibold text-regal-white">Оформить заказ</button> : <>
+                        open ? '' : <>
 
                           <button onClick={() => setOpen(true)} className={styles["prev-button"]}>
                             <FaCircleArrowRight />
@@ -261,6 +261,11 @@ const BasketPage = () => {
                             <FaCircleArrowLeft />
                           </button>
                         ) : ''
+                      }
+                    </div>
+                    <div className="mt-[22px]">
+                      {
+                        open && <button onClick={() => navigate('/payment')} className="bg-regal-red w-full py-[7px] rounded font-semibold text-regal-white">Оформить заказ</button>
                       }
                     </div>
                   </div>

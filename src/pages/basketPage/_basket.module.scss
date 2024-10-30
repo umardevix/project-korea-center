@@ -60,11 +60,11 @@
 				}
 				
 				.input {
-					@apply w-full p-2 border border-gray-300 rounded-lg;
+					@apply w-full p-2 border border-gray-300 rounded-lg outline-none;
 				}
 				
 				.input-group {
-					@apply flex w-full;
+					@apply flex w-full outline-none;
 				}
 				
 				.select-left {
