@@ -10,17 +10,28 @@ export default defineConfig({
       '/products': {
         target: 'https://koreacenter.kg/api',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/products/, '/products'), // Исправлено для использования '/products'
+        rewrite: (path) => path.replace(/^\/products/, '/products'),
       },
       '/account': {
         target: 'https://koreacenter.kg/api',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/account/, '/account'), // Исправлено
+        rewrite: (path) => path.replace(/^\/account/, '/account'),
       },
       '/api': {
         target: 'https://koreacenter.kg/api',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '/api'), // Исправлено
+        rewrite: (path) => path.replace(/^\/api/, '/api'),
+      },
+      // Здесь проксируем '/payment' на https://koreacenter.kg/api
+      '/payments': {
+        target: 'https://koreacenter.kg/api',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/payment/, '/payment'),
+      },
+      '/payment': {
+        target: 'https://ibank2.cbk.kg',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/payment/, ''),
       },
     },
   },

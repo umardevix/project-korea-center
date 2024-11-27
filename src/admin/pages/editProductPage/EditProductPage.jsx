@@ -79,8 +79,6 @@ export const EditProductPage = () => {
 				},
 			});
 
-			console.log(response);
-
 
 			if (response.status === 200) {
 				toast.success('Product updated successfully');

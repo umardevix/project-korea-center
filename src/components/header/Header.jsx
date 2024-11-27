@@ -5,11 +5,12 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setBasket } from '../../redux/productSlice/ProductSlice';
 import axios from 'axios';
+import { IoMdLogIn } from "react-icons/io";
 
 function Header() {
   const [popup, setPopup] = useState(false);
   const dispatch = useDispatch();
-  
+
   // Извлекаем данные пользователя и корзины из Redux Store
   const user = useSelector((state) => state.user.user); // Если user уже является объектом, не нужно использовать дополнительное свойство
   const basketData = useSelector((state) => state.products.basket);
@@ -27,7 +28,7 @@ function Header() {
             Authorization: `Bearer ${token}`,
           },
         });
-        
+
         // Обновляем состояние корзины в Redux Store
         dispatch(setBasket(response.data));
       } catch (error) {
@@ -82,7 +83,7 @@ function Header() {
               </div>
             ) : (
               <Link to="/login" className={styles.header_login}>
-                <img src="/assets/svg/login.svg" alt="Войти" />
+                <IoMdLogIn />
                 <span>Войти</span>
               </Link>
             )}

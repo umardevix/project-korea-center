@@ -47,6 +47,10 @@
 	>.card_btn{
 		@apply flex flex-row-reverse sm:flex-col justify-between  items-end sm:items-end mt-[14px] sm:mt-0;
 
+		>.cart{
+			@apply w-[117px]  h-[36px] flex justify-center items-center gap-[3px]  bg-blue-500 rounded text-regal-white font-normal hover:shadow-blue-shadow hover:transition-all ease-out duration-300
+		}
+
 		>.admin_btn{
 			@apply flex gap-3 text-regal-white;
 			.admin_trash{

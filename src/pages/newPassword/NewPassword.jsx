@@ -4,12 +4,13 @@ import styles from "./_new_password.module.scss";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { setUser } from "../../redux/userSlice/userSlice";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 function NewPassword() {
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useDispatch();
-  
+
   // Extract phone_number and verification_code from location state
   const phoneNumber = location.state?.phone_number || "";
   const verificationCode = location.state?.verification_code || "";
@@ -50,9 +51,9 @@ function NewPassword() {
       if (res.status === 200) {
         navigate("/login");
       }
-      
+
     } catch (error) {
-      console.log({   phoneNumber,password, passwordTwo,verificationCode})
+      console.log({ phoneNumber, password, passwordTwo, verificationCode })
       console.error(error);
       setBorder(false);
     }
@@ -60,7 +61,7 @@ function NewPassword() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    setError(""); 
+    setError("");
 
     if (password === "" || passwordTwo === "") {
       setError("Пароль не может быть пустым");
@@ -92,12 +93,7 @@ function NewPassword() {
                     value={password}
                     onChange={handlePasswordChange}
                   />
-                  <span>
-                    <img
-                      onClick={handleTogglePassword}
-                      src={togglePassword ? "/public/assets/svg/eye.svg" : "/public/assets/svg/glass.svg"}
-                      alt=""
-                    />
+                  <span onClick={handleTogglePassword}> {togglePassword ? <FaEye /> : <FaEyeSlash />}
                   </span>
                 </div>
               </div>
@@ -109,12 +105,7 @@ function NewPassword() {
                     value={passwordTwo}
                     onChange={handlePasswordTwoChange}
                   />
-                  <span>
-                    <img
-                      onClick={handleTogglePasswordTwo}
-                      src={togglePasswordTwo ? "/public/assets/svg/eye.svg" : "/public/assets/svg/glass.svg"}
-                      alt=""
-                    />
+                  <span onClick={handleTogglePasswordTwo}> {togglePasswordTwo ? <FaEye /> : <FaEyeSlash />}
                   </span>
                 </div>
               </div>

@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import styles from "./_burger.module.scss";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
+import { IoMdLogIn } from "react-icons/io";
 
 function Burger({ handlePopup }) {
   const ulRef = useRef(null);
@@ -61,10 +62,7 @@ function Burger({ handlePopup }) {
                 to="/login"
                 className={styles.header_login}
               >
-                <img
-                  src="../../../public/assets/svg/login.svg"
-                  alt="login icon"
-                />
+                <IoMdLogIn />
                 <span>Войти</span>
               </Link>
             ) : (

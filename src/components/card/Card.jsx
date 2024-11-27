@@ -7,6 +7,7 @@ import Button from "../../ui/button/Button";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { deleteProduct, addToBasket, updateBasketCount } from "../../redux/productSlice/ProductSlice";
+import { TbTrash } from "react-icons/tb";
 
 const Card = ({ el, isBasketPage, handleDeleteItem }) => {
   const location = useLocation();
@@ -69,7 +70,7 @@ const Card = ({ el, isBasketPage, handleDeleteItem }) => {
         {
           isBasketPage ? (
             <button onClick={() => handleDeleteItem(el.id)} className={styles.cart} disabled={loading}>
-              {loading ? <span>Загрузка...</span> : <>Удалить</>}
+              {loading ? <span>Загрузка...</span> : <TbTrash />}
             </button>
           ) : location.pathname === '/admin' ? (
             <div className={styles.admin_btn}>

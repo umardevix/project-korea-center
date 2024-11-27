@@ -24,10 +24,22 @@ export const deleteProduct = createAsyncThunk('products/deleteProduct', async (p
 
 
 // Асинхронный thunk для добавления продукта
-export const addProduct = createAsyncThunk('products/addProduct', async (newProduct) => {
-  const response = await axios.post('/products/product/', newProduct);
-  return response.data; // Возвращаем добавленный продукт
-});
+export const addProduct = createAsyncThunk(
+  'products/addProduct',
+  async (newProduct, { rejectWithValue }) => {
+    try {
+      const response = await axios.post('/products/product/', newProduct);
+      return response.data; // Возвращаем добавленный продукт
+    } catch (error) {
+      if (error.response) {
+        console.error("Error Response:", error.response.data);
+      } else {
+        console.error("Error Message:", error.message);
+      }
+      return rejectWithValue(error.response?.data || "Ошибка запроса");
+    }
+  }
+);
 
 
 export const addToBasket = createAsyncThunk(

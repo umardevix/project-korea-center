@@ -4,7 +4,6 @@ import { useSelector } from 'react-redux';
 
 const PrivateRoute = ({ element: Component, adminOnly = false }) => {
   const { user } = useSelector((state) => state.user);
-  console.log(user);
 
   // Получаем данные пользователя из Redux
   const isAuthenticated = user !== null; // Проверка аутентификации

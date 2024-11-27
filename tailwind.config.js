@@ -50,7 +50,8 @@ export default {
       },
       boxShadow: {
         'custom1': '0 0 25px 5px #3E6AE1',
-        'red-shadow': '0px 0px 25px 5px #E11E2440'
+        'red-shadow': '0px 0px 25px 5px #E11E2440',
+        'blue-shadow': '0px 0px 25px 5px #007FFF'
       }
     },
   },

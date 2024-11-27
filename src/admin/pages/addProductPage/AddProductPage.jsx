@@ -76,11 +76,13 @@ export const AddProductPage = () => {
 		}
 	};
 	const handleAddProduct = () => {
+		// Проверка обязательных полей
 		if (!productData.name || !productData.model || !productData.price || !productData.category) {
 			toast.error('Заполните все обязательные поля');
 			return;
 		}
 
+		// Создаем FormData для отправки данных продукта
 		const formData = new FormData();
 		formData.append('title', productData.name);
 		formData.append('model', productData.model);
@@ -95,22 +97,32 @@ export const AddProductPage = () => {
 		formData.append('generation', productData.generation);
 		formData.append('category', productData.category);
 
+		// Добавляем изображения с проверкой формата
 		photos.forEach((photo, index) => {
 			if (photo instanceof File) {
-				formData.append(`image${index + 1}`, photo);
+				// Проверка типа файла
+				if (['image/jpeg', 'image/png'].includes(photo.type)) {
+					formData.append(`image${index + 1}`, photo);
+				} else {
+					console.warn(`Файл image${index + 1} имеет неподдерживаемый тип: ${photo.type}`);
+					toast.error(`Файл image${index + 1} должен быть в формате JPEG или PNG.`);
+				}
 			}
 		});
 
+		// Отправка запроса на добавление продукта
 		dispatch(addProduct(formData))
+			.unwrap()
 			.then(() => {
 				toast.success('Продукт успешно добавлен!');
 				navigate('/admin')
 			})
 			.catch((error) => {
-				console.error('Ошибка при добавлении продукта:', error);
+				console.error('Ошибка при добавлении продукта:', error.response?.data || error.message);
 				toast.error('Не удалось добавить продукт. Проверьте введённые данные.');
 			});
 	};
+
 
 
 

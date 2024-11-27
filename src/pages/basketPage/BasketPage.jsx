@@ -15,23 +15,19 @@ const BasketPage = () => {
   const items = useSelector((state) => state.basket.items) || [];
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
-  const [open, setOpen] = useState(false)
   const [deliveryMethod, setDeliveryMethod] = useState("pickup");
 
-
-
+  // Загружаем корзину
   useEffect(() => {
     if (!user) {
-      // Если пользователь не авторизован, перенаправляем на страницу входа
       navigate('/login');
     } else {
-      // Если пользователь есть, загружаем корзину
       getBasket();
     }
   }, [user, navigate]);
 
   const getBasket = async () => {
-    setLoading(true); // Начинаем загрузку
+    setLoading(true);
     try {
       const accessToken = localStorage.getItem('accessToken');
 
@@ -41,14 +37,12 @@ const BasketPage = () => {
         return;
       }
 
-      // Запрос к новому API
       const res = await axios.get("https://koreacenter.kg/api/basket/", {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
       });
 
-      // Проверяем структуру ответа
       if (res.data && Array.isArray(res.data.items)) {
         dispatch({ type: 'basket/clearBasket' });
 
@@ -59,10 +53,10 @@ const BasketPage = () => {
           dispatch(addItemToBasket(item));
         });
 
-        setTotal(res.data.total_price); // Теперь просто берем total_price из верхнего уровня
+        setTotal(res.data.total_price);
       } else {
         console.error('Ожидался массив items, но получен:', res.data);
-        alert('Ошибка получения данных корзины. Проверьте, заполнены ли товары в вашей корзине.');
+        alert('Ошибка получения данных корзины.');
       }
     } catch (error) {
       if (error.response && error.response.status === 401) {
@@ -70,16 +64,15 @@ const BasketPage = () => {
         localStorage.removeItem('accessToken');
         navigate('/login');
       } else {
-        console.error('Ошибка получения данных корзины:', error);
-        alert('Произошла ошибка при получении данных корзины. Попробуйте снова позже.');
+        console.error('Ошибка при получении данных корзины:', error);
+        alert('Ошибка при получении данных корзины.');
       }
     } finally {
-      setLoading(false); // Завершаем загрузку
+      setLoading(false);
     }
   };
 
-
-
+  // Функция для удаления товара из корзины
   const handleDeleteItem = async (productId) => {
     try {
       const accessToken = localStorage.getItem('accessToken');
@@ -91,23 +84,27 @@ const BasketPage = () => {
       });
 
       if (response.status === 204) {
-        toast.success('Remove product success')
+        toast.success('Продукт удален из корзины');
       }
 
       getBasket();
     } catch (error) {
-      console.error('Ошибка при удалении элемента из корзины:', error);
-      alert('Не удалось удалить элемент из корзины. Попробуйте еще раз.');
+      console.error('Ошибка при удалении товара:', error);
+      alert('Не удалось удалить товар из корзины.');
       getBasket();
     }
   };
 
-  useEffect(() => {
-    if (user) {
-      getBasket();
-    }
-  }, [dispatch, user]);
 
+
+
+  // Расчёт общей суммы
+  useEffect(() => {
+    if (items.length > 0) {
+      const totalAmount = items.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
+      setTotal(totalAmount);
+    }
+  }, [items]);
 
   return (
     <section className={styles.basket}>
@@ -142,135 +139,61 @@ const BasketPage = () => {
                 )}
               </div>
 
-              {
-                items.length > 0 && (
-                  <div className={styles.form}>
-                    <h2 className={styles.title}>
-                      Для оформления заказа заполните необходимые поля
-                    </h2>
-                    {open ?
-                      <div className="bg-gray-100 w-full  min-h-[100px] flex items-center justify-center mb-6">
-                        <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
-                          {/* Радиокнопки */}
-                          <div className="flex items-center mb-4">
-                            <input
-                              id="pickup"
-                              type="radio"
-                              name="deliveryMethod"
-                              value="pickup"
-                              checked={deliveryMethod === "pickup"}
-                              onChange={() => setDeliveryMethod("pickup")}
-                              className="w-5 h-5 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 cursor-pointer"
-                            />
-                            <label
-                              htmlFor="pickup"
-                              className="ml-2 text-lg font-medium text-gray-900"
-                            >
-                              Самовывоз
-                            </label>
+              {items.length > 0 && (
+                <div className={styles.form}>
+                  <h2 className={styles.title}>Для оформления заказа заполните необходимые поля</h2>
+                  <div className="bg-gray-100 w-full min-h-[100px] flex items-center justify-center mb-6">
+                    <div className="bg-white p-6 rounded-lg shadow-lg max-w-md w-full">
+                      <div className="flex items-center mb-4">
+                        <input
+                          id="pickup"
+                          type="radio"
+                          name="deliveryMethod"
+                          value="pickup"
+                          checked={deliveryMethod === "pickup"}
+                          onChange={() => setDeliveryMethod("pickup")}
+                          className="w-5 h-5 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 cursor-pointer"
+                        />
+                        <label htmlFor="pickup" className="ml-2 text-lg font-medium text-gray-900">
+                          Самовывоз
+                        </label>
 
-                            <input
-                              id="delivery"
-                              type="radio"
-                              name="deliveryMethod"
-                              value="delivery"
-                              checked={deliveryMethod === "delivery"}
-                              onChange={() => setDeliveryMethod("delivery")}
-                              className="w-5 h-5 ml-8 text-gray-600 bg-gray-100 border-gray-300 focus:ring-green-500 cursor-pointer"
-                            />
-                            <label
-                              htmlFor="delivery"
-                              className="ml-2 text-lg font-medium text-gray-900"
-                            >
-                              Доставка
-                            </label>
-                          </div>
-
-                          {/* Поле примечание */}
-                          {deliveryMethod === 'pickup' ? (
-                            <div
-                              className="w-full h-32 p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500"
-                            >
-                              <ul>
-                                <li>Жалал-абад</li>
-                                <li>Аксы</li>
-                                <li>ул.Tабалдиев 32/a</li>
-                              </ul>
-                            </div>
-                          ) : deliveryMethod === 'delivery' && (<div
-                            className="w-full h-32 p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500"
-                          >
-                            контакт:0709684854
-                          </div>)}
-                        </div>
-                      </div> : <>
-                        <div className={styles.field}>
-                          <label className={styles.label}>Страна</label>
-                          <select className={styles.input}>
-                            <option>Кыргызстан</option>
-                          </select>
-                        </div>
-                        <div className={styles.field}>
-                          <label className={styles.label}>Телефон</label>
-                          <div className={styles["input-group"]}>
-                            <select className={styles["select-left"]}>
-                              <option>+996</option>
-                            </select>
-                            <input
-                              type="text"
-                              className={styles["input-right"]}
-                              placeholder="Введите номер"
-                              required
-                            />
-                          </div>
-                        </div>
-                        <div className={styles.field}>
-                          <label className={styles.label}>Имя</label>
-                          <input
-                            type="text"
-                            className={styles.input}
-                            placeholder="Введите имя"
-                            required
-                          />
-                        </div>
-                        <div className={styles.field}>
-                          <label className={styles.label}>Фамилия</label>
-                          <input
-                            type="text"
-                            className={styles.input}
-                            placeholder="Введите фамилию"
-                            required
-                          />
-                        </div></>}
-                    <div className={open ? 'flex flex-row-reverse justify-between items-center' : 'flex flex-row-reverse justify-between items-center'}>
-                      {
-                        open ? '' : <>
-
-                          <button onClick={() => setOpen(true)} className={styles["prev-button"]}>
-                            <FaCircleArrowRight />
-                          </button>
-
-                        </>
-                      }
-                      <div className="w-full text-center">
-                        <span>{open ? 2 : 1} / 2</span>
+                        <input
+                          id="delivery"
+                          type="radio"
+                          name="deliveryMethod"
+                          value="delivery"
+                          checked={deliveryMethod === "delivery"}
+                          onChange={() => setDeliveryMethod("delivery")}
+                          className="w-5 h-5 ml-8 text-gray-600 bg-gray-100 border-gray-300 focus:ring-green-500 cursor-pointer"
+                        />
+                        <label htmlFor="delivery" className="ml-2 text-lg font-medium text-gray-900">
+                          Доставка
+                        </label>
                       </div>
-                      {
-                        open ? (
-                          <button onClick={() => setOpen(false)} className={styles["next-button"]}>
-                            <FaCircleArrowLeft />
-                          </button>
-                        ) : ''
-                      }
-                    </div>
-                    <div className="mt-[22px]">
-                      {
-                        open && <button onClick={() => navigate('/payment')} className="bg-regal-red w-full py-[7px] rounded font-semibold text-regal-white">Оформить заказ</button>
-                      }
+
+                      {deliveryMethod === 'pickup' ? (
+                        <div className="w-full h-32 p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500">
+                          <ul>
+                            <li>Жалал-абад</li>
+                            <li>Аксы</li>
+                            <li>ул.Tабалдиев 32/a</li>
+                          </ul>
+                        </div>
+                      ) : deliveryMethod === 'delivery' && (
+                        <div className="w-full h-32 p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500">
+                          Контакт: 0709684854
+                        </div>
+                      )}
                     </div>
                   </div>
-                )
-              }
+                  <div>
+                    <button onClick={() => navigate('/payment')} className="bg-regal-red w-full py-[7px] rounded font-semibold text-regal-white">
+                      Оформить заказ
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
