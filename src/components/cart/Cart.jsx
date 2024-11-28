@@ -31,8 +31,8 @@ function Cart() {
       });
 
       if (response) {
-        console.log(response.data.payment_session)
-        // window.location.href = response.data.pay_url + response.data.payment_session
+        // console.log(response.data.payment_session)
+        window.location.href = response.data.pay_url + response.data.payment_session
 
 
 
