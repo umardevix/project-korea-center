@@ -43,7 +43,7 @@ function Cart() {
             console.log(response.data.payment_session)
             if(islocalId===response.data.payment_session&&islocalOrder_id===response.data.order_id){
 
-              // window.location.href = `${response.data.pay_url}${response.data.payment_session}`;
+              window.location.href = `${response.data.pay_url}${response.data.payment_session}`;
             }
           }
         } catch (error) {
