@@ -58,7 +58,7 @@ const ProfilePage = () => {
 
   return (
     <div className="flex flex-col items-center bg-gray-100 p-4">
-      <div className="bg-white shadow-md rounded-lg p-6 max-w-4xl w-full mt-4">
+      <div className="bg-white shadow-md rounded-lg p-6 max-w-[1200px] w-full mt-4">
         <h1 className="text-2xl font-semibold text-center mb-4 text-gray-800">
           Добро пожаловать в ваш аккаунт, {user.first_name}!
         </h1>
@@ -76,9 +76,9 @@ const ProfilePage = () => {
               Выйти
             </button>
           </div>
-
           {/* Order History Section */}
-          <div className="bg-gray-50 p-4 rounded-lg shadow-md md:w-1/2">
+
+          <div className="w-[450px] bg-gray-50 p-4 rounded-lg shadow-md md:w-1/2">
             <h2 className="text-xl font-semibold mb-4">История заказов</h2>
             <ul className="space-y-2">
               {orderHistory.length > 0 ? (
@@ -89,14 +89,15 @@ const ProfilePage = () => {
                     <span>{order.date}</span>
                   </li>
                 ))
-              ) : (
-                <li className="text-gray-600">{data.length===0?"нет заказов":data.length}</li>
+              ) : (<>
+                {/* <li className="text-gray-600">{data.length===0?"нет заказов":data.length}</li> */}
+      <History/> 
+              </>
               )}
             </ul>
           </div>
         </div>
       </div>
-        <History/>
     </div>
   );
 };

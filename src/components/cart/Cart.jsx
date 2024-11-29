@@ -28,19 +28,22 @@ function Cart() {
         }
       );
 
-      if (response.data && response.data.payment_session && response.data.pay_url) {
+      if (response.data && response.data.payment_session && response.data.pay_url&&response.data.order_id) {
+        console.log(response.data)
         try {
           const res = await axios.get(
             `/paymants/payments-status/${response.data.payment_session}`
           );
           if (res.status === 200) {
             localStorage.setItem("id", JSON.stringify(response.data.payment_session));
+            localStorage.setItem("order_id", JSON.stringify(response.data.order_id));
             let islocalId = JSON.parse(localStorage.getItem("id"));
+            let islocalOrder_id = JSON.parse(localStorage.getItem("order_id"));
             console.log(islocalId)
             console.log(response.data.payment_session)
-            if(islocalId===response.data.payment_session){
+            if(islocalId===response.data.payment_session&&islocalOrder_id===response.data.order_id){
 
-              window.location.href = `${response.data.pay_url}${response.data.payment_session}`;
+              // window.location.href = `${response.data.pay_url}${response.data.payment_session}`;
             }
           }
         } catch (error) {

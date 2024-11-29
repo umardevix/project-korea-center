@@ -25,7 +25,8 @@ export default {
         'regal-border': '#A1A1A1',
         'regal-span-opacity': '#00000080',
         'regal-fixed': '#00000080',
-        'bg-fiexed': '#00000080'
+        'bg-fiexed': '#00000080',
+        'regal-history':'#B9B9B9'
 
       },
 

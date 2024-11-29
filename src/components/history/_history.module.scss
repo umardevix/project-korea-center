@@ -1,0 +1,13 @@
+.history_container{
+    @apply w-[450px] border border-regal-history h-[288px] rounded-[4px];
+    .history_blocks{
+        .history_block{
+            .history_numbers{
+                @apply w-[39px] h-[36px] border border-regal-history rounded-[4px] rounded-r-none rounded-b-none flex justify-center items-center;
+            }
+            .history_date{
+                
+            }
+        }
+    }
+}
