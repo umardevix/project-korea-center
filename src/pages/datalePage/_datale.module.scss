@@ -1,0 +1,49 @@
+.datale_top{
+    @apply flex justify-center items-center relative mt-[42px];
+    .datale_left{
+        @apply absolute left-0 flex items-center;
+        p{
+            @apply font-normal text-[14px] leading-[16.41px] tracking-[2%];
+        }
+
+    }
+    h1{
+        @apply font-bold text-[24px] sm:text-[34px] leading-[39.84px] text-regal-black;
+    }
+}
+.datale_info{
+    @apply mt-[42px] lg:flex lg:justify-between;
+    .datale_block_left{
+        @apply flex flex-col gap-[15px];
+        .datale_block_item{
+            @apply flex items-center gap-[30px];
+            p{
+                @apply text-[16px] font-normal leading-[18.75px] tracking-[2%] ;
+            }
+        }
+    }
+    .datale_block_right{
+        @apply mt-[32px] lg:mt-0;
+        h5{
+            @apply font-semibold text-[16px] leading-[18.75px] tracking-[2%];
+        }
+        ul{ 
+            @apply mt-[15px] pl-[15px] pb-[24px] flex flex-col gap-2 border-b border-regal-black;
+            li{
+                @apply list-decimal ;
+                span{
+             @apply text-[12px] flex gap-[3px] sm:text-[16px] leading-[16.4px] sm:leading-[26.4px];
+                    img{
+                        @apply w-[150px] sm:w-[287px];
+                    }
+                }
+            }
+        }
+        .datale_total{
+            @apply text-[12px] flex justify-between sm:text-[16px] leading-[16.4px] sm:leading-[26.4px] mt-[24px];
+            img{
+                @apply w-[150px] sm:w-[287px];
+            }
+        }
+    }
+}

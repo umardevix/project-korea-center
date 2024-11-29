@@ -1,12 +1,38 @@
 .history_container{
-    @apply w-[450px] border border-regal-history h-[288px] rounded-[4px];
+    @apply w-[572px]  border border-regal-history h-[288px] rounded-[4px]  ;
     .history_blocks{
+        @apply flex flex-col ;
+
+        .styles.history_block_1{
+            @apply w-[39px] h-full border border-regal-history rounded-[4px] rounded-r-none rounded-b-none flex justify-center items-center;
+
+        }
         .history_block{
+            @apply flex h-[36px];
             .history_numbers{
-                @apply w-[39px] h-[36px] border border-regal-history rounded-[4px] rounded-r-none rounded-b-none flex justify-center items-center;
+                @apply w-[39px] h-full border border-regal-history  rounded-r-none rounded-b-none flex justify-center items-center;
             }
             .history_date{
-                
+                @apply h-full w-[122px] border border-regal-history flex justify-center items-center;
+                h4{
+                    @apply w-[98px] text-regal-black text-[12px] leading-[15.6px] font-semibold;
+                }
+                p{
+                    @apply w-[98px] text-regal-black text-[12px] leading-[15.6px] font-normal;
+
+                }
+
+            }
+            .history_quantity{
+                @apply h-full w-[144.25px] border border-regal-history flex justify-center items-center;
+                h4{
+                    @apply w-[120.25px] text-regal-black text-[12px] leading-[15.6px] font-semibold;
+                }
+                p{
+                    @apply w-[120.25px] text-regal-black text-[12px] leading-[15.6px] font-normal;
+
+                }
+
             }
         }
     }

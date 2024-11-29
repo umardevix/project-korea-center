@@ -21,6 +21,7 @@ import NewPassword from "../pages/newPassword/NewPassword";
 import PrivateRoute from "../authContext/PrivateRouter";
 import Prosmotr from "../admin/components/prosmotr/Prosmotr";
 import ProfilePage from "../pages/profile/ProfilePage";
+import DatalePage from "../pages/datalePage/DatalePage";
 
 
 
@@ -100,7 +101,11 @@ export const router = createBrowserRouter([
       {
         path: "/prosmotr/:id",
         element: <Prosmotr />
-      }
+      },
+      {
+        path: "/datale",
+        element: <DatalePage />
+      },
     ],
   }
 ]);

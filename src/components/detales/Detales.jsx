@@ -3,6 +3,7 @@ import styles from "./_detales.module.scss"
 import GreenButton from '../../ui/greenButton/GreenButton'
 import BlueButton from '../../ui/blueButton/BlueButton'
 function Detales({ product,onAddToBasket }) {
+    
     console.log(product)
     return (
         <div className={styles.detales}>

@@ -58,13 +58,13 @@ const ProfilePage = () => {
 
   return (
     <div className="flex flex-col items-center bg-gray-100 p-4">
-      <div className="bg-white shadow-md rounded-lg p-6 max-w-[1200px] w-full mt-4">
+      <div className="bg-white shadow-md rounded-lg p-6 max-w-[1100px] w-full mt-4">
         <h1 className="text-2xl font-semibold text-center mb-4 text-gray-800">
           Добро пожаловать в ваш аккаунт, {user.first_name}!
         </h1>
         <div className="flex flex-col md:flex-row">
           {/* Account Information Section */}
-          <div className="bg-gray-50 p-4 rounded-lg shadow-md md:w-1/2 mr-0 md:mr-4 mb-4 md:mb-0">
+          <div className=" max-w-[450px] w-full bg-gray-50 p-4 rounded-lg shadow-md md:w-1/2 mr-0 md:mr-4 mb-4 md:mb-0">
             <h2 className="text-xl font-semibold mb-4">Информация об аккаунте</h2>
             <p className="text-gray-700"><strong>Имя:</strong> {user.first_name} {user.last_name}</p>
             <p className="text-gray-700"><strong>Телефон:</strong> {user.phone_number}</p>
@@ -78,9 +78,9 @@ const ProfilePage = () => {
           </div>
           {/* Order History Section */}
 
-          <div className="w-[450px] bg-gray-50 p-4 rounded-lg shadow-md md:w-1/2">
+          <div className="max-w-[625px] w-full bg-gray-50 p-4 rounded-lg shadow-md">
             <h2 className="text-xl font-semibold mb-4">История заказов</h2>
-            <ul className="space-y-2">
+            <ul className="space-y-2 w-full overflow-scroll">
               {orderHistory.length > 0 ? (
                 orderHistory.map(order => (
                   <li key={order.id} className="flex justify-between bg-white p-2 rounded shadow">
