@@ -13,6 +13,7 @@ const BasketPage = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.user);
   const items = useSelector((state) => state.basket.items) || [];
+  console.log(items)
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [deliveryMethod, setDeliveryMethod] = useState("pickup");
@@ -118,12 +119,17 @@ const BasketPage = () => {
             </div>
             <div className={styles.basket_block}>
               <div className={styles.basket_info}>
-                <div className={styles.info_title}>
+                <>
+                {
+                  items.length!==0&&<><div className={styles.info_title}>
                   <h1>Корзина</h1>
                   <h2>
                     Итоговая сумма: <span>{total} сом</span>
                   </h2>
-                </div>
+                </div></> 
+                }
+                </>
+                
                 {items.length > 0 ? (
                   items.map((item) => (
                     <div key={item.product.id} className={styles.basket_card}>

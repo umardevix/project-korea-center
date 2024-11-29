@@ -46,7 +46,13 @@
 
 			>.footer_contact_social{
 				>div{
-					@apply flex sm:mt-[6px] gap-[3px]
+					@apply flex sm:mt-[6px] gap-[3px];
+					img{
+						@apply w-[24px] h-[24px];
+					}
+					.PiYoutubeLogo{
+					  @apply w-[24px] h-[24px];
+					}
 				}
 			}
 		}

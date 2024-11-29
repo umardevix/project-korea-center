@@ -1,5 +1,6 @@
 import React from 'react'
 import styles from './_footer.module.scss'
+import { PiYoutubeLogo } from "react-icons/pi";
 import { Link } from 'react-router-dom'
 
 function Footer() {
@@ -16,10 +17,7 @@ function Footer() {
 
             <ul className={styles.footer_order_info}>
               <h3>Способы оплаты:</h3>
-              <li>
-                <img src="/assets/svg/radio.svg" alt="" />
-                Наличнии
-              </li>
+            
               <li>
                 <img src="/assets/svg/radio.svg" alt="" />
                 Мбанк
@@ -52,8 +50,16 @@ function Footer() {
             <div className={styles.footer_contact_social}>
               <h3>Социальные сети</h3>
               <div>
+                <Link to="https://www.instagram.com/koreacenter.kg?igsh=MXduNG4xd3ZpZHBycQ==">
                 <img src="/assets/svg/instagram.svg" alt="" />
+                </Link>
+                <Link to="https://www.tiktok.com/@koreacenter.kg?_t=8rCD7h4IGPf&_r=1">
                 <img src="/assets/svg/tiktok.svg" alt="" />
+                </Link>
+                <Link to="https://youtube.com/@koreacenterkg?si=UQI0I39zDETkWnVU">
+                <PiYoutubeLogo className={styles.PiYoutubeLogo}/>
+                </Link>
+                {/* <img src="/assets/images/youtube.png" alt="" /> */}
               </div>
             </div>
           </ul>

@@ -3,14 +3,36 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { clearUser } from '../../redux/userSlice/userSlice';
 import axios from 'axios';
+import History from '../../components/history/History';
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
   const [orderHistory, setOrderHistory] = useState([]);
+  const [data , setData] = useState([])
+  async function handleGet() {
+    try {
+      const res = await axios.get("/payments/payments-history", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+      setData(res.data.items);
+    } catch (error) {
+      if (error.response) {
+        console.error("Ошибка ответа сервера:", error.response.data);
+      } else if (error.request) {
+        console.error("Запрос не был выполнен:", error.request);
+      } else {
+        console.error("Ошибка:", error.message);
+      }
+    }
+  }
+  
 
   useEffect(() => {
+    handleGet ()
     const fetchOrderHistory = async () => {
       try {
         const response = await axios.get('/account/orders/', {
@@ -68,12 +90,13 @@ const ProfilePage = () => {
                   </li>
                 ))
               ) : (
-                <li className="text-gray-600">Нет заказов.</li>
+                <li className="text-gray-600">{data.length===0?"нет заказов":data.length}</li>
               )}
             </ul>
           </div>
         </div>
       </div>
+        <History/>
     </div>
   );
 };

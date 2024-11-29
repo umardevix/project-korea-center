@@ -5,50 +5,52 @@ import { useLocation } from "react-router-dom";
 
 function Cart() {
   const items = useSelector((state) => state.basket.items) || [];
-  const [success_id, setSuccessid] = useState(null)
-  const location = useLocation()
+  const location = useLocation();
 
   const handlePayment = async () => {
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = localStorage.getItem("accessToken");
+    const productIds = items.map((item) => item.product.id);
 
-    // Формируем массив только с ID продуктов
-    const productIds = items.map(item => item.product.id);
-
-    // Проверка на наличие товаров для оплаты
     if (productIds.length === 0) {
-      console.error('No products selected for payment');
-      return; // Если нет выбранных товаров, не отправляем запрос
+      console.error("No products selected for payment");
+      return;
     }
 
     try {
-      const response = await axios.post('/payments/start-payments/', {
-        product_ids: productIds
-      }, {
-        headers: {
-          'Authorization': `Bearer ${accessToken}`,
-          'Content-Type': 'application/json',
+      const response = await axios.post(
+        "/payments/start-payments/",
+        { product_ids: productIds },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
         }
-      });
+      );
 
-      if (response) {
-        // console.log(response.data.payment_session)
-        window.location.href = response.data.pay_url + response.data.payment_session
+      if (response.data && response.data.payment_session && response.data.pay_url) {
+        try {
+          const res = await axios.get(
+            `/paymants/payments-status/${response.data.payment_session}`
+          );
+          if (res.status === 200) {
+            localStorage.setItem("id", JSON.stringify(response.data.payment_session));
+            let islocalId = JSON.parse(localStorage.getItem("id"));
+            console.log(islocalId)
+            console.log(response.data.payment_session)
+            if(islocalId===response.data.payment_session){
 
-
-
-        // https://sandbox.payler.com/gapi/Pay?session_id=nvazvvmAbv6zsvDNuC1Xn7Kcbyq7ptzKlP4u,
-        // https://sandbox.payler.com/gapi/Pay?session_id=lnxLKA4wqMwLz2Htxv18raMpMKevSc8aEi3I
-      }
-
-    } catch (error) {
-      console.error('Request failed:', error);
-
-      if (error.response) {
-        // Логируем подробности ошибки от сервера
-        console.error('Response error details:', error.response.data);
+              window.location.href = `${response.data.pay_url}${response.data.payment_session}`;
+            }
+          }
+        } catch (error) {
+          console.error("Payment status fetch error:", error.response?.data || error.message);
+        }
       } else {
-        console.error('Error details:', error.message);
+        console.error("Invalid response format:", response.data);
       }
+    } catch (error) {
+      console.error("Request failed:", error.response?.data || error.message);
     }
   };
 
@@ -65,3 +67,4 @@ function Cart() {
 }
 
 export default Cart;
+

@@ -1,19 +1,22 @@
 .detales{
     @apply w-full md:min-w-[488px];
     .detales_price{
-        @apply flex justify-between items-center;
+        @apply flex gap-4 items-start;
     }
     .detales_blocks{
         @apply flex max-w-[345px] w-full flex-col gap-3 mt-6;
         .detales_block{
-            @apply flex justify-between items-center;
+            @apply flex gap-[80px] items-center;
             span{
-           @apply text-[16px] font-normal leading-[21px] text-regal-span-opacity;
+           @apply w-[130px] text-[16px] font-normal leading-[21px] text-regal-span-opacity;
             }
             p{
                 @apply text-[16px] font-semibold leading-[12px] text-black;
 
 
+            }
+            h2{
+                @apply text-[18px] font-semibold leading-[12px] text-black;
             }
 
         }
