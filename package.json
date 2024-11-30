@@ -11,6 +11,11 @@
     "server": "json-server --watch public/db.json --port 8000"
   },
   "dependencies": {
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
+    "@mui/icons-material": "^6.1.9",
+    "@mui/material": "^6.1.9",
+    "@mui/styled-engine-sc": "^6.1.9",
     "@reduxjs/toolkit": "^2.2.7",
     "axios": "^1.7.3",
     "js-cookie": "^3.0.5",
@@ -23,6 +28,7 @@
     "react-router-dom": "^6.26.0",
     "react-toastify": "^10.0.5",
     "sass": "^1.77.8",
+    "styled-components": "^6.1.13",
     "tailwind-scrollbar-hide": "^1.1.7"
   },
   "devDependencies": {

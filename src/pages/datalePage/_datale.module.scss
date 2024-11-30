@@ -1,7 +1,7 @@
 .datale_top{
     @apply flex justify-center items-center relative mt-[42px];
     .datale_left{
-        @apply absolute left-0 flex items-center;
+        @apply absolute left-0 flex items-center cursor-pointer;
         p{
             @apply font-normal text-[14px] leading-[16.41px] tracking-[2%];
         }
@@ -14,7 +14,7 @@
 .datale_info{
     @apply mt-[42px] lg:flex lg:justify-between;
     .datale_block_left{
-        @apply flex flex-col gap-[15px];
+        @apply flex flex-col gap-[15px] ;
         .datale_block_item{
             @apply flex items-center gap-[30px];
             p{

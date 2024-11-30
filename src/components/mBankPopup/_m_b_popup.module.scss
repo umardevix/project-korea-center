@@ -1,0 +1,60 @@
+.mb_popup {
+  @apply fixed top-0 w-full h-full z-[99999] left-0 bg-regal-white pt-[63px];
+  .mb_popup_info {
+    @apply w-full sm:w-[491px] sm:mx-auto h-auto p-[25px] rounded-[4px] shadow-custom1 shadow-[#A9A9A9];
+    .mb_logo {
+      @apply flex flex-col items-center;
+      img {
+        @apply w-[250px];
+      }
+      p {
+        @apply text-[16px] font-semibold leading-[19px]  text-center mt-3;
+      }
+    }
+    .mb_phone_number{
+        @apply mt-2 flex w-full justify-start border border-regal-black p-4 bg-[#F8F8FF] border border-[#DCDCDC] rounded-[2px];
+
+    }
+    .mb_content{
+        @apply mt-5;
+            @apply flex flex-col items-center;
+            h1{
+                @apply w-[250px] text-center text-[18px] font-extrabold text-[#4682B4] leading-[20px];
+            }
+            .mb_blocks{
+                @apply mt-3 w-full flex flex-col gap-2;
+                .mb_block{
+                    @apply flex w-full justify-start gap-5 border border-regal-black py-2 bg-[#F8F8FF] border-y border-y-[#DCDCDC] border-x-0;
+                    span{
+                        @apply text-[16px] font-normal leading-[18px] text-regal-black;
+                    }
+                    p{
+                        @apply w-[150px] text-[16px] font-normal leading-[22px] text-regal-black;
+                    }
+                }
+                .mb_block_2{
+                    @apply bg-regal-white border-none;
+                }
+            }
+            .mb_button{
+                @apply w-full flex justify-center mt-6 relative;
+                button{
+                    @apply w-[200px] h-[40px] text-regal-white bg-bg-green rounded-[2px] text-[16px] hover:bg-[#90EE90];
+                    // #90EE90
+
+                }
+                input{
+                    @apply absolute left-0 border w-[100px] h-[40px] px-2 outline-none rounded-[2px];
+                }
+            }
+            .mb_close{
+                @apply w-full flex justify-end mt-2;
+                span{
+                    @apply text-[14px] font-normal cursor-pointer;
+
+                }
+            }
+        
+    }
+  }
+}

@@ -1,76 +1,193 @@
-import React, { useEffect, useState } from 'react';
-import styles from "./_history.module.scss";
-import axios from 'axios';
-
+import React, { useEffect, useState } from 'react'
+import styles from "./_history.module.scss"
+import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { setPopupSlice } from '../../redux/popupSlice/popupSlice';
+function generateRandomNumber() {
+  return Math.floor(100000 + Math.random() * 900000);
+}
 function History() {
-  const [isItemId, setIsItemId] = useState(null);
-  const [isItemOrderId, setIsItemOrderId] = useState(null);
-
-  async function getItem() {
+  const dispatch = useDispatch();
+  const items = useSelector((state)=>state.basket)
+  const [statusMessage,setStatusMessage] = useState("")
+  const [isorder_id,setIsOrderId] = useState(`MBK${generateRandomNumber()}`);
+  
+  const { total } = useSelector((state) => state.total);
+  
+  const [data , setData] = useState([])
+  async function handleGet() {
     try {
-      const res = await axios.get(`/payments/payments-status/${isItemId}/${isItemOrderId}/`);
-      console.log(res);
-      console.log(isItemId);
-      console.log(isItemOrderId);
+      const res = await axios.get("/payments/payments-history/", {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+        },
+      });
+      setData(res.data);
+      console.log(res.data)
     } catch (error) {
-      console.error(error);
+      if (error.response) {
+        console.error("Ошибка ответа сервера:", error.response.data);
+      } else if (error.request) {
+        console.error("Запрос не был выполнен:", error.request);
+      } else {
+        console.error("Ошибка:", error.message);
+      }
     }
   }
+  const postSerivce = async () => {
+    const accessToken = localStorage.getItem("accessToken"); // Получение токена
 
-  useEffect(() => {
-    const id = JSON.parse(localStorage.getItem("id"));
-    const orderId = JSON.parse(localStorage.getItem("order_id"));
-
-    setIsItemId(id);
-    setIsItemOrderId(orderId);
-  }, []); // Зависимость отсутствует, чтобы выполнить только один раз при монтировании
-
-  useEffect(() => {
-    if (isItemId && isItemOrderId) {
-      getItem();
+    if (!accessToken) {
+      console.error("Токен авторизации не найден");
+      setStatusMessage("Ошибка: токен авторизации не найден");
+      return;
     }
-  }, [isItemId, isItemOrderId]); // Зависимость от isItemId и isItemOrderId
 
+    // Преобразуем items для корректной структуры
+    const formattedItems = items.map((item) => ({
+      product: item.product?.id || item.product.id, // Используем ID товара
+      price: parseFloat(item.product.price), // Приводим цену к числу
+      quantity: item.quantity || 1, // Устанавливаем количество (по умолчанию 1)
+    }));
+    console.log(items);
+
+    console.log("Отправляемые данные для items:", formattedItems);
+
+    try {
+        const response = await axios.post(
+            "/payments/orders/create/",
+            {
+              order_id: isorder_id, // Убедитkjkjaесь, что это число (ID клиента)
+              total_amount: total,
+              items: formattedItems,
+            },
+            {
+              headers: {
+                Authorization: `Bearer ${accessToken}`,
+                "Content-Type": "application/json",
+              },
+            }
+          );
+      console.log(response.data);
+      console.log(response);
+      if(response.status===201){
+        // удалить из корзины
+      }
+    } catch (error) {
+      console.error(
+        "Ошибка при создании заказа:",
+        error.response?.data || error
+      );
+    }
+  };
+  async function deleteServer() {
+  
+    const accessToken = localStorage.getItem("accessToken"); // Получение токена
+  try {
+    const res = await axios.delete("https://koreacenter.kg/api/basket/delete/",{
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      
+    })
+      if(res.status===204){
+   dispatch(setPopupSlice(true))
+    }
+  } catch (error) {
+    console.log(error)
+    
+  }
+  
+  
+  }
+  async function getItem () {
+   let isItemId = JSON.parse(localStorage.getItem("id"));
+   let isItemOrder_id = JSON.parse(localStorage.getItem("order_id"));
+   console.log(isItemId,isItemOrder_id)
+   if(isItemId&&isItemOrder_id){
+    try {
+      const res = await axios.get(`/payments/payments-status/A67lwnDgvAMF5EQ1x7OI4GoxuqFCQ8S6vwjC/9852f33e-58bc-4529-8776-507821ea65ce/`)
+      console.log(res)
+      if(res.data.statusss==="completed"){
+        // alert("ваш заказ успешно куплен")
+        postSerivce()
+        deleteServer()
+        localStorage.removeItem("id");
+        localStorage.removeItem("order_id");
+      }
+      console.log(isItemId)
+      console.log(isItemOrder_id)
+      
+    } catch (error) {
+      console.log(error)
+      localStorage.removeItem("id");
+      localStorage.removeItem("order_id");
+    }
+   }
+   else{
+   }
+
+   
+
+  }
+  useEffect(()=>{
+    getItem()
+    handleGet()
+  },[])
   return (
     <div className={styles.history_container}>
-      <div className={styles.history_blocks}>
-        <div className={`${styles.history_block} ${styles.history_block_1}`}>
-          <div className={styles.history_numbers}>
-            <img src="/public/assets/svg/number.svg" alt="" />
-          </div>
-          <div className={styles.history_date}>
-            <h4>название</h4>
-          </div>
-          <div className={styles.history_date}>
-            <h4>Дата заказа</h4>
-          </div>
-          <div className={styles.history_quantity}>
-            <h4>Количество</h4>
-          </div>
-          <div className={styles.history_quantity}>
-            <h4>Статус заказа</h4>
-          </div>
-        </div>
-        <div className={styles.history_block}>
-          <div className={styles.history_numbers}>
-            <p>1</p>
-          </div>
-          <div className={styles.history_date}>
-            <p>название</p>
-          </div>
-          <div className={styles.history_date}>
-            <p>Дата заказа</p>
-          </div>
-          <div className={styles.history_quantity}>
-            <p>Количество</p>
-          </div>
-          <div className={styles.history_quantity}>
-            <p>Статус заказа</p>
-          </div>
-        </div>
+    <div className={styles.history_blocks}>
+    <div className={`${styles.history_block} ${styles.history_block_1}`}>
+      <div className={styles.history_numbers}>
+        <img src="/public/assets/svg/number.svg" alt="" />
+
+      </div>
+      <div className={styles.history_date}>
+        <h4>Действия</h4>
+      </div>
+      <div className={styles.history_date}>
+        <h4>Дата заказа</h4>
+      </div>
+      <div className={styles.history_quantity}>
+        <h4>Количество </h4>
+      </div>
+      <div className={styles.history_quantity}>
+        <h4>Статус заказа </h4>
       </div>
     </div>
-  );
+    {
+      data.map((item,index)=>(<>
+    <div key={item.id} className={styles.history_block}>
+      <div className={styles.history_numbers}>
+        <p>{index+1}</p>
+
+      </div>
+      <div className={styles.history_date}>
+        <Link to={`/datale/${item.id}`} className={styles.history_prosmotr}>Просмотр</Link>
+      </div>
+      <div className={styles.history_date}>
+        <p>{item.order_date.slice(0,10)}</p>
+      </div>
+      <div className={styles.history_quantity}>
+      <p>
+  {item.items.length} шт
+  </p>
+
+      </div>
+      <div className={styles.history_quantity}>
+        <p>{item.status} </p>
+      </div>
+    </div>
+      </>))
+    }
+    </div>
+    
+        
+      
+    </div>
+  )
 }
 
-export default History;
+export default History

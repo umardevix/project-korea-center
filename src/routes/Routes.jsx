@@ -103,7 +103,7 @@ export const router = createBrowserRouter([
         element: <Prosmotr />
       },
       {
-        path: "/datale",
+        path: "/datale/:id",
         element: <DatalePage />
       },
     ],

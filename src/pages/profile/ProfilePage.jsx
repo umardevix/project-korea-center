@@ -4,35 +4,18 @@ import { useNavigate } from 'react-router-dom';
 import { clearUser } from '../../redux/userSlice/userSlice';
 import axios from 'axios';
 import History from '../../components/history/History';
+import CustomizedDialogs from '../../components/profileModal/ProflieModale';
 
 const ProfilePage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.user);
   const [orderHistory, setOrderHistory] = useState([]);
-  const [data , setData] = useState([])
-  async function handleGet() {
-    try {
-      const res = await axios.get("/payments/payments-history", {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      });
-      setData(res.data.items);
-    } catch (error) {
-      if (error.response) {
-        console.error("Ошибка ответа сервера:", error.response.data);
-      } else if (error.request) {
-        console.error("Запрос не был выполнен:", error.request);
-      } else {
-        console.error("Ошибка:", error.message);
-      }
-    }
-  }
+
   
 
   useEffect(() => {
-    handleGet ()
+
     const fetchOrderHistory = async () => {
       try {
         const response = await axios.get('/account/orders/', {
@@ -58,6 +41,7 @@ const ProfilePage = () => {
 
   return (
     <div className="flex flex-col items-center bg-gray-100 p-4">
+      <CustomizedDialogs/>
       <div className="bg-white shadow-md rounded-lg p-6 max-w-[1100px] w-full mt-4">
         <h1 className="text-2xl font-semibold text-center mb-4 text-gray-800">
           Добро пожаловать в ваш аккаунт, {user.first_name}!

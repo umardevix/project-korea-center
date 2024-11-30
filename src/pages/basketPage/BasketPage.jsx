@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { addItemToBasket, removeItemFromBasket } from "../../redux/basketSlice/basketSlice";
 import { toast } from "react-toastify";
 import { FaCircleArrowLeft, FaCircleArrowRight } from "react-icons/fa6";
-
+import { setTotaSlice } from "../../redux/totalSlice/totalSlice";
 const BasketPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -104,6 +104,10 @@ const BasketPage = () => {
     if (items.length > 0) {
       const totalAmount = items.reduce((acc, item) => acc + item.product.price * item.quantity, 0);
       setTotal(totalAmount);
+      dispatch(setTotaSlice(totalAmount))
+
+
+ 
     }
   }, [items]);
 

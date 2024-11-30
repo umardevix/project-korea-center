@@ -51,7 +51,7 @@ export const addToBasket = createAsyncThunk(
       },
     });
     return response.data;
-    ;
+    
   }
 );
 
