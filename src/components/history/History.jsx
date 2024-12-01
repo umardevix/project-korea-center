@@ -53,11 +53,11 @@ function History() {
 
   if(isItemOrder_id){
     const formattedItems = items.map((item) => ({
-      product: item.product?.id || item.product.id, // Используем ID товара
+      product: item.product.id, // Используем ID товара
       price: parseFloat(item.product.price), // Приводим цену к числу
       quantity: item.quantity || 1, // Устанавливаем количество (по умолчанию 1)
     }));
-    console.log("Отправляемые данные для items:", formattedItems);
+    console.log("Отправляемые данные для items:", formattedItems,items);
     
     console.log(formattedItems);
     try {
@@ -106,7 +106,7 @@ function History() {
     })
     console.log("delete",res)
       if(res.status===204){
-        window.location.reload(true);
+        // window.location.reload(true);
    dispatch(setPopupSlice(true))
    
    localStorage.removeItem("id");
