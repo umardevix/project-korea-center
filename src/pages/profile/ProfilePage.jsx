@@ -16,22 +16,22 @@ const ProfilePage = () => {
 
   useEffect(() => {
 
-    const fetchOrderHistory = async () => {
-      try {
-        const response = await axios.get('/account/orders/', {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-          },
-        });
-        if (response.status === 200) {
-          setOrderHistory(response.data); // Assuming response.data is the order array
-        }
-      } catch (error) {
-        console.error("Ошибка при получении истории заказов:", error);
-      }
-    };
+    // const fetchOrderHistory = async () => {
+    //   try {
+    //     const response = await axios.get('/account/orders/', {
+    //       headers: {
+    //         Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    //       },
+    //     });
+    //     if (response.status === 200) {
+    //       setOrderHistory(response.data); // Assuming response.data is the order array
+    //     }
+    //   } catch (error) {
+    //     console.error("Ошибка при получении истории заказов:", error);
+    //   }
+    // };
 
-    fetchOrderHistory();
+    // fetchOrderHistory();
   }, []);
 
   const handleLogout = () => {

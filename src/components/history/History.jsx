@@ -24,6 +24,7 @@ function History() {
         },
       });
       setData(res.data);
+      console.log("getHistory",res)
     } catch (error) {
       if (error.response) {
         console.error("Ошибка ответа сервера:", error.response.data);
@@ -69,7 +70,7 @@ function History() {
             }
           );
       console.log(response.data);
-      console.log(response);
+      console.log(response,"postHisteroy");
       if(response.status===201){
         // удалить из корзины
         
@@ -93,6 +94,7 @@ function History() {
       },
       
     })
+    console.log("delete",res)
       if(res.status===204){
    dispatch(setPopupSlice(true))
    
@@ -114,7 +116,8 @@ function History() {
       const res = await axios.get(`/payments/payments-status/${isItemId}/${isItemOrder_id}/`)
       console.log(res)
       if(res.data.status==="completed"){
-        // alert("ваш заказ успешно куплен")
+        alert("ваш заказ успешно куплен")
+        console.log("get sussion , order_id",res)
         postSerivce()
     
       }
