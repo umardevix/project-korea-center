@@ -6,6 +6,7 @@ import axios from 'axios'
 function DatalePage() {
     const location = useLocation();
     const {item} = location.state
+    console.log(item)
     // const [data , setData] = useState({})
     const navigate = useNavigate()
   return (
@@ -43,7 +44,7 @@ function DatalePage() {
                 {
                     item.items&&item.items.map((el)=>(
                         <>
-                         <li><span>{el.product_name} ({el.quantity}шт) 
+                         <li key={el.id}><span>{el.product_name} ({el.quantity}шт) 
                          ...............................................................
                     {el.price} сом</span>
                 </li>

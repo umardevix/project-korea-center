@@ -9,7 +9,7 @@ function generateRandomNumber() {
 }
 function History() {
   const dispatch = useDispatch();
-  const items = useSelector((state)=>state.basket)
+  const { items } = useSelector((state) => state.basket);
   console.log(items)
   const [statusMessage,setStatusMessage] = useState("")
   const [isorder_id,setIsOrderId] = useState(`MBK${generateRandomNumber()}`);
@@ -47,7 +47,7 @@ function History() {
     }
 
     // Преобразуем items для корректной структуры
-    const formattedItems = items.items.map((item) => ({
+    const formattedItems = items.map((item) => ({
       product: item.product?.id || item.product.id, // Используем ID товара
       price: parseFloat(item.product.price), // Приводим цену к числу
       quantity: item.quantity || 1, // Устанавливаем количество (по умолчанию 1)
