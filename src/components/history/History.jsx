@@ -47,18 +47,19 @@ function History() {
     }
 
     // Преобразуем items для корректной структуры
+    
+ 
+    let isItemOrder_id = JSON.parse(localStorage.getItem("order_id"));
+
+  if(isItemOrder_id){
     const formattedItems = items.map((item) => ({
       product: item.product?.id || item.product.id, // Используем ID товара
       price: parseFloat(item.product.price), // Приводим цену к числу
       quantity: item.quantity || 1, // Устанавливаем количество (по умолчанию 1)
     }));
-    console.log(items);
-
     console.log("Отправляемые данные для items:", formattedItems);
     
-   let isItemOrder_id = JSON.parse(localStorage.getItem("order_id"));
-
-  if(isItemOrder_id){
+    console.log(formattedItems);
     try {
       const response = await axios.post(
           "/payments/orders/create/",
