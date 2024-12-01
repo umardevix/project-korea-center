@@ -43,8 +43,8 @@ export default function CustomizedDialogs() {
         aria-labelledby="customized-dialog-title"
         open={popup}
       >
-        <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
-          Modal title
+        <DialogTitle className='text-regal-green' sx={{ m: 0, p: 2 }} id="customized-dialog-title">
+          Успешно оплачено
         </DialogTitle>
         <IconButton
           aria-label="close"
@@ -60,24 +60,20 @@ export default function CustomizedDialogs() {
         </IconButton>
         <DialogContent dividers>
           <Typography gutterBottom>
-            Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-            dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-            consectetur ac, vestibulum at eros.
+          Вы успешно оплатили заказ для получения товара можете забрать товар из магазина или заказать доставку.
+
+
           </Typography>
           <Typography gutterBottom>
-            Praesent commodo cursus magna, vel scelerisque nisl consectetur et.
-            Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor.
+          Самовывоз:
+Область Ош, улица Касымбекова, дом 8б
           </Typography>
           <Typography gutterBottom>
-            Aenean lacinia bibendum nulla sed consectetur. Praesent commodo cursus
-            magna, vel scelerisque nisl consectetur et. Donec sed odio dui. Donec
-            ullamcorper nulla non metus auctor fringilla.
+          Доставка:
+          Для доставки можете написать нашим менеджерам в Ватсапп: 0505 888 080
           </Typography>
         </DialogContent>
         <DialogActions>
-          <Button autoFocus onClick={handleClose}>
-            Save changes
-          </Button>
         </DialogActions>
       </BootstrapDialog>
     </React.Fragment>

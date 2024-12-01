@@ -16,9 +16,18 @@
                       }
                     }
                   }
-               }
+               };
                .header_login{
                 @apply flex items-center gap-[9px] mt-6;
+               }
+               .burger_user{
+                @apply flex mt-6 gap-[9px] items-center cursor-pointer;
+                p{
+                  @apply font-normal text-[16px] text-regal-black;
+                }
+                img{
+                  @apply w-4 h-4 object-cover;
+                }
                }
 
             }

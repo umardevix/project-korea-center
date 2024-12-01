@@ -35,7 +35,7 @@
 }
 
 .label {
-  @apply min-w-full table-auto border-collapse border-2 border-gray-300;
+  @apply max-w-[1416px] px-4 w-full mx-auto table-auto border-collapse border-2 border-gray-300;
 
   .label_thead {
     @apply border-collapse border-2 border-gray-300;
@@ -57,7 +57,10 @@
     @apply text-center border-collapse border-2 border-gray-300;
 
     .tr_td {
-      @apply border-2 border-gray-300 px-4 py-2
+      @apply border-2 border-gray-300 px-4 py-2;
+      select{
+        @apply bg-transparent outline-none cursor-pointer;
+      }
     }
 
     .btn_pros {

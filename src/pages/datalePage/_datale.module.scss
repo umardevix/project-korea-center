@@ -1,7 +1,7 @@
 .datale_top{
     @apply flex justify-center items-center relative mt-[42px];
     .datale_left{
-        @apply absolute left-0 flex items-center cursor-pointer;
+        @apply absolute gap-2 left-0 flex items-center cursor-pointer;
         p{
             @apply font-normal text-[14px] leading-[16.41px] tracking-[2%];
         }
@@ -32,7 +32,7 @@
             li{
                 @apply list-decimal ;
                 span{
-             @apply text-[12px] flex gap-[3px] sm:text-[16px] leading-[16.4px] sm:leading-[26.4px];
+             @apply flex items-center text-[12px] flex gap-[3px] sm:text-[16px] leading-[16.4px] sm:leading-[26.4px];
                     img{
                         @apply w-[150px] sm:w-[287px];
                     }

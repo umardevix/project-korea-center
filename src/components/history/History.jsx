@@ -24,7 +24,6 @@ function History() {
         },
       });
       setData(res.data);
-      console.log(res.data)
     } catch (error) {
       if (error.response) {
         console.error("Ошибка ответа сервера:", error.response.data);
@@ -105,7 +104,6 @@ function History() {
   async function getItem () {
    let isItemId = JSON.parse(localStorage.getItem("id"));
    let isItemOrder_id = JSON.parse(localStorage.getItem("order_id"));
-   console.log(isItemId,isItemOrder_id)
    if(isItemId&&isItemOrder_id){
     try {
       const res = await axios.get(`/payments/payments-status/A67lwnDgvAMF5EQ1x7OI4GoxuqFCQ8S6vwjC/9852f33e-58bc-4529-8776-507821ea65ce/`)
@@ -141,7 +139,7 @@ function History() {
     <div className={styles.history_blocks}>
     <div className={`${styles.history_block} ${styles.history_block_1}`}>
       <div className={styles.history_numbers}>
-        <img src="/public/assets/svg/number.svg" alt="" />
+      №
 
       </div>
       <div className={styles.history_date}>
@@ -165,7 +163,7 @@ function History() {
 
       </div>
       <div className={styles.history_date}>
-        <Link to={`/datale/${item.id}`} className={styles.history_prosmotr}>Просмотр</Link>
+        <Link state={{item}} to={`/datale/${item.id}`} className={styles.history_prosmotr}>Просмотр</Link>
       </div>
       <div className={styles.history_date}>
         <p>{item.order_date.slice(0,10)}</p>
