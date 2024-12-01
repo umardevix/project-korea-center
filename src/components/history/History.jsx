@@ -10,6 +10,7 @@ function generateRandomNumber() {
 function History() {
   const dispatch = useDispatch();
   const items = useSelector((state)=>state.basket)
+  console.log(items)
   const [statusMessage,setStatusMessage] = useState("")
   const [isorder_id,setIsOrderId] = useState(`MBK${generateRandomNumber()}`);
   
@@ -35,7 +36,8 @@ function History() {
       }
     }
   }
-  const postSerivce = async () => {
+  async function postSerivce () {
+    
     const accessToken = localStorage.getItem("accessToken"); // Получение токена
 
     if (!accessToken) {
@@ -45,7 +47,7 @@ function History() {
     }
 
     // Преобразуем items для корректной структуры
-    const formattedItems = items.map((item) => ({
+    const formattedItems = items.items.map((item) => ({
       product: item.product?.id || item.product.id, // Используем ID товара
       price: parseFloat(item.product.price), // Приводим цену к числу
       quantity: item.quantity || 1, // Устанавливаем количество (по умолчанию 1)
@@ -86,7 +88,10 @@ function History() {
     );
   }
   }
-  };
+  else{
+    alert("error order id")
+  }
+  }
   async function deleteServer() {
   
     const accessToken = localStorage.getItem("accessToken"); // Получение токена
@@ -100,6 +105,7 @@ function History() {
     })
     console.log("delete",res)
       if(res.status===204){
+        window.location.reload(true);
    dispatch(setPopupSlice(true))
    
    localStorage.removeItem("id");
@@ -120,7 +126,7 @@ function History() {
       const res = await axios.get(`/payments/payments-status/${isItemId}/${isItemOrder_id}/`)
       console.log(res)
       if(res.data.status==="completed"){
-        alert("ваш заказ успешно куплен")
+        // alert("ваш заказ успешно куплен")
         console.log("get sussion , order_id",res)
         postSerivce()
     
@@ -129,12 +135,12 @@ function History() {
       console.log(isItemOrder_id)
       
     } catch (error) {
-      console.log(error)
+      console.log(error,"is get item")
       localStorage.removeItem("id");
       localStorage.removeItem("order_id");
+    
+
     }
-   }
-   else{
    }
 
    
