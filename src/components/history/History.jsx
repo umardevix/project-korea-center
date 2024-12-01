@@ -72,6 +72,8 @@ function History() {
       console.log(response);
       if(response.status===201){
         // удалить из корзины
+        
+        deleteServer()
       }
     } catch (error) {
       console.error(
@@ -93,6 +95,9 @@ function History() {
     })
       if(res.status===204){
    dispatch(setPopupSlice(true))
+   
+   localStorage.removeItem("id");
+   localStorage.removeItem("order_id");
     }
   } catch (error) {
     console.log(error)
@@ -111,9 +116,7 @@ function History() {
       if(res.data.statusss==="completed"){
         // alert("ваш заказ успешно куплен")
         postSerivce()
-        deleteServer()
-        localStorage.removeItem("id");
-        localStorage.removeItem("order_id");
+    
       }
       console.log(isItemId)
       console.log(isItemOrder_id)

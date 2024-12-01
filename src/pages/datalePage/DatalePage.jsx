@@ -31,6 +31,10 @@ function DatalePage() {
                 <p>Статус заказа:</p>
                 <p>{item.status&&item.status}</p>
             </div>
+            <div className={styles.datale_block_item}>
+                <p>Номер заказа:</p>
+                <p>{item.order_id&&item.order_id}</p>
+            </div>
          
         </div>
         <div className={styles.datale_block_right}>
