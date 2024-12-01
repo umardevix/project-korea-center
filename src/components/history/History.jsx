@@ -111,7 +111,7 @@ function History() {
    let isItemOrder_id = JSON.parse(localStorage.getItem("order_id"));
    if(isItemId&&isItemOrder_id){
     try {
-      const res = await axios.get(`/payments/payments-status/${isItemId}${isItemOrder_id}/`)
+      const res = await axios.get(`/payments/payments-status/${isItemId}/${isItemOrder_id}/`)
       console.log(res)
       if(res.data.statusss==="completed"){
         // alert("ваш заказ успешно куплен")
