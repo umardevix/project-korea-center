@@ -53,35 +53,39 @@ function History() {
     console.log(items);
 
     console.log("Отправляемые данные для items:", formattedItems);
+    
+   let isItemOrder_id = JSON.parse(localStorage.getItem("order_id"));
 
+  if(isItemOrder_id){
     try {
-        const response = await axios.post(
-            "/payments/orders/create/",
-            {
-              order_id: isorder_id, // Убедитkjkjaесь, что это число (ID клиента)
-              total_amount: total,
-              items: formattedItems,
+      const response = await axios.post(
+          "/payments/orders/create/",
+          {
+            order_id: isItemOrder_id, // Убедитkjkjaесь, что это число (ID клиента)
+            total_amount: total,
+            items: formattedItems,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
             },
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-                "Content-Type": "application/json",
-              },
-            }
-          );
-      console.log(response.data);
-      console.log(response,"postHisteroy");
-      if(response.status===201){
-        // удалить из корзины
-        
-        deleteServer()
-      }
-    } catch (error) {
-      console.error(
-        "Ошибка при создании заказа:",
-        error.response?.data || error
-      );
+          }
+        );
+    console.log(response.data);
+    console.log(response,"postHisteroy");
+    if(response.status===201){
+      // удалить из корзины
+      
+      deleteServer()
     }
+  } catch (error) {
+    console.error(
+      "Ошибка при создании заказа:",
+      error.response?.data || error
+    );
+  }
+  }
   };
   async function deleteServer() {
   
