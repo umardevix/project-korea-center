@@ -33,7 +33,7 @@ function Cart() {
           const res = await axios.get(
             `/paymants/payments-status/${response.data.payment_session}/${response.data.order_id}`
           );
-          if (res.status === 200) {
+         
             localStorage.setItem("id", JSON.stringify(response.data.payment_session));
             localStorage.setItem("order_id", JSON.stringify(response.data.order_id));
             let islocalId = JSON.parse(localStorage.getItem("id"));
@@ -42,7 +42,7 @@ function Cart() {
 
               window.location.href = `${response.data.pay_url}${response.data.payment_session}`;
             }
-          }
+          
         } catch (error) {
           console.error("Payment status fetch error:", error.response?.data || error.message);
         }

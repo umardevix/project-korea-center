@@ -96,8 +96,8 @@ function History() {
       if(res.status===204){
    dispatch(setPopupSlice(true))
    
-   localStorage.removeItem("id");
-   localStorage.removeItem("order_id");
+  //  localStorage.removeItem("id");
+  //  localStorage.removeItem("order_id");
     }
   } catch (error) {
     console.log(error)
