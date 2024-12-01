@@ -96,8 +96,8 @@ function History() {
       if(res.status===204){
    dispatch(setPopupSlice(true))
    
-  //  localStorage.removeItem("id");
-  //  localStorage.removeItem("order_id");
+   localStorage.removeItem("id");
+   localStorage.removeItem("order_id");
     }
   } catch (error) {
     console.log(error)
@@ -113,7 +113,7 @@ function History() {
     try {
       const res = await axios.get(`/payments/payments-status/${isItemId}/${isItemOrder_id}/`)
       console.log(res)
-      if(res.data.statusss==="completed"){
+      if(res.data.status==="completed"){
         // alert("ваш заказ успешно куплен")
         postSerivce()
     
