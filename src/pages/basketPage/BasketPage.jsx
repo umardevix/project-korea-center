@@ -13,7 +13,6 @@ const BasketPage = () => {
   const navigate = useNavigate();
   const user = useSelector((state) => state.user.user);
   const items = useSelector((state) => state.basket.items) || [];
-  console.log(items)
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(true);
   const [deliveryMethod, setDeliveryMethod] = useState("pickup");

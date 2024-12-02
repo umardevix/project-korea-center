@@ -124,11 +124,11 @@ function History() {
     })
     console.log("delete",res)
       if(res.status===204){
-        // window.location.reload(true);
-   dispatch(setPopupSlice(true))
-   
-   localStorage.removeItem("id");
-   localStorage.removeItem("order_id");
+        dispatch(setPopupSlice(true))
+        
+        localStorage.removeItem("id");
+        localStorage.removeItem("order_id");
+        window.location.reload(true);
     }
   } catch (error) {
     console.log(error)

@@ -10,6 +10,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Typography from '@mui/material/Typography';
 import { useDispatch, useSelector } from 'react-redux';
 import { setPopupSlice } from '../../redux/popupSlice/popupSlice';
+import { Link } from 'react-router-dom';
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   '& .MuiDialogContent-root': {
     padding: theme.spacing(2),
@@ -70,7 +71,8 @@ export default function CustomizedDialogs() {
           </Typography>
           <Typography gutterBottom>
           Доставка:
-          Для доставки можете написать нашим менеджерам в Ватсапп: 0505 888 080
+          Для доставки можете написать нашим менеджерам в Ватсапп: <Link className='text-blue-500' to="https://api.whatsapp.com/send?phone=996551868080">996551868080
+          </Link>
           </Typography>
         </DialogContent>
         <DialogActions>

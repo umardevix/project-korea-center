@@ -12,7 +12,6 @@ function generateRandomNumber() {
 
 function MBankPopup({ setPopup, name, phone_number }) {
   const { items } = useSelector((state) => state.basket);
-  console.log(items)
   const { total } = useSelector((state) => state.total);
   const [quid, setQuid] = useState(`CBK${generateRandomNumber()}`);
   const [isorder_id,setIsOrderId] = useState(`MBK${generateRandomNumber()}`);
@@ -29,7 +28,7 @@ function MBankPopup({ setPopup, name, phone_number }) {
 
   const createPayment = async () => {
     try {
-      const response = await axios.get("/payment/otp/create", {
+      const response = await axios.get("/mbank/otp/create", {
         params: {
           phone: phone_number,
           amount: total * 100,
@@ -59,7 +58,7 @@ function MBankPopup({ setPopup, name, phone_number }) {
 
   const handleConfirm = async () => {
     try {
-      const response = await axios.get("/payment/otp/confirm", {
+      const response = await axios.get("/mbank/otp/confirm", {
         params: { quid, otp },
         headers: {
           authenticate: authenticateHeader,
@@ -71,13 +70,14 @@ function MBankPopup({ setPopup, name, phone_number }) {
       if (response.data.code === 220) {
         setStatusMessage("Транзакция успешно подтверждена");
         console.log(response.data);
+        
+        if (response.data.code === 220) {
+          await handleGet();
+        }
       } else {
         setStatusMessage(response.data.comment || "Ошибка подтверждения");
         console.log(response.data);
 
-        if (response.data.code === 228) {
-          await handleGet();
-        }
       }
     } catch (error) {
       setStatusMessage("Ошибка подтверждения платежа");
