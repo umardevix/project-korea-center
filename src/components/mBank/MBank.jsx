@@ -29,6 +29,7 @@ function MBank() {
           'Content-Type': 'application/json',
         },
       });
+      console.log(response)
 
       if (response.data.code === 0) {
         setStatusMessage(response.data.comment);
@@ -41,6 +42,7 @@ function MBank() {
         setStatusMessage('Плательщик не найден в системе');
       } else {
         setStatusMessage('Неизвестная ошибка');
+        console.log(response)
       }
     } catch (error) {
       setStatusMessage('Ошибка связи с сервером');
