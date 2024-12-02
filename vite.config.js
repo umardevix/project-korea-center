@@ -28,10 +28,10 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/payment/, '/payment'),
       },
-      '/payment': {
+      '/mbank': {
         target: 'https://ibank2.cbk.kg',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/payment/, ''),
+        rewrite: (path) => path.replace(/^\/mbank/, ''),
       },
     },
   },

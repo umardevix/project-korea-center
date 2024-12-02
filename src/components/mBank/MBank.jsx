@@ -21,8 +21,7 @@ function MBank() {
   const handlePhoneCheck = async () => {
     try {
       const phoneWithCountryCode = `996${phone}`;
-      const response = await axios.get(`/payment/otp/check?phone=996755400047`, {
-        // params: { phone: phoneWithCountryCode },
+      const response = await axios.get(`/mbank/otp/check?phone=996755400047`, {
         headers: {
           authenticate: authenticateHeader,
           Accept: 'application/json',
