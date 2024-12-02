@@ -72,7 +72,9 @@ export const AdminOrder = () => {
                         order.id === id ? { ...order, status: newStatus } : order
                     )
                 );
-                window.location.reload(true);
+                // window.location.reload(true);
+                getService()
+                
             }
         } catch (error) {
             console.error('Error updating status:', error.message);

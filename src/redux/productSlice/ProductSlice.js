@@ -18,7 +18,7 @@ export const fetchProducts = createAsyncThunk('products/fetchProducts', async ()
 
 // Асинхронный thunk для удаления продукта
 export const deleteProduct = createAsyncThunk('products/deleteProduct', async (productId) => {
-  await axios.delete(`/products/product/${productId}`);
+  await axios.delete(`/products/product/${productId}/`);
   return productId;
 });
 
