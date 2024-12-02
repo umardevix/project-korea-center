@@ -258,3 +258,4 @@ export const {
 } = productsSlice.actions;
 
 export default productsSlice.reducer;
+// https://latest.currency-api.pages.dev/v1/currencies/kgs.json net::ERR_CONNECTION_CLOSED
