@@ -42,7 +42,7 @@ function MBank() {
         setStatusMessage('Плательщик не найден в системе');
       } else {
         setStatusMessage('Неизвестная ошибка');
-        console.log("ошибка из неизвестная ошибка", response.data.code)
+        console.log("ошибка из неизвестная ошибка", response.data)
       }
     } catch (error) {
       setStatusMessage('Ошибка связи с сервером');
