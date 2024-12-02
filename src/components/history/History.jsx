@@ -8,9 +8,9 @@ function generateRandomNumber() {
   return Math.floor(100000 + Math.random() * 900000);
 }
 function History() {
-  const dispatch = useDispatch();
-  const { items } = useSelector((state) => state.basket);
+  const [items, setItems] = useState([]);
   console.log(items)
+  const dispatch = useDispatch();
   const [statusMessage,setStatusMessage] = useState("")
   const [isorder_id,setIsOrderId] = useState(`MBK${generateRandomNumber()}`);
   
@@ -36,6 +36,24 @@ function History() {
       }
     }
   }
+  async function getBasket () {
+    const accessTocen = localStorage.getItem("accessToken");
+  
+    try {
+      const res = await axios.get("https://koreacenter.kg/api/basket/",{
+        headers:{
+          Authorization:`Bearer ${accessTocen}`
+        }
+      })
+      // console.log(res)
+      setItems(res.data.items)
+      
+    } catch (error) {
+      console.log(error)
+      
+    }
+
+  }
   async function postSerivce () {
     
     const accessToken = localStorage.getItem("accessToken"); // Получение токена
@@ -53,7 +71,7 @@ function History() {
 
   if(isItemOrder_id){
     const formattedItems = items.map((item) => ({
-      product: item.product.id, // Используем ID товара
+      product:  item.product?.id || item.product.id, // Используем ID товара
       price: parseFloat(item.product.price), // Приводим цену к числу
       quantity: item.quantity || 1, // Устанавливаем количество (по умолчанию 1)
     }));
@@ -148,6 +166,7 @@ function History() {
 
   }
   useEffect(()=>{
+    getBasket()
     getItem()
     handleGet()
   },[])

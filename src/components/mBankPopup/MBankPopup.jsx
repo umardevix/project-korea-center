@@ -12,6 +12,7 @@ function generateRandomNumber() {
 
 function MBankPopup({ setPopup, name, phone_number }) {
   const { items } = useSelector((state) => state.basket);
+  console.log(items)
   const { total } = useSelector((state) => state.total);
   const [quid, setQuid] = useState(`CBK${generateRandomNumber()}`);
   const [isorder_id,setIsOrderId] = useState(`MBK${generateRandomNumber()}`);
