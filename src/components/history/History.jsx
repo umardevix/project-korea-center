@@ -76,42 +76,53 @@ function History() {
     console.log(isItemOrder_id)
 
   // if(isItemOrder_id){
-    const formattedItems = items.map((item) => ({
-      product:  item.product?.id || item.product.id, // Используем ID товара
-      price: parseFloat(item.product.price), // Приводим цену к числу
-      quantity: item.quantity || 1, // Устанавливаем количество (по умолчанию 1)
-    }));
+    const formattedItems = items.map((item) => {
+      // Проверяем наличие свойства product
+      if (!item.product || !item.product.id) {
+        console.error("Ошибка: отсутствует ID товара в item:", item);
+        return null;
+      }
+      
+      // Возвращаем объект в нужной структуре
+      return {
+        product: item.product.id, // Используем ID товара
+        price: parseFloat(item.product.price) || 0, // Преобразуем цену в число (по умолчанию 0)
+        quantity: item.quantity || 1, // Устанавливаем количество (по умолчанию 1)
+      };
+    }).filter(Boolean); // Удаляем null-значения
+    
     console.log("Отправляемые данные для items:", formattedItems,items);
     
     console.log(formattedItems);
     try {
       const response = await axios.post(
-          "/payments/orders/create/",
-          {
-            order_id: isItemOrder_id, // Убедитkjkjaесь, что это число (ID клиента)
-            total_amount: total,
-            items: formattedItems,
+        "/payments/orders/create/",
+        {
+          order_id: isItemOrder_id, // Убедитесь, что передается корректный ID заказа
+          total_amount: total, // Общая сумма заказа
+          items: formattedItems, // Сформированный массив items
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
           },
-          {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-              "Content-Type": "application/json",
-            },
-          }
-        );
-    console.log(response.data);
-    console.log(response,"postHisteroy");
-    if(response.status===201){
-      // удалить из корзины
+        }
+      );
       
-      deleteServer()
+      console.log("Успешный ответ сервера:", response.data);
+      
+      if (response.status === 201) {
+        // Успешно создан заказ, удаляем корзину
+        deleteServer();
+      }
+    } catch (error) {
+      console.error(
+        "Ошибка при создании заказа:",
+        error.response?.data || error.message
+      );
     }
-  } catch (error) {
-    console.error(
-      "Ошибка при создании заказа:",
-      error.response?.data || error
-    );
-  }
+    
   // }
   // else{
   //   alert("error order id")
