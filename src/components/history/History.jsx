@@ -70,8 +70,8 @@ function History() {
  
     let isItemOrder_id = JSON.parse(localStorage.getItem("order_id"));
 
-  if(isItemOrder_id){
-    const formattedItems = data.map((item) => ({
+  if(isItemOrder_id&&items.length!==0){
+    const formattedItems = items.map((item) => ({
       product:  item.product?.id || item.product.id, // Используем ID товара
       price: parseFloat(item.product.price), // Приводим цену к числу
       quantity: item.quantity || 1, // Устанавливаем количество (по умолчанию 1)
