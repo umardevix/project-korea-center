@@ -17,6 +17,7 @@ function History() {
   const { total } = useSelector((state) => state.total);
   
   const [data , setData] = useState([])
+  console.log(data)
   async function handleGet() {
     try {
       const res = await axios.get("/payments/payments-history/", {
@@ -70,7 +71,7 @@ function History() {
     let isItemOrder_id = JSON.parse(localStorage.getItem("order_id"));
 
   if(isItemOrder_id){
-    const formattedItems = items.map((item) => ({
+    const formattedItems = data.map((item) => ({
       product:  item.product?.id || item.product.id, // Используем ID товара
       price: parseFloat(item.product.price), // Приводим цену к числу
       quantity: item.quantity || 1, // Устанавливаем количество (по умолчанию 1)
