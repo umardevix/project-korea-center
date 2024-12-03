@@ -1,6 +1,14 @@
 import axios from 'axios';
 import store from '../redux/store';
 import { setUser } from '../redux/userSlice/userSlice';
+import { Navigate } from 'react-router-dom';
+
+const logout = () => {
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+    store.dispatch(setUser(null)); // Сброс состояния пользователя
+	return <Navigate to="/login" />;
+};
 
 export const initializeAuth = async () => {
     const refreshToken = localStorage.getItem('refreshToken');
@@ -36,10 +44,13 @@ export const refreshAccessToken = async () => {
             return newAccessToken;
         } else {
             console.warn('Не удалось обновить токен.');
+			logout()
             return null;
         }
     } catch (error) {
         console.error('Ошибка при обновлении токена:', error);
+		logout()
+		
         return null;
     }
 };
