@@ -72,11 +72,10 @@ function History() {
 
     // Преобразуем items для корректной структуры
     
- 
     let isItemOrder_id = JSON.parse(localStorage.getItem("order_id"));
     console.log(isItemOrder_id)
 
-  if(isItemOrder_id!==null&&items.length!==0){
+  // if(isItemOrder_id){
     const formattedItems = items.map((item) => ({
       product:  item.product?.id || item.product.id, // Используем ID товара
       price: parseFloat(item.product.price), // Приводим цену к числу
@@ -113,10 +112,10 @@ function History() {
       error.response?.data || error
     );
   }
-  }
-  else{
-    alert("error order id")
-  }
+  // }
+  // else{
+  //   alert("error order id")
+  // }
   }
   async function deleteServer() {
   

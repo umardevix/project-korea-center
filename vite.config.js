@@ -26,7 +26,7 @@ export default defineConfig({
       '/payments': {
         target: 'https://koreacenter.kg/api',
         changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/payment/, '/payment'),
+        rewrite: (path) => path.replace(/^\/payments/, '/payments'),
       },
       '/mbank': {
         target: 'https://ibank2.cbk.kg',
