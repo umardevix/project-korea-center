@@ -101,15 +101,16 @@ function MBankPopup({ setPopup, name, phone_number }) {
         
         if (response.data.code === 220) {
           console.log(response)
-          // await handleGet();
+          
+          if(response.data.code ===220) {
+            await handleStatus()
+          }
        
         }
       } else {
         setStatusMessage(response.data.comment || "Ошибка подтверждения");
         console.log(response.data);
-        if(response.data.code ===228) {
-          await handleStatus()
-        }
+    
 
       }
     } catch (error) {
@@ -206,6 +207,9 @@ try {
   
       console.log("Response:", res.data);
       console.log(res)
+      if (res.data.code===330) {
+        await handleGet();
+      }
     } catch (error) {
       console.error("Error:", error.message, error.response?.data || error);
     }

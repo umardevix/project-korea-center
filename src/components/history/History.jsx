@@ -10,6 +10,7 @@ function generateRandomNumber() {
 function History() {
   const [items, setItems] = useState([]);
   console.log(items)
+  console.log(items)
   const dispatch = useDispatch();
   const [statusMessage,setStatusMessage] = useState("")
   const [isorder_id,setIsOrderId] = useState(`MBK${generateRandomNumber()}`);
@@ -76,20 +77,26 @@ function History() {
     console.log(isItemOrder_id)
 
   // if(isItemOrder_id){
-    const formattedItems = items.map((item) => {
-      // Проверяем наличие свойства product
-      if (!item.product || !item.product.id) {
-        console.error("Ошибка: отсутствует ID товара в item:", item);
-        return null;
-      }
+    // const formattedItems = items.map((item) => {
+    //   // Проверяем наличие свойства product
+    //   if (!item.product || !item.product.id) {
+    //     console.error("Ошибка: отсутствует ID товара в item:", item);
+    //     return null;
+    //   }
       
-      // Возвращаем объект в нужной структуре
-      return {
-        product: item.product.id, // Используем ID товара
-        price: parseFloat(item.product.price) || 0, // Преобразуем цену в число (по умолчанию 0)
-        quantity: item.quantity || 1, // Устанавливаем количество (по умолчанию 1)
-      };
-    }).filter(Boolean); // Удаляем null-значения
+    //   // Возвращаем объект в нужной структуре
+    //   return {
+    //     product: item.product.id, // Используем ID товара
+    //     price: parseFloat(item.product.price) || 0, // Преобразуем цену в число (по умолчанию 0)
+    //     quantity: item.quantity || 1, // Устанавливаем количество (по умолчанию 1)
+    //   };
+    // }).filter(Boolean); // Удаляем null-значения
+    const formattedItems = items.map((item) => ({
+      product: item.product?.id || item.product.id, // Используем ID товара
+      price: parseFloat(item.product.price), // Приводим цену к числу
+      quantity: item.quantity || 1, // Устанавливаем количество (по умолчанию 1)
+    }));
+    console.log(formattedItems)
     
     console.log("Отправляемые данные для items:", formattedItems,items);
     
