@@ -55,6 +55,11 @@ function History() {
     }
 
   }
+  useEffect(()=>{
+    getBasket()
+    getItem()
+    handleGet()
+  },[])
   async function postSerivce () {
     
     const accessToken = localStorage.getItem("accessToken"); // Получение токена
@@ -69,6 +74,7 @@ function History() {
     
  
     let isItemOrder_id = JSON.parse(localStorage.getItem("order_id"));
+    console.log(isItemOrder_id)
 
   if(isItemOrder_id!==null&&items.length!==0){
     const formattedItems = items.map((item) => ({
@@ -166,11 +172,7 @@ function History() {
    
 
   }
-  useEffect(()=>{
-    getBasket()
-    getItem()
-    handleGet()
-  },[])
+ 
   return (
     <div className={styles.history_container}>
     <div className={styles.history_blocks}>
