@@ -21,31 +21,42 @@ function MBankPopup({ setPopup, name, phone_number }) {
   const dispatch = useDispatch()
   const navigate = useNavigate()
 
+  
+  const handleClose = () => setPopup(false);
   const authenticateHeader =
     "bcec992fec1e20efcc7458839dafca53b5cb855b288562233b7ad1c7bb62b835";
-
-  const handleClose = () => setPopup(false);
-
+  
   const createPayment = async () => {
     try {
+      const params = {
+        phone: phone_number,
+        amount: total * 100,
+        quid: quid,
+        comment: "Пополнение баланса",
+      };
+  
+      const headers = {
+        authenticate: authenticateHeader,
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      };
+  
+      const queryString = new URLSearchParams(params).toString();
+      const curlCommand = `curl -X GET "/mbank/otp/create?${queryString}" ` +
+        `-H "authenticate: ${authenticateHeader}" ` +
+        `-H "Accept: application/json" ` +
+        `-H "Content-Type: application/json"`;
+  
+      // console.log("cURL Command:", curlCommand);
+  
       const response = await axios.get("/mbank/otp/create", {
-        params: {
-          phone: phone_number,
-          amount: total * 100,
-          quid,
-          comment: "Пополнение баланса",
-        },
-        headers: {
-          authenticate: authenticateHeader,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
+        params,
+        headers,
       });
-
+  
       if (response.data.code === 110) {
         setStatusMessage("Транзакция успешно создана");
         setPopupOp(true);
-        console.log(response.data);
       } else {
         setStatusMessage(response.data.comment || "Ошибка создания платежа");
         setPopupOp(false);
@@ -55,6 +66,7 @@ function MBankPopup({ setPopup, name, phone_number }) {
       console.error("Ошибка создания платежа:", error);
     }
   };
+  
 
   const handleConfirm = async () => {
     try {
@@ -69,14 +81,13 @@ function MBankPopup({ setPopup, name, phone_number }) {
 
       if (response.data.code === 220) {
         setStatusMessage("Транзакция успешно подтверждена");
-        console.log(response.data);
         
         if (response.data.code === 220) {
           await handleGet();
         }
       } else {
         setStatusMessage(response.data.comment || "Ошибка подтверждения");
-        console.log(response.data);
+        // console.log(response.data);
 
       }
     } catch (error) {

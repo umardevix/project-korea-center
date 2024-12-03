@@ -4,14 +4,22 @@ import styles from './_image_uploader.module.scss';
 export const ImageUploader = ({ photos, setPhotos }) => {
 	const [currentIndex, setCurrentIndex] = useState(0);
 
-	const handleAddPhoto = (e) => {
-		const file = e.target.files[0];
+	const handleAddPhoto = (file) => {
 		if (file && currentIndex < photos.length) {
 			const newPhotos = [...photos];
 			newPhotos[currentIndex] = file;
 			setPhotos(newPhotos);
 			setCurrentIndex((prevIndex) => prevIndex + 1);
 		}
+	};
+
+	const handleButtonClick = () => {
+		document.getElementById('fileInput').click();
+	};
+
+	const handleFileChange = (e) => {
+		const file = e.target.files[0];
+		handleAddPhoto(file);
 	};
 
 	return (
@@ -32,11 +40,15 @@ export const ImageUploader = ({ photos, setPhotos }) => {
 			<label>
 				<input
 					type="file"
-					className="hidden"
+					id="fileInput"
+					className={styles.hidden_input}
 					accept="image/*"
-					onChange={handleAddPhoto}
+					onChange={handleFileChange}
+					style={{ display: 'none' }}
 				/>
-				<button>Добавить фото</button>
+				<button type="button" onClick={handleButtonClick}>
+					Добавить фото
+				</button>
 			</label>
 		</div>
 	);

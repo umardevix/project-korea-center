@@ -54,7 +54,7 @@ const ProductSection = ({ searchQuery, productCondition }) => {
           ) : filteredProducts.length > 0 ? (
             <>
               {currentItems.map((el) => (
-                <Card key={el.id} el={el} location={location} navigate={navigate} />
+                <Card key={el.id} el={el} location={location} navigate={navigate}  />
               ))}
               <Pagination
                 itemsPerPage={itemsPerPage}

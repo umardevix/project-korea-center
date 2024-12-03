@@ -4,6 +4,7 @@ import { setUser } from '../redux/userSlice/userSlice';
 
 export const refreshAccessToken = async () => {
 	const refreshToken = localStorage.getItem('refreshToken');
+	console.log("refreshToken", refreshToken);
 	if (!refreshToken) {
 		console.warn('Нет refresh токена.');
 		return null;
@@ -20,6 +21,8 @@ export const refreshAccessToken = async () => {
 		});
 
 		const newAccessToken = response.data.access;
+		console.log(response,"response")
+		console.log(newAccessToken,"newAccessToken")
 		if (newAccessToken) {
 			localStorage.setItem('accessToken', newAccessToken);
 
