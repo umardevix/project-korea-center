@@ -70,7 +70,7 @@ function History() {
  
     let isItemOrder_id = JSON.parse(localStorage.getItem("order_id"));
 
-  if(isItemOrder_id&&items.length!==0){
+  if(isItemOrder_id!==null&&items.length!==0){
     const formattedItems = items.map((item) => ({
       product:  item.product?.id || item.product.id, // Используем ID товара
       price: parseFloat(item.product.price), // Приводим цену к числу
@@ -129,7 +129,7 @@ function History() {
         
         localStorage.removeItem("id");
         localStorage.removeItem("order_id");
-        window.location.reload(true);
+        handleGet()
     }
   } catch (error) {
     console.log(error)
