@@ -18,6 +18,7 @@ function History() {
   const { total } = useSelector((state) => state.total);
   
   const [data , setData] = useState([])
+console.log(items)
   console.log(data)
   async function handleGet() {
     try {
@@ -48,7 +49,13 @@ function History() {
         }
       })
       // console.log(res)
-      setItems(res.data.items)
+      const formattedItems = res.data.items.map((item) => ({
+        product: item.product?.id || item.product.id, // Используем ID товара
+        price: parseFloat(item.product.price), // Приводим цену к числу
+        quantity: item.quantity || 1, // Устанавливаем количество (по умолчанию 1)
+      }));
+      console.log(formattedItems)
+      setItems(formattedItems)
       
     } catch (error) {
       console.log(error)
@@ -107,7 +114,7 @@ function History() {
         {
           order_id: isItemOrder_id, // Убедитесь, что передается корректный ID заказа
           total_amount: total, // Общая сумма заказа
-          items: formattedItems, // Сформированный массив items
+          items: items, // Сформированный массив items
         },
         {
           headers: {
