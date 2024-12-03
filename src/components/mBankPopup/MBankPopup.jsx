@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import styles from "./_m_b_popup.module.scss";
@@ -9,10 +9,12 @@ import { useNavigate } from "react-router-dom";
 function generateRandomNumber() {
   return Math.floor(100000 + Math.random() * 900000);
 }
+const authenticateHeader =
+  "bcec992fec1e20efcc7458839dafca53b5cb855b288562233b7ad1c7bb62b835";
 
 function MBankPopup({ setPopup, name, phone_number }) {
   const { items } = useSelector((state) => state.basket);
-  const { total } = useSelector((state) => state.total);
+  const [total, setTotal] = useState(0)
   const [quid, setQuid] = useState(`CBK${generateRandomNumber()}`);
   const [isorder_id,setIsOrderId] = useState(`MBK${generateRandomNumber()}`);
   const [otp, setOtp] = useState("");
@@ -20,11 +22,25 @@ function MBankPopup({ setPopup, name, phone_number }) {
   const [popupop, setPopupOp] = useState(false);
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const [isQuid, setIsQuid] = useState()
 
   
   const handleClose = () => setPopup(false);
-  const authenticateHeader =
-    "bcec992fec1e20efcc7458839dafca53b5cb855b288562233b7ad1c7bb62b835";
+ async function getBasket () {
+  const accessToken = localStorage.getItem("accessToken");
+    try {
+      const res = await axios.get("https://koreacenter.kg/api/basket/", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }});
+        console.log(res)
+        setTotal(res.data.total_price)
+      
+    } catch (error) {
+      console.log(error)
+      
+    }
+  }
   
   const createPayment = async () => {
     try {
@@ -34,6 +50,7 @@ function MBankPopup({ setPopup, name, phone_number }) {
         quid: quid,
         comment: "Пополнение баланса",
       };
+      setIsQuid(params.quid);
   
       const headers = {
         authenticate: authenticateHeader,
@@ -47,7 +64,7 @@ function MBankPopup({ setPopup, name, phone_number }) {
         `-H "Accept: application/json" ` +
         `-H "Content-Type: application/json"`;
   
-      // console.log("cURL Command:", curlCommand);
+      console.log("cURL Command:", curlCommand);
   
       const response = await axios.get("/mbank/otp/create", {
         params,
@@ -83,11 +100,16 @@ function MBankPopup({ setPopup, name, phone_number }) {
         setStatusMessage("Транзакция успешно подтверждена");
         
         if (response.data.code === 220) {
-          await handleGet();
+          console.log(response)
+          // await handleGet();
+       
         }
       } else {
         setStatusMessage(response.data.comment || "Ошибка подтверждения");
-        // console.log(response.data);
+        console.log(response.data);
+        if(response.data.code ===228) {
+          await handleStatus()
+        }
 
       }
     } catch (error) {
@@ -166,6 +188,30 @@ try {
       );
     }
   };
+  async function handleStatus() {
+    try {
+      if (!isQuid) {
+        throw new Error("Quid is undefined!");
+      }
+  
+      console.log("Sending GET request to:", `/mbank/opt/status?quid=${isQuid}`);
+  
+      const res = await axios.get(`/mbank/otp/status?quid=CBK454339`, {
+        headers: {
+          authenticate: authenticateHeader,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+  
+      console.log("Response:", res.data);
+      console.log(res)
+    } catch (error) {
+      console.error("Error:", error.message, error.response?.data || error);
+    }
+  }
+  
+  
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -175,6 +221,10 @@ try {
       handleConfirm();
     }
   };
+  useEffect(()=>{
+    getBasket()
+    // handleStatus()
+  },[])
 
   return (
     <div className={styles.mb_popup}>
@@ -227,6 +277,3 @@ try {
 }
 
 export default MBankPopup;
-// eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyOTc1OTA0LCJpYXQiOjE3MzI4ODc5NzcsImp0aSI6ImM5Zjk1N2YyNDIxYzQ4NDZiOWExOThlY2ExYTZmNDc3IiwidXNlcl9pZCI6MjcsInJvbGUiOm51bGx9.7nl0pboIlBnO-Rha1RxbmvdoQezFrCUweuHqSUU71x0
-//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzMyOTc1OTA0LCJpYXQiOjE3MzI4ODc5NzcsImp0aSI6ImM5Zjk1N2YyNDIxYzQ4NDZiOWExOThlY2ExYTZmNDc3IiwidXNlcl9pZCI6MjcsInJvbGUiOm51bGx9.7nl0pboIlBnO-Rha1RxbmvdoQezFrCUweuHqSUU71x0
-// {"first_name":"doolotkeldi","last_name":"alanov","phone_number":"+996501246086","date_joined":"2024-11-28T06:27:07.244865Z","is_active":true,"role":null,"country":null,"id":27}
