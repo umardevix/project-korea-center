@@ -1,14 +1,15 @@
 import axios from 'axios';
 import store from '../redux/store';
 import { setUser } from '../redux/userSlice/userSlice';
-import { Navigate } from 'react-router-dom';
 
 const logout = () => {
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
     store.dispatch(setUser(null)); // Сброс состояния пользователя
-	return <Navigate to="/login" />;
+	window.location.href = "/login"
 };
+
+
 
 export const initializeAuth = async () => {
     const refreshToken = localStorage.getItem('refreshToken');
