@@ -30,13 +30,14 @@ function MBank() {
       });
       // console.log(response)
 
+      console.log(response.data);
       if (response.data.code === 0) {
         setStatusMessage(response.data.comment);
         handlePopup(true);
+        console.log(response.data)
         setNumber(phoneWithCountryCode);
         setName(response.data.displayName);
         setQuid(response.data.quid); // Сохраняем QUID для дальнейшего использования
-        console.log(response.data);
       } else if (response.data.code === 114) {
         setStatusMessage('Плательщик не найден в системе');
       } else {

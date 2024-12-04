@@ -112,7 +112,7 @@ console.log(items)
       const response = await axios.post(
         "/payments/orders/create/",
         {
-          order_id: isItemOrder_id, // Убедитесь, что передается корректный ID заказа
+          order_id: isItemOrder_id, // Убедитесь, что пеедается корректный ID заказа
           total_amount: total, // Общая сумма заказа
           items: items, // Сформированный массив items
         },
@@ -178,8 +178,13 @@ console.log(items)
       if(res.data.status==="completed"){
         // alert("ваш заказ успешно куплен")
         console.log("get sussion , order_id",res)
-        postSerivce()
+       deleteServer()
     
+      }
+      else{
+        localStorage.removeItem("id");
+        localStorage.removeItem("order_id");
+
       }
       console.log(isItemId)
       console.log(isItemOrder_id)

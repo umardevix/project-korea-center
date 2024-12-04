@@ -70,6 +70,7 @@ function MBankPopup({ setPopup, name, phone_number }) {
         params,
         headers,
       });
+      console.log(response)
   
       if (response.data.code === 110) {
         setStatusMessage("Транзакция успешно создана");
@@ -95,6 +96,7 @@ function MBankPopup({ setPopup, name, phone_number }) {
           "Content-Type": "application/json",
         },
       });
+      console.log(response)
 
       if (response.data.code === 220) {
         setStatusMessage("Транзакция успешно подтверждена");
