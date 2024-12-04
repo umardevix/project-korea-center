@@ -1,25 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import styles from "./_history.module.scss"
 import axios from 'axios'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setPopupSlice } from '../../redux/popupSlice/popupSlice';
-function generateRandomNumber() {
-  return Math.floor(100000 + Math.random() * 900000);
-}
+import { toast } from 'react-toastify';
+
 function History() {
-  const [items, setItems] = useState([]);
-  console.log(items)
-  console.log(items)
   const dispatch = useDispatch();
-  const [statusMessage,setStatusMessage] = useState("")
-  const [isorder_id,setIsOrderId] = useState(`MBK${generateRandomNumber()}`);
   
-  const { total } = useSelector((state) => state.total);
   
   const [data , setData] = useState([])
-console.log(items)
-  console.log(data)
   async function handleGet() {
     try {
       const res = await axios.get("/payments/payments-history/", {
@@ -39,109 +30,12 @@ console.log(items)
       }
     }
   }
-  async function getBasket () {
-    const accessTocen = localStorage.getItem("accessToken");
-  
-    try {
-      const res = await axios.get("https://koreacenter.kg/api/basket/",{
-        headers:{
-          Authorization:`Bearer ${accessTocen}`
-        }
-      })
-      // console.log(res)
-      const formattedItems = res.data.items.map((item) => ({
-        product: item.product?.id || item.product.id, // Используем ID товара
-        price: parseFloat(item.product.price), // Приводим цену к числу
-        quantity: item.quantity || 1, // Устанавливаем количество (по умолчанию 1)
-      }));
-      console.log(formattedItems)
-      setItems(formattedItems)
-      
-    } catch (error) {
-      console.log(error)
-      
-    }
 
-  }
   useEffect(()=>{
-    getBasket()
     getItem()
     handleGet()
   },[])
-  async function postSerivce () {
-    
-    const accessToken = localStorage.getItem("accessToken"); // Получение токена
 
-    if (!accessToken) {
-      console.error("Токен авторизации не найден");
-      setStatusMessage("Ошибка: токен авторизации не найден");
-      return;
-    }
-
-    // Преобразуем items для корректной структуры
-    
-    let isItemOrder_id = JSON.parse(localStorage.getItem("order_id"));
-    console.log(isItemOrder_id)
-
-  // if(isItemOrder_id){
-    // const formattedItems = items.map((item) => {
-    //   // Проверяем наличие свойства product
-    //   if (!item.product || !item.product.id) {
-    //     console.error("Ошибка: отсутствует ID товара в item:", item);
-    //     return null;
-    //   }
-      
-    //   // Возвращаем объект в нужной структуре
-    //   return {
-    //     product: item.product.id, // Используем ID товара
-    //     price: parseFloat(item.product.price) || 0, // Преобразуем цену в число (по умолчанию 0)
-    //     quantity: item.quantity || 1, // Устанавливаем количество (по умолчанию 1)
-    //   };
-    // }).filter(Boolean); // Удаляем null-значения
-    const formattedItems = items.map((item) => ({
-      product: item.product?.id || item.product.id, // Используем ID товара
-      price: parseFloat(item.product.price), // Приводим цену к числу
-      quantity: item.quantity || 1, // Устанавливаем количество (по умолчанию 1)
-    }));
-    console.log(formattedItems)
-    
-    console.log("Отправляемые данные для items:", formattedItems,items);
-    
-    console.log(formattedItems);
-    try {
-      const response = await axios.post(
-        "/payments/orders/create/",
-        {
-          order_id: isItemOrder_id, // Убедитесь, что пеедается корректный ID заказа
-          total_amount: total, // Общая сумма заказа
-          items: items, // Сформированный массив items
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      
-      console.log("Успешный ответ сервера:", response.data);
-      
-      if (response.status === 201) {
-        // Успешно создан заказ, удаляем корзину
-        deleteServer();
-      }
-    } catch (error) {
-      console.error(
-        "Ошибка при создании заказа:",
-        error.response?.data || error.message
-      );
-    }
-    
-  // }
-  // else{
-  //   alert("error order id")
-  // }
-  }
   async function deleteServer() {
   
     const accessToken = localStorage.getItem("accessToken"); // Получение токена
@@ -168,6 +62,25 @@ console.log(items)
   
   
   }
+  const handleDelete = async (id) => {
+    try {
+        const res = await axios.delete(`/payments/orders/${id}/delete/`, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+                "Content-Type": "application/json",
+            },
+        });
+        if (res.status === 204) {
+          localStorage.removeItem("id");
+        localStorage.removeItem("order_id");
+        localStorage.removeItem("pay_url");
+        handleGet()
+            // setData(data.filter(order => order.id !== id));
+        }
+    } catch (error) {
+        console.error('Error deleting order:', error.message);
+    }
+};
   async function getItem () {
    let isItemId = JSON.parse(localStorage.getItem("id"));
    let isItemOrder_id = JSON.parse(localStorage.getItem("order_id"));
@@ -181,10 +94,14 @@ console.log(items)
        deleteServer()
     
       }
+      else if(res.data.status==="failed"){
+        toast.error('у не достоточно средств ');
+      }
       else{
-        localStorage.removeItem("id");
-        localStorage.removeItem("order_id");
-        localStorage.removeItem("pay_url");
+        const isData = data.filter((x)=>x.order_id==isItemOrder_id)
+        handleDelete(isData[0].id)
+
+        
 
       }
       console.log(isItemId)

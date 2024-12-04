@@ -36,6 +36,7 @@ function Cart() {
   useEffect(()=>{
     getBasket()
   },[])
+
   async function postSerivce () {
     
     const accessToken = localStorage.getItem("accessToken"); // Получение токена
@@ -71,11 +72,6 @@ function Cart() {
       price: parseFloat(item.product.price), // Приводим цену к числу
       quantity: item.quantity || 1, // Устанавливаем количество (по умолчанию 1)
     }));
-    // console.log(formattedItems)
-    
-    // console.log("Отправляемые данные для items:", formattedItems,items);
-    
-    // console.log(formattedItems);
     try {
       const response = await axios.post(
         "/payments/orders/create/",
@@ -100,10 +96,20 @@ function Cart() {
         let pay_url = JSON.parse(localStorage.getItem("pay_url"));
         if(islocalOrder_id && islocalId&&pay_url){
           
-              window.location.href = `${pay_url}${islocalId}`;
+              // window.location.href = `${pay_url}${islocalId}`;
+              console.log(isItemOrder_id)
+              localStorage.removeItem("id");
+        localStorage.removeItem("order_id");
+        localStorage.removeItem("pay_url");
         }
         // Успешно создан заказ, удаляем корзину
         // deleteServer();
+      }
+      else{
+        
+        localStorage.removeItem("id");
+        localStorage.removeItem("order_id");
+        localStorage.removeItem("pay_url");
       }
     } catch (error) {
       console.error(

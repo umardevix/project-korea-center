@@ -5,6 +5,7 @@ import axios from 'axios';
 
 export const AdminOrder = () => {
     const [data, setData] = useState([]);
+    console.log(data)
     const [searchTerm, setSearchTerm] = useState('');
     const [filter, setFilter] = useState('');
     const [endDate, setEndDate] = useState('');
