@@ -97,9 +97,10 @@ function Cart() {
       if (response.status === 201) {
         let islocalId = JSON.parse(localStorage.getItem("id"));
         let islocalOrder_id = JSON.parse(localStorage.getItem("order_id"));
-        if(islocalOrder_id && islocalId){
+        let pay_url = JSON.parse(localStorage.getItem("pay_url"));
+        if(islocalOrder_id && islocalId&&pay_url){
           
-              window.location.href = `${response.data.pay_url}${response.data.payment_session}`;
+              window.location.href = `${pay_url}${islocalId}`;
         }
         // Успешно создан заказ, удаляем корзину
         // deleteServer();
@@ -146,9 +147,11 @@ function Cart() {
           if (res.status === 200) {
             localStorage.setItem("id", JSON.stringify(response.data.payment_session));
             localStorage.setItem("order_id", JSON.stringify(response.data.order_id));
+            localStorage.setItem("pay_url", JSON.stringify(response.data.pay_url));
             let islocalId = JSON.parse(localStorage.getItem("id"));
             let islocalOrder_id = JSON.parse(localStorage.getItem("order_id"));
-            if(islocalId===response.data.payment_session&&islocalOrder_id===response.data.order_id){
+            let pay_url = JSON.parse(localStorage.getItem("pay_url"));
+            if(islocalId===response.data.payment_session&&islocalOrder_id===response.data.order_id&&pay_url===response.data.pay_url){
               // window.location.href = `${response.data.pay_url}${response.data.payment_session}`;
               postSerivce()
             }

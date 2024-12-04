@@ -184,6 +184,7 @@ console.log(items)
       else{
         localStorage.removeItem("id");
         localStorage.removeItem("order_id");
+        localStorage.removeItem("pay_url");
 
       }
       console.log(isItemId)
@@ -193,6 +194,7 @@ console.log(items)
       console.log(error,"is get item")
       localStorage.removeItem("id");
       localStorage.removeItem("order_id");
+      localStorage.removeItem("pay_url");
     
 
     }
