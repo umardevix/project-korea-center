@@ -39,12 +39,12 @@
             .mb_button{
                 @apply w-full flex justify-center mt-6 relative;
                 button{
-                    @apply w-[200px] h-[40px] text-regal-white bg-bg-green rounded-[2px] text-[16px] hover:bg-[#90EE90];
+                    @apply w-[180px] sm:w-[200px] h-[40px] text-regal-white bg-bg-green rounded-[2px] text-[16px] hover:bg-[#90EE90];
                     // #90EE90
 
                 }
                 input{
-                    @apply absolute left-0 border w-[100px] h-[40px] px-2 outline-none rounded-[2px];
+                    @apply absolute left-0 border w-[80px] sm:w-[100px] h-[40px] px-2 outline-none rounded-[2px];
                 }
             }
             .mb_close{

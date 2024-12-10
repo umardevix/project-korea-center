@@ -5,43 +5,41 @@ import styles from "./_m_b_popup.module.scss";
 import { setPopupSlice } from "../../redux/popupSlice/popupSlice";
 import { useNavigate } from "react-router-dom";
 
-// Генерация случайного 6-значного числа
 function generateRandomNumber() {
   return Math.floor(100000 + Math.random() * 900000);
 }
+
 const authenticateHeader =
-  "bcec992fec1e20efcc7458839dafca53b5cb855b288562233b7ad1c7bb62b835";
+  "b9aba2e0a23cb29c94b9986e924dcaeff09e390c37fd9ecca0f92acd81ed4899226cdd7e1ecfbd5169e3f3299d0f005fb415c1fa95ed00e605a7bb9529e84c85";
 
 function MBankPopup({ setPopup, name, phone_number }) {
   const { items } = useSelector((state) => state.basket);
-  const [total, setTotal] = useState(0)
+  const [total, setTotal] = useState(0);
   const [quid, setQuid] = useState(`CBK${generateRandomNumber()}`);
-  const [isorder_id,setIsOrderId] = useState(`MBK${generateRandomNumber()}`);
+  const [isorder_id, setIsOrderId] = useState(`MBK${generateRandomNumber()}`);
   const [otp, setOtp] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
   const [popupop, setPopupOp] = useState(false);
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const [isQuid, setIsQuid] = useState()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const [isQuid, setIsQuid] = useState();
 
-  
   const handleClose = () => setPopup(false);
- async function getBasket () {
-  const accessToken = localStorage.getItem("accessToken");
+
+  async function getBasket() {
+    const accessToken = localStorage.getItem("accessToken");
     try {
       const res = await axios.get("https://koreacenter.kg/api/basket/", {
         headers: {
-          Authorization: `Bearer ${accessToken}`
-        }});
-        console.log(res)
-        setTotal(res.data.total_price)
-      
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      setTotal(res.data.total_price);
     } catch (error) {
-      console.log(error)
-      
+      console.log(error);
     }
   }
-  
+
   const createPayment = async () => {
     try {
       const params = {
@@ -51,27 +49,18 @@ function MBankPopup({ setPopup, name, phone_number }) {
         comment: "Пополнение баланса",
       };
       setIsQuid(params.quid);
-  
+
       const headers = {
         authenticate: authenticateHeader,
         Accept: "application/json",
         "Content-Type": "application/json",
       };
-  
-      const queryString = new URLSearchParams(params).toString();
-      const curlCommand = `curl -X GET "/mbank/otp/create?${queryString}" ` +
-        `-H "authenticate: ${authenticateHeader}" ` +
-        `-H "Accept: application/json" ` +
-        `-H "Content-Type: application/json"`;
-  
-      console.log("cURL Command:", curlCommand);
-  
+
       const response = await axios.get("/mbank/otp/create", {
         params,
         headers,
       });
-      console.log(response)
-  
+
       if (response.data.code === 110) {
         setStatusMessage("Транзакция успешно создана");
         setPopupOp(true);
@@ -84,7 +73,6 @@ function MBankPopup({ setPopup, name, phone_number }) {
       console.error("Ошибка создания платежа:", error);
     }
   };
-  
 
   const handleConfirm = async () => {
     try {
@@ -96,128 +84,105 @@ function MBankPopup({ setPopup, name, phone_number }) {
           "Content-Type": "application/json",
         },
       });
-      console.log(response)
 
       if (response.data.code === 220) {
         setStatusMessage("Транзакция успешно подтверждена");
-        
-        if (response.data.code === 220) {
-          console.log(response)
-          
-          if(response.data.code ===220) {
-            await handleStatus()
-          }
-       
-        }
+        await handleStatus();
       } else {
         setStatusMessage(response.data.comment || "Ошибка подтверждения");
-        console.log(response.data);
-    
-
       }
     } catch (error) {
       setStatusMessage("Ошибка подтверждения платежа");
       console.error("Ошибка подтверждения платежа:", error);
     }
   };
-async function deleteServer() {
-  
-  const accessToken = localStorage.getItem("accessToken"); // Получение токена
-try {
-  const res = await axios.delete("https://koreacenter.kg/api/basket/delete/",{
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-      "Content-Type": "application/json",
-    },
-    
-  })
-    if(res.status===204){
- dispatch(setPopupSlice(true))
-    navigate("/profile") // dispatch(setPopupSlice(true))
-    navigate("/profile")
+
+  async function deleteServer() {
+    const accessToken = localStorage.getItem("accessToken");
+    try {
+      const res = await axios.delete(
+        "https://koreacenter.kg/api/basket/delete/",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (res.status === 204) {
+        dispatch(setPopupSlice(true));
+        navigate("/profile");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
-} catch (error) {
-  console.log(error)
-  
-}
 
-
-}
   const handleGet = async () => {
-    const accessToken = localStorage.getItem("accessToken"); // Получение токена
-
+    const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
-      console.error("Токен авторизации не найден");
       setStatusMessage("Ошибка: токен авторизации не найден");
       return;
     }
 
-    // Преобразуем items для корректной структуры
     const formattedItems = items.map((item) => ({
-      product: item.product?.id || item.product.id, // Используем ID товара
-      price: parseFloat(item.product.price), // Приводим цену к числу
-      quantity: item.quantity || 1, // Устанавливаем количество (по умолчанию 1)
+      product: item.product?.id || item.product.id,
+      price: parseFloat(item.product.price),
+      quantity: item.quantity || 1,
     }));
-    console.log(items);
-
-    console.log("Отправляемые данные для items:", formattedItems);
 
     try {
-        const response = await axios.post(
-            "/payments/orders/create/",
-            {
-              order_id: isorder_id, // Убедитkjkjaесь, что это число (ID клиента)
-              total_amount: total,
-              items: formattedItems,
-            },
-            {
-              headers: {
-                Authorization: `Bearer ${accessToken}`,
-                "Content-Type": "application/json",
-              },
-            }
-          );
-      console.log(response.data);
-      console.log(response);
-      if(response.status===201){
-       await deleteServer()
-        
-   
+      const response = await axios.post(
+        "/payments/orders/create/",
+        {
+          order_id: isorder_id,
+          total_amount: total,
+          items: formattedItems,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.status === 201) {
+        await deleteServer();
       }
     } catch (error) {
-      console.error(
-        "Ошибка при создании заказа:",
-        error.response?.data || error
-      );
+      console.error("Ошибка при создании заказа:", error.response?.data || error);
     }
   };
+
   async function handleStatus() {
     try {
       if (!isQuid) {
         throw new Error("Quid is undefined!");
       }
-  
-      console.log("Sending GET request to:", `/mbank/opt/status?quid=${isQuid}`);
-  
-      const res = await axios.get(`/mbank/otp/status?quid=CBK454339`, {
+
+      const res = await axios.get(`/mbank/otp/status?quid=${isQuid}`, {
         headers: {
           authenticate: authenticateHeader,
           Accept: "application/json",
           "Content-Type": "application/json",
         },
       });
-  
-      console.log("Response:", res.data);
-      console.log(res)
-      if (res.data.code===330) {
+
+      if (res.data.code === 330) {
         await handleGet();
+        setStatusMessage("Транзакция успешно завершена");
+      } else if (res.data.code === 331) {
+        setStatusMessage("Транзакция в процессе обработки. Подождите...");
+        setTimeout(handleStatus, 5000); // Проверка через 5 секунд
+      } else {
+        setStatusMessage(res.data.comment || "Ошибка обработки транзакции");
       }
     } catch (error) {
+      setStatusMessage(error.response?.data.comment || "Ошибка проверки статуса");
       console.error("Error:", error.message, error.response?.data || error);
     }
   }
-  
-  
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -227,10 +192,10 @@ try {
       handleConfirm();
     }
   };
-  useEffect(()=>{
-    getBasket()
-    // handleStatus()
-  },[])
+
+  useEffect(() => {
+    getBasket();
+  }, []);
 
   return (
     <div className={styles.mb_popup}>
