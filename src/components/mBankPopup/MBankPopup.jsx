@@ -59,7 +59,7 @@ function MBankPopup({ setPopup, name, phone_number }) {
         "Content-Type": "application/json",
       };
 
-      const response = await axios.get("/mbank/otp/create", {
+      const response = await axios.get("https://api.mbank.kg/v1/otp//create", {
         params,
         headers,
       });
@@ -82,7 +82,7 @@ function MBankPopup({ setPopup, name, phone_number }) {
 
   const handleConfirm = async (value) => {
     try {
-      const response = await axios.get(`/mbank/otp/confirm?quid=${quid}&otp=${value}`, {
+      const response = await axios.get(`https://api.mbank.kg/v1/otp/confirm?quid=${quid}&otp=${value}`, {
         // params: { quid, otp },
         headers: {
           authenticate: authenticateHeader,
@@ -115,7 +115,7 @@ function MBankPopup({ setPopup, name, phone_number }) {
         throw new Error("Quid is undefined!");
       }
 
-      const res = await axios.get(`/mbank/otp/status?quid=${isQuid}`, {
+      const res = await axios.get(`https://api.mbank.kg/v1/otp/status?quid=${isQuid}`, {
         headers: {
           authenticate: authenticateHeader,
           Accept: "application/json",

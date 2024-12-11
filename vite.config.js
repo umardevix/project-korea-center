@@ -28,11 +28,11 @@ export default defineConfig({
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/payments/, '/payments'),
       },
-      '/mbank': {
-        target: 'https://api.mbank.kg/v1',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/mbank/, ''),
-      },
+      // '/mbank': {
+      //   target: 'https://api.mbank.kg/v1/otp/',
+      //   changeOrigin: true,
+      //   rewrite: (path) => path.replace(/^\/mbank/, ''),
+      // },
     },
   },
 });

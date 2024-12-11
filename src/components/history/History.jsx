@@ -57,9 +57,6 @@ console.log(res)
           getBasket()
         } else if (res.data.status === "failed") {
           toast.error("Недостаточно средств");
-          localStorage.removeItem("id");
-          localStorage.removeItem("order_id");
-          localStorage.removeItem("pay_url");
           handleFailedPayment();
         } else {
           handleFailedPayment();
@@ -98,10 +95,33 @@ console.log(res)
         }
       );
       console.log(res)
+      if (res.status === 201) {
+        await deleteServer();
+      }
 
-      handleGet(); // Refresh history after payment is confirmed
     } catch (error) {
       console.error("Error updating history:", error);
+    }
+  }
+  async function deleteServer() {
+    const accessToken = localStorage.getItem("accessToken");
+    try {
+      const res = await axios.delete(
+        "https://koreacenter.kg/api/basket/delete/",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (res.status === 204) {
+        dispatch(setPopupSlice(true));
+        handleFailedPayment()
+
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
 
