@@ -35,6 +35,7 @@ function Header() {
         console.error("Ошибка при получении данных корзины:", error);
       }
     };
+    
 
     // Запрашиваем корзину только если пользователь авторизован
     if (user) {
@@ -46,6 +47,10 @@ function Header() {
   useEffect(() => {
     localStorage.setItem('basket', JSON.stringify(basketData));
   }, [basketData]);
+  useEffect(() => {
+    // Управляем скроллом в зависимости от значения `open`
+    document.body.style.overflow = popup ? "hidden" : "";
+  }, [popup]);
 
   const handlePopup = (value) => {
     setPopup(value);
