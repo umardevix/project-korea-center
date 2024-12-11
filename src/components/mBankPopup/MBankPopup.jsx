@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import styles from "./_m_b_popup.module.scss";
 import { setPopupSlice } from "../../redux/popupSlice/popupSlice";
 import { useNavigate } from "react-router-dom";
+import { ThreeDot } from "react-loading-indicators";
 
 function generateRandomNumber() {
   return Math.floor(100000 + Math.random() * 900000);
@@ -20,9 +21,11 @@ function MBankPopup({ setPopup, name, phone_number }) {
   const [otp, setOtp] = useState("");
   const [statusMessage, setStatusMessage] = useState("");
   const [popupop, setPopupOp] = useState(false);
+  const [isError, setIsError] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [isQuid, setIsQuid] = useState();
+  const [loading ,setLoading] = useState(false)
 
   const handleClose = () => setPopup(false);
 
@@ -64,20 +67,55 @@ function MBankPopup({ setPopup, name, phone_number }) {
       if (response.data.code === 110) {
         setStatusMessage("Транзакция успешно создана");
         setPopupOp(true);
+        setIsError(false);
       } else {
         setStatusMessage(response.data.comment || "Ошибка создания платежа");
         setPopupOp(false);
+        setIsError(true);
       }
     } catch (error) {
       setStatusMessage("Ошибка создания платежа");
+      setIsError(true);
       console.error("Ошибка создания платежа:", error);
     }
   };
 
-  const handleConfirm = async () => {
+  const handleConfirm = async (value) => {
     try {
-      const response = await axios.get("/mbank/otp/confirm", {
-        params: { quid, otp },
+      const response = await axios.get(`/mbank/otp/confirm?quid=${quid}&otp=${value}`, {
+        // params: { quid, otp },
+        headers: {
+          authenticate: authenticateHeader,
+          Accept: "application/json",
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response)
+
+      if (response.data.code === 220) {
+        setStatusMessage("Транзакция успешно подтверждена");
+        setIsError(false);
+        await handleStatus();
+      } else {
+        setStatusMessage(response.data.comment || "Ошибка подтверждения");
+        setIsError(true);
+        console.log(response)
+      }
+    } catch (error) {
+      setStatusMessage("Ошибка подтверждения платежа");
+      setIsError(true);
+      console.error("Ошибка подтверждения платежа:", error);
+      console.log(error)
+    }
+  };
+
+  async function handleStatus() {
+    try {
+      if (!isQuid) {
+        throw new Error("Quid is undefined!");
+      }
+
+      const res = await axios.get(`/mbank/otp/status?quid=${isQuid}`, {
         headers: {
           authenticate: authenticateHeader,
           Accept: "application/json",
@@ -85,36 +123,24 @@ function MBankPopup({ setPopup, name, phone_number }) {
         },
       });
 
-      if (response.data.code === 220) {
-        setStatusMessage("Транзакция успешно подтверждена");
-        await handleStatus();
+      if (res.data.code === 330) {
+        await handleGet();
+        setStatusMessage("Транзакция успешно завершена");
+        setIsError(false);
+        setLoading(false)
+      } else if (res.data.code === 331) {
+        setStatusMessage("Транзакция в процессе обработки. Подождите...");
+        setIsError(false);
+        setLoading(true)
+        setTimeout(handleStatus, 5000); // Check again after 5 seconds
       } else {
-        setStatusMessage(response.data.comment || "Ошибка подтверждения");
+        setStatusMessage(res.data.comment || "Ошибка обработки транзакции");
+        setIsError(true);
       }
     } catch (error) {
-      setStatusMessage("Ошибка подтверждения платежа");
-      console.error("Ошибка подтверждения платежа:", error);
-    }
-  };
-
-  async function deleteServer() {
-    const accessToken = localStorage.getItem("accessToken");
-    try {
-      const res = await axios.delete(
-        "https://koreacenter.kg/api/basket/delete/",
-        {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      if (res.status === 204) {
-        dispatch(setPopupSlice(true));
-        navigate("/profile");
-      }
-    } catch (error) {
-      console.log(error);
+      setStatusMessage(error.response?.data.comment || "Ошибка проверки статуса");
+      setIsError(true);
+      console.error("Error:", error.message, error.response?.data || error);
     }
   }
 
@@ -122,6 +148,7 @@ function MBankPopup({ setPopup, name, phone_number }) {
     const accessToken = localStorage.getItem("accessToken");
     if (!accessToken) {
       setStatusMessage("Ошибка: токен авторизации не найден");
+      setIsError(true);
       return;
     }
 
@@ -155,41 +182,33 @@ function MBankPopup({ setPopup, name, phone_number }) {
     }
   };
 
-  async function handleStatus() {
+  async function deleteServer() {
+    const accessToken = localStorage.getItem("accessToken");
     try {
-      if (!isQuid) {
-        throw new Error("Quid is undefined!");
-      }
-
-      const res = await axios.get(`/mbank/otp/status?quid=${isQuid}`, {
-        headers: {
-          authenticate: authenticateHeader,
-          Accept: "application/json",
-          "Content-Type": "application/json",
-        },
-      });
-
-      if (res.data.code === 330) {
-        await handleGet();
-        setStatusMessage("Транзакция успешно завершена");
-      } else if (res.data.code === 331) {
-        setStatusMessage("Транзакция в процессе обработки. Подождите...");
-        setTimeout(handleStatus, 5000); // Проверка через 5 секунд
-      } else {
-        setStatusMessage(res.data.comment || "Ошибка обработки транзакции");
+      const res = await axios.delete(
+        "https://koreacenter.kg/api/basket/delete/",
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      if (res.status === 204) {
+        dispatch(setPopupSlice(true));
+        navigate("/profile");
       }
     } catch (error) {
-      setStatusMessage(error.response?.data.comment || "Ошибка проверки статуса");
-      console.error("Error:", error.message, error.response?.data || error);
+      console.log(error);
     }
   }
 
   const handleChange = (e) => {
     const value = e.target.value;
+    
     setOtp(value);
-
-    if (value === "1234") {
-      handleConfirm();
+    if (value.length === 4) {
+      handleConfirm(value);
     }
   };
 
@@ -212,7 +231,9 @@ function MBankPopup({ setPopup, name, phone_number }) {
             <p>{phone_number}</p>
           </div>
           <div className={styles.mb_content}>
-            <h1>Статус: ожидание подтверждения</h1>
+            <h1>Статус:    {statusMessage && (
+              <p className={isError ? styles.errorText : ""}>{statusMessage}</p>
+            )}</h1>
             <div className={styles.mb_blocks}>
               <div className={styles.mb_block}>
                 <p>Плательщик</p>
@@ -230,6 +251,7 @@ function MBankPopup({ setPopup, name, phone_number }) {
                   placeholder="Введите OTP"
                   value={otp}
                   onChange={handleChange}
+                  className={isError ? styles.errorInput : ""}
                 />
               )}
               <button disabled={popupop} onClick={createPayment}>
@@ -239,8 +261,16 @@ function MBankPopup({ setPopup, name, phone_number }) {
             <div className={styles.mb_close}>
               <span onClick={handleClose}>Закрыть</span>
             </div>
-            {statusMessage && <p>{statusMessage}</p>}
+            {statusMessage && (
+              <p className={isError ? styles.errorText : ""}>{statusMessage}</p>
+            )}
           </div>
+{
+  
+  loading&&  <div className={styles.mb_loading}>
+       <ThreeDot color="#32cd32" size="medium" text="" textColor="" />
+          </div>
+}
         </div>
       </div>
     </div>

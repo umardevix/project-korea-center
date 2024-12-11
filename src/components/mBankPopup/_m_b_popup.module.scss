@@ -1,7 +1,7 @@
 .mb_popup {
   @apply fixed top-0 w-full h-full z-[99999] left-0 bg-regal-white pt-[63px];
   .mb_popup_info {
-    @apply w-full sm:w-[491px] sm:mx-auto h-auto p-[25px] rounded-[4px] shadow-custom1 shadow-[#A9A9A9];
+    @apply w-full sm:w-[491px] relative sm:mx-auto h-auto p-[25px] rounded-[4px] shadow-custom1 shadow-[#A9A9A9];
     .mb_logo {
       @apply flex flex-col items-center;
       img {
@@ -55,6 +55,10 @@
                 }
             }
         
+    }
+    .mb_loading{
+        @apply absolute w-full h-full   bg-[rgba(0,79,115,0.09)]  top-0 left-0 flex justify-center items-center;
+
     }
   }
 }

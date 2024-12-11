@@ -96,11 +96,9 @@ function Cart() {
         let pay_url = JSON.parse(localStorage.getItem("pay_url"));
         if(islocalOrder_id && islocalId&&pay_url){
           
-              // window.location.href = `${pay_url}${islocalId}`;
+              window.location.href = `${pay_url}${islocalId}`;
               console.log(isItemOrder_id)
-              localStorage.removeItem("id");
-        localStorage.removeItem("order_id");
-        localStorage.removeItem("pay_url");
+        
         }
         // Успешно создан заказ, удаляем корзину
         // deleteServer();

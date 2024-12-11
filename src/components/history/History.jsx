@@ -96,6 +96,12 @@ function History() {
       }
       else if(res.data.status==="failed"){
         toast.error('у не достоточно средств ');
+        
+      localStorage.removeItem("id");
+      localStorage.removeItem("order_id");
+      localStorage.removeItem("pay_url");
+      const isData = data.filter((x)=>x.order_id==isItemOrder_id)
+      handleDelete(isData[0].id)
       }
       else{
         const isData = data.filter((x)=>x.order_id==isItemOrder_id)
@@ -112,6 +118,8 @@ function History() {
       localStorage.removeItem("id");
       localStorage.removeItem("order_id");
       localStorage.removeItem("pay_url");
+      const isData = data.filter((x)=>x.order_id==isItemOrder_id)
+      handleDelete(isData[0].id)
     
 
     }
