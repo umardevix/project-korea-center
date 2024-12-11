@@ -136,6 +136,7 @@ function MBankPopup({ setPopup, name, phone_number,statusMessagge }) {
       } else {
         setStatusMessage(res.data.comment || "Ошибка обработки транзакции");
         setIsError(true);
+        setLoading(false)
       }
     } catch (error) {
       setStatusMessage(error.response?.data.comment || "Ошибка проверки статуса");
