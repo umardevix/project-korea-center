@@ -84,10 +84,8 @@ function RegisterPage() {
       if (error.response && error.response.status === 400) {
         // Проверяем наличие ошибки по номеру телефона
         if (error.response.data.phone_number) {
-          // Показываем алерт, если номер уже существует
           alert("Пользователь с таким номером телефона уже существует.");
         } else {
-          // Показываем общую ошибку, если другая проблема
           alert("Произошла ошибка при регистрации. Пожалуйста, попробуйте снова.");
         }
       } else {
@@ -95,7 +93,6 @@ function RegisterPage() {
       }
     }
   }
-
 
   return (
     <section className={styles.login_section}>
@@ -134,7 +131,15 @@ function RegisterPage() {
                 <div className={styles.login_input}>
                   <input
                     onChange={handleChange}
+                    onInput={(event) => {
+                      const value = event.target.value;
+                      if (value.startsWith("0")) {
+                        event.target.value = value.substring(1);
+                      }
+                    }}
                     name="phone_number"
+                    
+                    placeholder="700000000"
                     value={user.phone_number}
                     type="text"
                   />
@@ -158,9 +163,7 @@ function RegisterPage() {
                     className={uncow ? styles.login_input_error : styles.login_input_success}
                   />
                   <span className="flex items-center mt-[2px] cursor-pointer" onClick={handleToggleOne}>
-                    {
-                      toggle ? <FaEye className="text-lg" /> : <FaEyeSlash className="text-lg" />
-                    }
+                    {toggle ? <FaEye className="text-lg" /> : <FaEyeSlash className="text-lg" />}
                   </span>
                 </div>
               </div>
@@ -175,9 +178,7 @@ function RegisterPage() {
                     className={uncow ? styles.login_input_error : styles.login_input_success}
                   />
                   <span className="flex items-center mt-[2px] cursor-pointer" onClick={handleToggleTwo}>
-                    {
-                      toggleTwo ? <FaEye className="text-lg" /> : <FaEyeSlash className="text-lg" />
-                    }
+                    {toggleTwo ? <FaEye className="text-lg" /> : <FaEyeSlash className="text-lg" />}
                   </span>
                 </div>
               </div>

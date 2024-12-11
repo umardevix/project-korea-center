@@ -14,9 +14,30 @@ function Header() {
   // Извлекаем данные пользователя и корзины из Redux Store
   const user = useSelector((state) => state.user.user); // Если user уже является объектом, не нужно использовать дополнительное свойство
   const basketData = useSelector((state) => state.products.basket);
+  const [count , setcount] = useState(0)
 
   // Общее количество товаров в корзине
   const totalItemCount = basketData.total_items_count || 0;
+  async function getBasket() {
+    const accessToken = localStorage.getItem("accessToken");
+
+    try {
+      const res = await axios.get("https://koreacenter.kg/api/basket/", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      console.log(res)
+      setcount(res.data.total_item_count)
+
+
+     
+
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
 
   useEffect(() => {
     const fetchBasket = async () => {
@@ -55,6 +76,9 @@ function Header() {
   const handlePopup = (value) => {
     setPopup(value);
   };
+  useEffect(()=>{
+    getBasket()
+  },[])
 
   return (
     <header className={styles.header}>
@@ -78,7 +102,6 @@ function Header() {
               <div>
                 <img src="/assets/images/basket.png" alt="Корзина" />
               </div>
-              {/* <span>{totalItemCount}</span> */}
             </Link>
             {user ? (
               <div className={styles.user_profile}>

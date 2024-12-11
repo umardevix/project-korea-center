@@ -37,14 +37,18 @@
                 }
             }
             .mb_button{
-                @apply w-full flex justify-center mt-6 relative;
+                @apply w-full flex justify-center gap-2 mt-6 ;
                 button{
-                    @apply w-[180px] sm:w-[200px] h-[40px] text-regal-white bg-bg-green rounded-[2px] text-[16px] hover:bg-[#90EE90];
+                    @apply w-[140px] sm:w-[200px] h-[40px] text-regal-white bg-bg-green rounded-[2px] text-[12px] md:text-[16px] hover:bg-[#90EE90];
                     // #90EE90
 
                 }
                 input{
-                    @apply absolute left-0 border w-[80px] sm:w-[100px] h-[40px] px-2 outline-none rounded-[2px];
+                    @apply  border w-[120px] h-[40px] px-2 outline-none rounded-[2px];
+                    
+                }
+                input::placeholder{
+                    @apply text-[12px];
                 }
             }
             .mb_close{

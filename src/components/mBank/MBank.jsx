@@ -86,6 +86,7 @@ function MBank() {
           phone_number={number}
           name={name}
           quid={quid}
+          statusMessagge={statusMessage}
         />
       )}
     </>

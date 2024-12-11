@@ -16,11 +16,7 @@ function Cart() {
         },
       });
 
-      const formattedItems = res.data.items.map((item) => ({
-        product: item.product?.id || item.product.id, 
-        price: parseFloat(item.product.price),
-        quantity: item.quantity || 1,
-      }));
+     
 
       setItems(res.data.items);
       setTotal(res.data.total_price);

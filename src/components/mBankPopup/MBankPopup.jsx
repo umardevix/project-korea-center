@@ -13,13 +13,13 @@ function generateRandomNumber() {
 const authenticateHeader =
   "b9aba2e0a23cb29c94b9986e924dcaeff09e390c37fd9ecca0f92acd81ed4899226cdd7e1ecfbd5169e3f3299d0f005fb415c1fa95ed00e605a7bb9529e84c85";
 
-function MBankPopup({ setPopup, name, phone_number }) {
+function MBankPopup({ setPopup, name, phone_number,statusMessagge }) {
   const { items } = useSelector((state) => state.basket);
   const [total, setTotal] = useState(0);
   const [quid, setQuid] = useState(`CBK${generateRandomNumber()}`);
   const [isorder_id, setIsOrderId] = useState(`MBK${generateRandomNumber()}`);
   const [otp, setOtp] = useState("");
-  const [statusMessage, setStatusMessage] = useState("");
+  const [statusMessage, setStatusMessage] = useState(statusMessagge);
   const [popupop, setPopupOp] = useState(false);
   const [isError, setIsError] = useState(false);
   const dispatch = useDispatch();
@@ -248,7 +248,7 @@ function MBankPopup({ setPopup, name, phone_number }) {
               {popupop && (
                 <input
                   type="number"
-                  placeholder="Введите OTP"
+                  placeholder="Введите СМС код"
                   value={otp}
                   onChange={handleChange}
                   className={isError ? styles.errorInput : ""}

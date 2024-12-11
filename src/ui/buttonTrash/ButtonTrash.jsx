@@ -9,7 +9,7 @@ export const ButtonTrash = ({ el }) => {
 			const res = await axios.delete(`/api/basket/${el.id}`)
 			if (res.status === 200) {
 				console.log('Service deleted')
-				window.location.reload()
+				window.location.reload(true)
 			}
 		}
 		else {

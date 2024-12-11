@@ -184,14 +184,16 @@ const BasketPage = () => {
                       {deliveryMethod === 'pickup' ? (
                         <div className="w-full h-32 p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500">
                           <ul>
-                            <li>Жалал-абад</li>
-                            <li>Аксы</li>
-                            <li>ул.Tабалдиев 32/a</li>
+                            <li>Область Ош,</li>
+                            <li>улица Касымбекова,</li>
+                            <li>  дом 8б</li>
                           </ul>
                         </div>
                       ) : deliveryMethod === 'delivery' && (
                         <div className="w-full h-32 p-3 border border-gray-300 rounded-lg focus:ring-green-500 focus:border-green-500">
-                          Контакт: 0709684854
+                          Контакт: 
+                          <a className="text-blue-500" target="_blank" href="https://api.whatsapp.com/send?phone=996551868080">996551868080
+                          </a>
                         </div>
                       )}
                     </div>
