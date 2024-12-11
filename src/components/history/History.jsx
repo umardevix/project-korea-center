@@ -23,6 +23,23 @@ function History() {
       console.error("Error fetching payment history:", error);
     }
   }
+  async function getBasket()
+   {
+    const accessToken = localStorage.getItem("accessToken");
+    try {
+      const res = await axios.get("https://koreacenter.kg/api/basket/", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      console.log(res)
+      if(res.status ===200){
+        handleSuccessfulPayment(res.data.items,res.data.total_price,accessToken);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   useEffect(() => {
     getPaymentStatus();
@@ -32,13 +49,12 @@ function History() {
   async function getPaymentStatus() {
     let isItemId = JSON.parse(localStorage.getItem("id"));
     let isItemOrder_id = JSON.parse(localStorage.getItem("order_id"));
-
-    if (isItemId && isItemOrder_id) {
+    // if () {
       try {
         const res = await axios.get(`/payments/payments-status/${isItemId}/${isItemOrder_id}/`);
-
+console.log(res)
         if (res.data.status === "completed") {
-          handleSuccessfulPayment(res.data);
+          getBasket()
         } else if (res.data.status === "failed") {
           toast.error("Недостаточно средств");
           localStorage.removeItem("id");
@@ -52,18 +68,36 @@ function History() {
         console.log("Error fetching payment status:", error);
         handleFailedPayment();
       }
-    }
+    // }
   }
 
-  async function handleSuccessfulPayment(paymentData) {
-    console.log("Payment successful, updating history:", paymentData);
+  async function handleSuccessfulPayment(items,total,accessToken) {
+    
+    let isItemOrder_id = JSON.parse(localStorage.getItem("order_id"));
+    const formattedItems = items.map((item) => ({
+      product: item.product?.id || item.product.id,
+      price: parseFloat(item.product.price),
+      quantity: item.quantity || 1,
+    }));
+    console.log(formattedItems)
+    console.log(isItemOrder_id,total,formattedItems)
 
     try {
-      await axios.post("/payments/update-history", {
-        order_id: paymentData.order_id,
-        status: paymentData.status,
-        items: paymentData.items,
-      });
+      const res = await axios.post(
+        "/payments/orders/create/",
+        {
+          order_id:isItemOrder_id,
+          total_amount: total,
+          items: formattedItems,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(res)
 
       handleGet(); // Refresh history after payment is confirmed
     } catch (error) {
